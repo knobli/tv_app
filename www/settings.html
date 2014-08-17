@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Slidebars Basic Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- Slidebars CSS -->
+		<link rel="stylesheet" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<div data-role="page" id="demo-page" data-url="demo-page">
+			<div data-role="header" data-theme="b">
+				<h1>Einstellungen</h1>
+				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
+			</div><!-- /header -->
+			<div role="main" class="ui-content">
+				<h1>Login</h1>
+				<form action="#" method="post">
+					<div data-role="fieldcontain">
+						<label for="username" >Username</label>
+						<input type="text" name="username" id="username" placeholder="Username" />
+					</div>
+					<div data-role="fieldcontain">
+						<label for="password">Password</label>
+						<input type="password" name="password" id="password" placeholder="Password" />
+					</div>
+					<input type="button" id="login" value="Login" />
+				</form>
+				<h1>Riegenauswahl</h1>					
+				<form action="#" method="post">
+					<div data-role="fieldcontain">
+						<label for="matchRiege">Match</label>
+						<select name="matchRiege" id="matchRiege">
+							<optgroup label="TVG">
+								<option value="1">aktiv Riege</option>
+								<option value="3">Team Grafstal</option>
+							</optgroup>
+							<optgroup label="DTVG">
+								<option value="4">Damenriege</option>
+							</optgroup>
+						</select>
+					</div>
+					<div data-role="fieldcontain">
+						<label for="eventRiege">Anlass</label>
+						<select name="eventRiege" id="eventRiege">
+							<optgroup label="TVG">
+								<option value="1">aktiv Riege</option>
+								<option value="3">Team Grafstal</option>
+							</optgroup>
+							<optgroup label="DTVG">
+								<option value="4">Damenriege</option>
+							</optgroup>
+						</select>
+					</div>	
+					<div data-role="fieldcontain">
+						<label for="trainingRiege">Training</label>
+						<select name="trainingRiege" id="trainingRiege">
+							<optgroup label="TVG">
+								<option value="1">aktiv Riege</option>
+								<option value="3">Team Grafstal</option>
+							</optgroup>
+							<optgroup label="DTVG">
+								<option value="4">Damenriege</option>
+							</optgroup>
+						</select>
+					</div>		
+					<input type="button" id="save" value="Speichern" />
+				</form>
+			</div><!-- /content -->
+		</div>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
+		<script>
+			$("#noteForm").ajaxSubmit({
+				success: function(data){
+				
+				},
+				error: function(data) {
+       			//alert(data);
+      			}
+      		});
+		</script>
+	</body>
+</html>
