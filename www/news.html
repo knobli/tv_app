@@ -11,9 +11,9 @@
 	</head>
 
 	<body>
-		<div data-role="page" id="training" data-url="training">
+		<div data-role="page" id="news" data-url="training">
 			<div data-role="header" data-theme="b">
-				<h1 id="pageTitle">Trainingstitel</h1>
+				<h1 id="pageTitle">Newstitel</h1>
 				
 				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
 				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
@@ -27,9 +27,9 @@
 			<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
 			<script type="text/javascript" src="js/signinObject.js"></script>
 			<script>
-			$(document).on('pageshow', '#training', function(){   
+			$(document).on('pageshow', '#news', function(){   
 			    var id = getUrlParameter("id");
-			    loadSigninObject('http://grafstal.ch/controller/json/training.php', id);
+			    loadNews('http://grafstal.ch/controller/json/content.php', id);
 			}); 
 			</script>
 		</div>

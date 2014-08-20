@@ -10,27 +10,24 @@
 	</head>
 
 	<body>
-		<div data-role="page" id="trainings" data-url="trainings">
+		<div data-role="page" id="events" data-url="events">
 			<div data-role="header" data-theme="b">
-				<h1>Trainings</h1>
+				<h1>Anl&auml;sse</h1>
 				<a href="#" data-rel="back" data-icon="arrow-l" data-iconpos="notext"  data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
 				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-				<ul data-role="listview" data-ajax="false" data-inset="false" id="list">
+				<ul data-role="listview" data-inset="true" id="list">
 
 				</ul>
 			</div><!-- /content -->
-			<script>
-			$(document).on('pageshow', '#trainings', function(){   
-				getSigninObjectFromUrl('http://grafstal.ch/controller/json/training.php', './training.html');	
-			});
-			</script>						
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
 		<script type="text/javascript" src="js/signinObject.js"></script>
-	
+		<script>
+			getSigninObjectFromUrl('http://grafstal.ch/controller/json/event.php', 'event.html');
+		</script>
 	</body>
 </html>

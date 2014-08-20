@@ -5,32 +5,31 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<!-- Slidebars CSS -->
 		<link rel="stylesheet" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="css/jquery.moblie.extensions.css">
 		<style>
 		</style>
 	</head>
 
 	<body>
-		<div data-role="page" id="trainings" data-url="trainings">
+		<div data-role="page" id="event" data-url="event">
 			<div data-role="header" data-theme="b">
-				<h1>Trainings</h1>
-				<a href="#" data-rel="back" data-icon="arrow-l" data-iconpos="notext"  data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
+				<h1 id="pageTitle">Anlasstitle</h1>
+				
+				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
 				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-				<ul data-role="listview" data-ajax="false" data-inset="false" id="list">
-
-				</ul>
+				<ul data-role="listview" data-inset="false" id="list">
+				</ul>				
 			</div><!-- /content -->
-			<script>
-			$(document).on('pageshow', '#trainings', function(){   
-				getSigninObjectFromUrl('http://grafstal.ch/controller/json/training.php', './training.html');	
-			});
-			</script>						
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
 		<script type="text/javascript" src="js/signinObject.js"></script>
-	
+		<script>
+			var id = getUrlParameter('id');
+			loadSigninObject('http://grafstal.ch/controller/json/event.php', id);
+		</script>
 	</body>
 </html>
