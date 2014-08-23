@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Slidebars Basic Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- Slidebars CSS -->
+		<link rel="stylesheet" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="css/jquery.moblie.extensions.css">
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<div data-role="page" id="addCarpool" data-url="addCarpool">
+			<div data-role="header" data-theme="b">
+				<h1>Fahrgemeinschaft</h1>
+				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
+				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
+			</div><!-- /header -->
+			<div role="main" class="ui-content">
+	    		<h2 style="text-align: center;"><img src="img/glyphicons_005_car.png"> Carpool Test</h2>
+				<ul data-role="listview" data-inset="false" id="list">
+					<li>
+						<div style="display: inline"><span class="ui-btn-icon-notext ui-icon-check"></span>Angemeldet</div> <button href='' class='ui-btn ui-icon-delete ui-corner-all ui-btn-icon-left ui-btn-inline'>Abmelden</button>
+					</li>
+				</ul>
+			</div><!-- /content -->
+		</div>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
+		<script type="text/javascript" src="js/signinObject.js"></script>
+		<script>
+			var listId = "list";
+			addKeyValueListEntry(listId, 'Termin', "Speer, 19:30");
+			addKeyValueListEntry(listId, 'Fahrer', "Raffael Santschi");
+			addKeyValueListEntry(listId, 'Ort', "Tagelswangen");
+			addKeyValueListEntry(listId, 'Dein Status', "<a href=''>Anmelden</a>");
+			addListListEntry(listId, 'Anmeldungen  (Freie Pl&auml;tze: 1)', new Array("Andreas Bollmann", "Ivan Sebastiano", "Joel Schmied"));
+		</script>
+	</body>
+</html>

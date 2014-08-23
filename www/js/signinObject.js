@@ -43,6 +43,28 @@ function addKeyValueListEntry(listId, key, value){
 	}
 }
 
+function addKeyValueWithSubListEntry(listId, key, value, sub){
+	if(value != ""){
+		var listEntry = '<li><p><strong>' + key +'</strong></p><p class="ui-li-right-side">' + value;
+		if(sub != ""){
+			listEntry += '<br>' + sub
+		}
+		listEntry += '</p></li>';
+		$("#" + listId).append(listEntry);
+	}
+}
+
+function addListListEntry(listId, key, arrayList){
+	if(arrayList.length != 0){
+		var listEntry = '<li><p><strong>' + key +'</strong></p><p class="text-indent">';
+		$.each(arrayList, function(index, value){
+			listEntry += value + '<br>';
+		});
+		listEntry += '</p></li>';
+		$("#" + listId).append(listEntry);
+	}
+}
+
 function getTimeStamp(date){
 	var hours = date.getHours();
 	var minutes = date.getMinutes();

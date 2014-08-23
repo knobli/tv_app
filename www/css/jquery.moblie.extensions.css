@@ -4,3 +4,7 @@
 	right: 3.333em;
 	text-align: right
 }
+
+.text-indent {
+	padding-left: 10px;
+}
