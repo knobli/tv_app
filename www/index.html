@@ -24,14 +24,14 @@
 		    </div><!-- /content -->
 		    <div data-role="panel" id="left-panel" data-theme="b">
 				<ul data-role="listview" data-ajax="false" data-inset="false" data-theme="a">
-					<li><a href="./index.html">News</a></li>
+					<li><a href="./index.html" rel="external">News</a></li>
 				    <li data-role="list-divider">Veranstaltungen</li>
-				    <li><a href="./trainings.html">Training</a></li>
-				    <li><a href="./events.html">Anl&auml;sse</a></li>
-				    <li><a href="./matches.html">Matches</a></li>
+				    <li><a href="./trainings.html" rel="external">Training</a></li>
+				    <li><a href="./events.html" rel="external">Anl&auml;sse</a></li>
+				    <li><a href="./matches.html" rel="external">Matches</a></li>
 				    <li data-role="list-divider">Sonstiges</li>
-				    <li><a href="./results.html">Resultate</a></li>
-				    <li><a href="./pitctures.html">Bilder</a></li>
+				    <li><a href="./results.html" rel="external">Resultate</a></li>
+				    <li><a href="./pitctures.html" rel="external">Bilder</a></li>
 				</ul>		        
 		    </div><!-- /panel -->
 		</div>
@@ -40,6 +40,7 @@
         <script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
         <script type="text/javascript" src="js/signinObject.js"></script>
         <script type="text/javascript" src="js/news.js"></script>
+        <script type="text/javascript" src="js/help.js"></script>
 		<script>
 			$( document ).on( "pagecreate", "#main-page", function() {
 			    $( document ).on( "swipeleft swiperight", "#main-page", function( e ) {
@@ -49,8 +50,11 @@
 			            }
 			        }
 			    });
-			    
+			    if(isLoggedIn()){
+			    	getNextSigninObjectFromUrl('http://grafstal.ch/controller/json/signinObjects.php?next=1');
+			    }
 			    getNewsFromUrl('http://grafstal.ch/controller/json/content.php', 'news.html');
+			    
 			});		
 		</script>
 	</body>

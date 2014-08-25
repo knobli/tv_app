@@ -21,16 +21,17 @@
 
 				</ul>
 			</div><!-- /content -->
-			<script>
-			$(document).on('pageshow', '#trainings', function(){   
-				getSigninObjectFromUrl('http://grafstal.ch/controller/json/training.php', './training.html');	
-			});
-			</script>						
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
 		<script type="text/javascript" src="js/signinObject.js"></script>
-	
+		<script type="text/javascript" src="js/help.js"></script>
+		<script>
+			$(document).on('pageshow', '#trainings', function() {
+				getSigninObjectFromUrl('http://grafstal.ch/controller/json/training.php');
+			});
+		</script>
+
 	</body>
 </html>

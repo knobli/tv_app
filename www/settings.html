@@ -16,72 +16,131 @@
 				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-				<h1>Login</h1>
-				<form action="#" method="post">
-					<div data-role="fieldcontain">
-						<label for="username" >Username</label>
-						<input type="text" name="username" id="username" placeholder="Username" />
-					</div>
-					<div data-role="fieldcontain">
-						<label for="password">Password</label>
-						<input type="password" name="password" id="password" placeholder="Password" />
-					</div>
-					<input type="button" id="login" value="Login" />
-				</form>
+				<div id="login">
+					<h1>Login</h1>
+					<form id="loginForm" action="http://grafstal.ch/controller/json/login.php" method="post">
+						<div data-role="fieldcontain">
+							<label for="username" >Username</label>
+							<input type="text" name="username" id="username" placeholder="Username" />
+						</div>
+						<div data-role="fieldcontain">
+							<label for="password">Password</label>
+							<input type="password" name="password" id="password" placeholder="Password" />
+						</div>
+						<input type="button" value="Login" onclick="login()" />
+					</form>
+				</div>
+				
+				<div id="logout">
+					Eingeloggt als <b><span id="loginName">dummy</span></b>
+					<input type="button" value="Logout" onclick="logout()" />
+				</div>
+				
 				<h1>Riegenauswahl</h1>					
 				<form action="#" method="post">
 					<div data-role="fieldcontain">
 						<label for="matchRiege">Match</label>
 						<select name="matchRiege" id="matchRiege">
-							<optgroup label="TVG">
-								<option value="1">aktiv Riege</option>
-								<option value="3">Team Grafstal</option>
-							</optgroup>
-							<optgroup label="DTVG">
-								<option value="4">Damenriege</option>
-							</optgroup>
 						</select>
 					</div>
 					<div data-role="fieldcontain">
 						<label for="eventRiege">Anlass</label>
 						<select name="eventRiege" id="eventRiege">
-							<optgroup label="TVG">
-								<option value="1">aktiv Riege</option>
-								<option value="3">Team Grafstal</option>
-							</optgroup>
-							<optgroup label="DTVG">
-								<option value="4">Damenriege</option>
-							</optgroup>
 						</select>
 					</div>	
 					<div data-role="fieldcontain">
 						<label for="trainingRiege">Training</label>
 						<select name="trainingRiege" id="trainingRiege">
-							<optgroup label="TVG">
-								<option value="1">aktiv Riege</option>
-								<option value="3">Team Grafstal</option>
-							</optgroup>
-							<optgroup label="DTVG">
-								<option value="4">Damenriege</option>
-							</optgroup>
 						</select>
 					</div>		
-					<input type="button" id="save" value="Speichern" />
+					<input type="button" onclick="saveRiege()" value="Speichern" />
 				</form>
 			</div><!-- /content -->
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.form.min.js"></script>
+		<script type="text/javascript" src="js/signinObject.js"></script>	
+		<script type="text/javascript" src="js/help.js"></script>				
 		<script>
-			$("#noteForm").ajaxSubmit({
+		$( document ).on( "pagecreate", "#settings", function() {
+			checkLoginLogout();
+			loadRiegenDropdown(["eventRiege", "trainingRiege", "matchRiege"]);
+		});	
+		
+		function loadRiegenDropdown(ids){
+			$.getJSON('http://grafstal.ch/controller/json/riege.php', function(data) {
+				var oldClub = "";
+				var optgroup = {};
+				$.each(data, function(i, riege) {
+					if(oldClub != riege.club.name){
+						$.each(ids, function(j, id) {
+						 	if(oldClub != ""){
+						 		$('#' + id).append(optgroup[id]);
+						 		optgroup[id] = "";
+						 	}
+						 	optgroup[id] = '<optgroup label="' + riege.club.name + '">';
+						});
+						oldClub = riege.club.name;			
+					}
+					$.each(ids, function(j, id) {
+						if(getSavedRiege(id) != null && getSavedRiege(id) == riege.id){
+							optgroup[id] += '<option value="' + riege.id + '" selected="selected">' + riege.name + '</option>';
+						} else {
+							optgroup[id] += '<option value="' + riege.id + '">' + riege.name + '</option>';
+						}	 	
+					});		
+  				});
+  				$.each(ids, function(j, id) {
+  					$('#' + id).append(optgroup[id]);
+  					$('#' + id).selectmenu('refresh');
+  				});
+			});
+		}	
+			
+		function login(){
+			$("#loginForm").ajaxSubmit({
 				success: function(data){
-					$( ".selector" ).popup( "open", options );
+					if(data.success){
+						alert("Erfolgreich angemeldet");
+						setLogin(data.memberId, data.username);
+						checkLoginLogout();
+					} else {
+						alert("Anmeldung fehlgeschlagen: " + data.error_message);
+					}
 				},
-				error: function(data) {
-       			//alert(data);
+				error: function(xhr, ajaxOptions, thrownError) {
+			        alert(thrownError);
       			}
       		});
-		</script>
+      	}
+      	
+      	function logout(){
+      		removeLogin();
+      		checkLoginLogout();
+      	}
+      	
+		function saveRiege(){
+			saveRiegenDropdown(["eventRiege", "trainingRiege", "matchRiege"]);
+      	}      	
+      	
+      	function saveRiegenDropdown(ids){
+			$.each(ids, function(j, id) {
+				saveRiegeSelection(id, $("#" + id).val());
+			});
+      	}
+      	
+      	function checkLoginLogout(){
+      		if(isLoggedIn()){
+      			$("#logout").show();
+      			$("#loginName").text(getUsername());
+      			$("#login").hide();
+      		} else {
+      			$("#login").show();
+      			$("#logout").hide();
+      		}
+      	}
+		</script>		
 	</body>
 </html>

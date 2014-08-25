@@ -17,8 +17,7 @@
 				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-				<ul data-role="listview" data-inset="true" id="list">
-
+				<ul data-role="listview" data-inset="false" id="list">
 				</ul>
 			</div><!-- /content -->
 		</div>
@@ -26,8 +25,9 @@
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
 		<script type="text/javascript" src="js/signinObject.js"></script>
+		<script type="text/javascript" src="js/help.js"></script>
 		<script>
-			getSigninObjectFromUrl('http://grafstal.ch/controller/json/event.php', 'event.html');
+			getSigninObjectFromUrl('http://grafstal.ch/controller/json/event.php');
 		</script>
 	</body>
 </html>

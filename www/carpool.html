@@ -18,25 +18,19 @@
 				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-	    		<h2 style="text-align: center;"><img src="img/glyphicons_005_car.png"> Carpool Test</h2>
+	    		<h2 style="text-align: center;" id="carpoolTitle"></h2>
 				<ul data-role="listview" data-inset="false" id="list">
-					<li>
-						<div style="display: inline"><span class="ui-btn-icon-notext ui-icon-check"></span>Angemeldet</div> <button href='' class='ui-btn ui-icon-delete ui-corner-all ui-btn-icon-left ui-btn-inline'>Abmelden</button>
-					</li>
 				</ul>
 			</div><!-- /content -->
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
-		<script type="text/javascript" src="js/signinObject.js"></script>
+		<script type="text/javascript" src="js/carpool.js"></script>
+		<script type="text/javascript" src="js/help.js"></script>
 		<script>
-			var listId = "list";
-			addKeyValueListEntry(listId, 'Termin', "Speer, 19:30");
-			addKeyValueListEntry(listId, 'Fahrer', "Raffael Santschi");
-			addKeyValueListEntry(listId, 'Ort', "Tagelswangen");
-			addKeyValueListEntry(listId, 'Dein Status', "<a href=''>Anmelden</a>");
-			addListListEntry(listId, 'Anmeldungen  (Freie Pl&auml;tze: 1)', new Array("Andreas Bollmann", "Ivan Sebastiano", "Joel Schmied"));
+			var id = getUrlParameter('id');
+			loadCarpool('http://grafstal.ch/controller/json/carpool.php?id=' + id);		
 		</script>
 	</body>
 </html>

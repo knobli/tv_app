@@ -1,20 +1,21 @@
 function getNewsFromUrl(url, linkUrl){
-	$.getJSON(url, function(data) {
-	
-	  $.each(data, function(key, val) {
-	  	var createDate;
-	  	if(val.createDate != null){
-	  		createDate = new Date(val.createDate.date);
-	  	} else {
-	  		createDate = new Date();
-	  	}
-	    $("#list").append('<li><a href="' + linkUrl + '?id=' + val.id + '" rel="external"><h2>' + $('<textarea />').html(val.title).text() + '</h2><p>' + getDateStamp(createDate) + '</p><p id="introText' + val.id + '"></p></a></li>');
-	    $("#introText" + val.id).html($('<textarea />').html(val.introText).text());
-	  });
-	
-	  $( "#list" ).listview( "refresh" );
-	});		
+	$.getJSON(url, function(data) { addNewsMenuEntry(data, linkUrl); });		
 }	
+
+function addNewsMenuEntry(data, linkUrl){
+  $.each(data, function(key, val) {
+  	var createDate;
+  	if(val.createDate != null){
+  		createDate = new Date(val.createDate.date);
+  	} else {
+  		createDate = new Date();
+  	}
+    $("#list").append('<li><a href="' + linkUrl + '?id=' + val.id + '" rel="external"><h2>' + $('<textarea />').html(val.title).text() + '</h2><p>' + getDateStamp(createDate) + '</p><p id="introText' + val.id + '"></p></a></li>');
+    $("#introText" + val.id).html($('<textarea />').html(val.introText).text());
+  });
+  
+  $( "#list" ).listview( "refresh" );   	
+}
 
 function loadNews(url, id){
 	

@@ -17,7 +17,7 @@
 				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-				<form method="post" action="http://grafstal.ch/ajax/add_carpool.php">
+				<form method="post" id="carpoolForm" action="http://grafstal.ch/controller/json/carpool.php">
 					<input type="hidden" id="signinObjectId" name="signinObjectId" />
 					<input type="hidden" id="memberId" name="memberId" />
 					<input type="text" name="name" required placeholder="Gruppennamen"/>
@@ -41,13 +41,15 @@
 						</fieldset>					
 						<input type="text" name="freeSeatsValue" placeholder="Freie Pl&auml;tze (optional)"/>
 					</div>
-					<button data-icon="plus" onclick="addCarpool()">Fahrgemeinschaft erstellen</button>
+					<input type="button" value="Fahrgemeinschaft erstellen" onclick="addCarpool()" />
 				</form>
 			</div><!-- /content -->
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.form.min.js"></script>
+		<script type="text/javascript" src="js/help.js"></script>
 		<script>
 			$("input:radio[name='radio-type']").change(function(e){
 			    if($(this).val() == 1) {
@@ -59,9 +61,19 @@
 			});
 			
 			function addCarpool(){
-				$("#noteForm").ajaxSubmit({
-					success: function(data){},
-					error: function(data){}
+				$("#signinObjectId").val(getUrlParameter('id'));
+				$("#memberId").val(getUserId());
+				$("#carpoolForm").ajaxSubmit({
+					success: function(data){
+						if(data.success){
+							alert("Fahrgemeinschaft eingetragen");
+						} else {
+							alert("Speichern fehlgeschlagen: " + data.error_message);
+						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+			        	alert(thrownError);
+      				}
 				});
 			}
 		</script>

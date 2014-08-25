@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<!-- Slidebars CSS -->
 		<link rel="stylesheet" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="css/jquery.moblie.extensions.css">
 		<style>
 		</style>
 	</head>
@@ -17,12 +18,12 @@
 				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-				<ul data-role="listview" data-inset="false">
+				<ul data-role="listview" data-inset="false" id="list">
 				    <li>
 				    	<a href="#">
-				    		<div style=" float: left; width: 80px; height: 80px;">
-				    			<div style="margin-left: auto; margin-right: auto; display:table; height: 100%; vertical-align:middle;">
-				    				<div style="display:table-cell; vertical-align:middle;">
+				    		<div class="img-container">
+				    			<div class="img-center-outer">
+				    				<div class="img-center-inner">
 				        				<img src="img/glyphicons_005_car.png">
 				        			</div>
 				        		</div>
@@ -32,13 +33,20 @@
 				    		<p class="ui-li-aside">
 				    			Tagelswangen
 				    		</p>
+				    		<p class="ui-li-aside">
+				    			<br>
+				    			<br>
+				    			<br>
+				    			<br>				    			
+				    		<b>kein Platz mehr</b>
+				    		</p>				    		
 				    	</a>
 				    </li>
 				    <li>
 				    	<a href="#">
-				    		<div style=" float: left; width: 80px; height: 80px;">
-				    			<div style="margin-left: auto; margin-right: auto; display:table; height: 100%; vertical-align:middle;">
-				    				<div style="display:table-cell; vertical-align:middle;">
+				    		<div class="img-container">
+				    			<div class="img-center-outer">
+				    				<div class="img-center-inner">
 				        				<img src="img/glyphicons_306_bicycle.png">
 				        			</div>
 				        		</div>
@@ -48,16 +56,45 @@
 				    		<p class="ui-li-aside">
 				    			Lindau
 				    		</p>
+				    		<p class="ui-li-aside">
+				    			<br>
+				    			<br>
+				    			<a href="#" class="ui-btn ui-mini ui-icon-check ui-btn-icon-left">Angemeldet</a>
+				    		</p>
 				    	</a>
-				    </li>				    
+				    </li>	
+				    <li>
+				    	<a href="#">
+				    		<div class="img-container">
+				    			<div class="img-center-outer">
+				    				<div class="img-center-inner">
+				        				<img src="img/glyphicons_005_car.png">
+				        			</div>
+				        		</div>
+				        	</div>
+				    		<h2>Carpool Test 3</h2>
+				    		<p>Ivan Sebastiano</p>
+				    		<p class="ui-li-aside">
+				    			Tagelswangen
+				    		</p>
+				    		<p class="ui-li-aside">
+				    			<br>
+				    			<br>
+				    			<a href="#" class="ui-btn ui-mini ui-icon-plus ui-btn-icon-left">Anmelden</a>
+				    		</p>
+				    	</a>
+				    </li>			    				    			    
 				</ul>
 			</div><!-- /content -->
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
+		<script type="text/javascript" src="js/carpool.js"></script>
+		<script type="text/javascript" src="js/help.js"></script>
 		<script>
-			
+			var id = getUrlParameter('id');
+			getCarpoolsFromUrl('http://grafstal.ch/controller/json/carpool.php?signinObjectId=' + id);
 		</script>
 	</body>
 </html>

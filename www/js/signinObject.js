@@ -1,7 +1,12 @@
-function getSigninObjectFromUrl(url, linkUrl){
-	$.getJSON(url, function(data) {
-	  var oldDateStamp;
-	
+var linkUrls = {"Training": "training.html", "Anlass": "event.html", "Match": "match.html", "Hockeymatch": "match.html"};
+
+function getSigninObjectFromUrl(url){
+	$.getJSON(url, function(data) { addSinginObjectMenuEntry(data); });
+}	
+
+function addSinginObjectMenuEntry(data){
+  var oldDateStamp;
+  if(data.length != 0){
 	  $.each(data, function(key, val) {
 	  	var startDate = new Date(val.startDate.date);
 	  	var dateStamp = getDateStamp(startDate);
@@ -9,13 +14,32 @@ function getSigninObjectFromUrl(url, linkUrl){
 	  		$("#list").append('<li data-role="list-divider">' + getDateString(startDate) + '</li>');
 	  		oldDateStamp = dateStamp;
 	  	}
-	    $("#list").append('<li><a href="' + linkUrl + '?id=' + val.id + '" rel="external"><h2>' + val.name + '</h2><p><strong>' + val.location.name +'</strong></p><div class="ui-li-aside"><p><strong>' + getTimeStamp(startDate) + '</strong></p><p>' + val.responsible.firstname + ' ' + val.responsible.surname + '</p></div></a></li>');
-	    //$("#" + val.id).click(function (){ $.mobile.changePage(linkUrl, { dataUrl : linkUrl + '?id=' + val.id, data: { 'id': val.id }, reloadPage : true, changeHash : true })});
+	    $("#list").append(createSinginObjectMenuEntry(val));
 	  });
-	
-	  $( "#list" ).listview( "refresh" );
-	});		
+  } else {
+  	$("#list").append("<li>Keine Eintr&auml;ge vorhanden</li>");
+  }	  	
+  $( "#list" ).listview( "refresh" );	
+}
+
+function getNextSigninObjectFromUrl(url){
+	$.getJSON(url, function(data) { 
+		$("#list").prepend(createSinginObjectMenuEntry(data[0]));
+		$( "#list" ).listview( "refresh" ); 
+	});
 }	
+
+function createSinginObjectMenuEntry(signinObject){
+	var startDate = new Date(signinObject.startDate.date);
+	var listEntry = '<li><a href="' + linkUrls[signinObject.type] + '?id=' + signinObject.id + '" rel="external"><fieldset class="ui-grid-a"><div class="ui-block-a">';
+	listEntry += '<h2>' + signinObject.name + '</h2>';
+	listEntry += '<p><strong>' + signinObject.location.name +'</strong></p>';
+	listEntry += '</div><div class="ui-block-b ui-li-aside">';
+	listEntry += '<p><strong>' + getTimeStamp(startDate) + '</strong></p>';
+	listEntry += '<p>' + signinObject.responsible.firstname + ' ' + signinObject.responsible.surname + '</p>';
+	listEntry += '</div></fieldset></a></li>';		
+	return listEntry;
+}
 
 function loadSigninObject(url, id){
 	
@@ -33,88 +57,105 @@ function loadSigninObject(url, id){
 			addKeyValueListEntry(listId, 'Ort', signinObject.location.name);
 			addKeyValueListEntry(listId, 'Datum', getStartEndDate(startDate, endDate));
 			addKeyValueListEntry(listId, 'Verantwortlicher', signinObject.responsible.firstname + ' ' + signinObject.responsible.surname);
+			if(isLoggedIn){
+				var memberStatus = getMemberStatusForSigninObject(signinObject);
+				if(memberStatus === undefined || memberStatus == MemberStatus.NONE){
+					addTwoButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signin("+ signinObject.id + ")", 'Abmelden', 'ui-icon-minus', "signout("+ signinObject.id + ")");
+				} else if (memberStatus == MemberStatus.IN){
+					addButtonListEntry(listId, 'Angemeldet', 'ui-icon-check', "signout("+ signinObject.id + ")");
+				} else if (memberStatus == MemberStatus.OUT){
+					addButtonListEntry(listId, 'Abgemeldet', 'ui-icon-delete', "signin("+ signinObject.id + ")");
+				}
+				var countOfCarpools = getCountOfCarpools(signinObject);
+				addKeyValueWithLinkListEntry(listId, 'Fahrgemeinschaften', '<span class="ui-li-count">' + countOfCarpools + '</span>', 'carpools.html?id=' + signinObject.id);
+			
+				addMemberList(listId, signinObject);
+			}
 			$( "#list" ).listview( "refresh" );
 		});
 }
 
-function addKeyValueListEntry(listId, key, value){
-	if(value != ""){
-		$("#" + listId).append('<li><p><strong>' + key +'</strong></p><p class="ui-li-right-side">' + value + '</p></li>');
-	}
+function getMemberStatusForSigninObject(signinObject){
+	var memberStatus = null;
+	$.ajax({
+	  type: "GET",
+	  url: 'http://grafstal.ch/controller/json/signinEntries.php',
+	  data: { 'signinObjectId': signinObject.id,
+	  			'memberId': getUserId() },
+	  async: false
+	})
+	.done(function( entry ) {
+		memberStatus = entry.status;
+	});	
+	return memberStatus;
 }
 
-function addKeyValueWithSubListEntry(listId, key, value, sub){
-	if(value != ""){
-		var listEntry = '<li><p><strong>' + key +'</strong></p><p class="ui-li-right-side">' + value;
-		if(sub != ""){
-			listEntry += '<br>' + sub
-		}
-		listEntry += '</p></li>';
-		$("#" + listId).append(listEntry);
-	}
-}
-
-function addListListEntry(listId, key, arrayList){
-	if(arrayList.length != 0){
-		var listEntry = '<li><p><strong>' + key +'</strong></p><p class="text-indent">';
-		$.each(arrayList, function(index, value){
-			listEntry += value + '<br>';
+function addMemberList(listId, signinObject){
+	memberList = new Array();
+	$.ajax({
+	  type: "GET",
+	  url: 'http://grafstal.ch/controller/json/signingEntries.php',
+	  data: { 'signinObjectId': signinObject.id },
+	  async: false
+	})
+	.done(function( entries ) {
+		$.each(entries, function(key, entry) {
+			memberList.push(entry.member.firstname + ' ' + entry.member.surname);
 		});
-		listEntry += '</p></li>';
-		$("#" + listId).append(listEntry);
+	});		
+	addListListEntry(listId, 'Anmeldungen  (Anmeldungen: ' + memberList.length + ')', memberList);	
+}
+
+function getCountOfCarpools(signinObject){
+	var carpoolCount = 99;
+	$.ajax({
+	  type: "GET",
+	  url: 'http://grafstal.ch/controller/json/carpool.php',
+	  data: { 'signinObjectId': signinObject.id,
+	  			'getCount': true },
+	  async: false
+	})
+	.done(function( count ) {
+		carpoolCount = count;
+	});	
+	return carpoolCount;
+}
+
+function signin(id){
+	changeStatus(id,1, "Anmeldung");
+}
+
+function signout(id){
+	changeStatus(id,0, "Abmeldung");
+}
+
+function changeStatus(id, status, text){
+	$.ajax({
+	  type: "POST",
+	  url: 'http://grafstal.ch/controller/json/signinEntries.php',
+	  data: { 'signinObjectId': id,
+	  			'memberId': getUserId(),
+	  			'status': status,
+	  			'comment': 'Von Mobile App angepasst' },
+	  async: true
+	})
+	.done(function( data ) {
+		if(data.success){
+			alert(text +" erfolgreich");
+		} else {
+			alert(text + " fehlgeschlagen: " + data.error_message);
+		}
+	});	
+}
+
+var stoargeKeys = {"eventRiege": "TV_APP_eventRiege", "trainingRiege": "TV_APP_trainingRiege", "matchRiege": "TV_APP_matchRiege"};
+
+function getSavedRiege(type){
+	return window.localStorage.getItem(stoargeKeys[type]);
+}
+
+function saveRiegeSelection(type, selection){
+	if(selection != null){
+		window.localStorage.setItem(stoargeKeys[type], selection);
 	}
-}
-
-function getTimeStamp(date){
-	var hours = date.getHours();
-	var minutes = date.getMinutes();
-	
-	var output = (hours<10 ? '0' : '') + hours + ':' + (minutes<10 ? '0' : '') + minutes;
-	return output;
-}
-
-function getDateStamp(date){
-	var month = date.getMonth()+1;
-	var day = date.getDate();
-	
-	var output = (day<10 ? '0' : '') + day + '.' + (month<10 ? '0' : '') + month + '.' + date.getFullYear();
-	return output;
-}
-
-function getDateString(date){
-	var weekDays = new Array("Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag");
-	var months = new Array("Januar", "Februar", "M&auml;rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember");
-	var day = date.getDate();
-	
-	var output = weekDays[date.getDay()] + ', ' + (day<10 ? '0' : '') + day + '. ' + months[date.getMonth()] + ' ' + date.getFullYear();
-	return output;
-}
-
-function getStartEndDate(startDate, endDate){	
-	if(startDate.getFullYear() != endDate.getFullYear() || startDate.getMonth() != endDate.getMonth() || startDate.getDate() != endDate.getDate() ){
-		endStamp = getDateStamp(endDate) + ' ' + getTimeStamp(endDate);
-	} else {
-		endStamp = getTimeStamp(endDate);
-	}
-	var startStamp = getDateStamp(startDate) + ' ' + getTimeStamp(startDate);
-	var output = startStamp + ' - ' + endStamp;
-	return output;	
-}
-
-function getUrlParameter(sParam){
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++) 
-    {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) 
-        {
-            return sParameterName[1];
-        }
-	}
-}
-
-function getParameterByName(name) {
-    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }

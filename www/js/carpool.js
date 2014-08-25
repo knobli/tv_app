@@ -1,0 +1,135 @@
+CarpoolType = {
+	CAR : 1,
+	BICYCLE : 2
+}
+
+function getCarpoolsFromUrl(url) {
+	$.getJSON(url, function(data) {
+		addCarpoolMenuEntry(data);
+	});
+}
+
+function addCarpoolMenuEntry(data) {
+	if (data.length != 0) {
+		$.each(data, function(key, val) {
+			$("#list").append(createCarpoolMenuEntry(val));
+		});
+	} else {
+		$("#list").append("<li>Keine Eintr&auml;ge vorhanden</li>");
+	}
+
+	addLinkListEntry('list', 'Neue Fahrgemeinschaft hinzuf&uuml;gen', 'ui-icon-plus', 'add_carpool.html?id=' + id);
+	$("#list").listview("refresh");
+}
+
+function createCarpoolMenuEntry(carpool) {
+	var listEntry = '<li><a href="carpool.html?id=' + carpool.id + '" class="image-link" rel="external"><fieldset class="ui-grid-a"><div class="ui-block-a">';
+	listEntry += '<div class="img-container"><div class="img-center-outer"><div class="img-center-inner">';
+	if (carpool.type == CarpoolType.CAR) {
+		listEntry += '<img src="img/glyphicons_005_car.png">';
+	} else {
+		listEntry += '<img src="img/glyphicons_306_bicycle.png">';
+	}
+	listEntry += '</div></div></div>';
+	listEntry += '<h2>' + carpool.name + '</h2>';
+	listEntry += '<p>' + carpool.responsible.firstname + ' ' + carpool.responsible.surname + '</p>';
+	listEntry += '</div><div class="ui-block-b ui-li-aside">';
+	listEntry += '<p>' + carpool.responsible.city + '</p>';
+	if(isLoggedIn && getUserId() != carpool.responsible.id){
+		if(getMemberStatusForCarpool(carpool)== MemberStatus.IN){
+			listEntry += '<button class="ui-btn ui-mini ui-icon-minus ui-btn-icon-left ui-btn-inline">Abmelden</button>';
+		} else {
+			listEntry += '<button class="ui-btn ui-mini ui-icon-plus ui-btn-icon-left ui-btn-inline">Anmelden</button>';
+		}
+	}
+	listEntry += '</div></fieldset></a></li>';
+	return listEntry;
+}
+
+function loadCarpool(url){
+	$.getJSON(url, function(carpool) {
+		var listId = "list";
+		var startDate = new Date(carpool.signinObject.startDate.date);
+		var title = "";
+		if(carpool.type == CarpoolType.CAR){
+			title += '<img src="img/glyphicons_005_car.png">';
+		} else {
+			title += '<img src="img/glyphicons_306_bicycle.png">';
+		}
+		title += " " + carpool.name;
+		$('#carpoolTitle').html(title);
+		addKeyValueListEntry(listId, 'Termin', carpool.signinObject.name + ", " + getTimeStamp(startDate));
+		addKeyValueListEntry(listId, 'Fahrer', carpool.responsible.firstname + ' ' + carpool.responsible.surname);
+		addKeyValueListEntry(listId, 'Ort', carpool.responsible.city);
+		if(isLoggedIn && getUserId() != carpool.responsible.id){
+			if(getMemberStatusForCarpool(carpool) == MemberStatus.IN){
+				addButtonListEntry(listId, 'Angemeldet', 'ui-icon-check', "signoutCarpool("+ carpool.id + ")");	
+			} else {
+				addButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signinCarpool("+ carpool.id + ")");				
+			}
+		}
+		addMemberListForCarpool(listId, carpool);
+		$( "#list" ).listview( "refresh" );
+	});
+}
+
+function getMemberStatusForCarpool(carpool){
+	var memberStatus = null;
+	$.ajax({
+	  type: "GET",
+	  url: 'http://grafstal.ch/controller/json/carpoolEntry.php',
+	  data: { 'carpoolId': carpool.id,
+	  			'memberId': getUserId() },
+	  async: false
+	})
+	.done(function( entry ) {
+		memberStatus = (entry == null) ? MemberStatus.OUT : MemberStatus.IN;
+	});	
+	return memberStatus;
+}
+
+function addMemberListForCarpool(listId, carpool){
+	memberList = new Array();
+	$.ajax({
+	  type: "GET",
+	  url: 'http://grafstal.ch/controller/json/carpoolEntry.php',
+	  data: { 'carpoolId': carpool.id, },
+	  async: false
+	})
+	.done(function( entries ) {
+		$.each(entries, function(key, entry) {
+			memberList.push(entry.member.firstname + ' ' + entry.member.surname);
+		});
+	});		
+	var title = "Anmeldungen:";
+	if(carpool.type == CarpoolType.CAR){
+		title = 'Anmeldungen  (Freie Pl&auml;tze: ' + (carpool.size - memberList.length)  + ')';
+	}
+	addListListEntry(listId, title, memberList);	
+}
+
+function signinCarpool(id){
+	changeStatusCarpool(id,1, "Anmeldung");
+}
+
+function signoutCarpool(id){
+	changeStatusCarpool(id,0, "Abmeldung");
+}
+
+function changeStatusCarpool(id, status, text){
+	$.ajax({
+	  type: "POST",
+	  url: 'http://grafstal.ch/controller/json/carpoolEntry.php',
+	  data: { 'carpoolId': id,
+	  			'memberId': getUserId(),
+	  			'status': status },
+	  async: true
+	})
+	.done(function( data ) {
+		if(data.success){
+			alert(text +" erfolgreich");
+		} else {
+			alert(text + " fehlgeschlagen: " + data.error_message);
+		}
+	});	
+}

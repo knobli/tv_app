@@ -8,3 +8,31 @@
 .text-indent {
 	padding-left: 10px;
 }
+
+.text-with-nl {
+	white-space:normal;
+}
+
+.img-container {
+	float: left; 
+	width: 80px; 
+	height: 80px;
+}
+
+.img-center-outer {
+	margin-left: auto; 
+	margin-right: auto; 
+	display:table; 
+	height: 100%; 
+	vertical-align:middle;
+}
+
+.img-center-inner {
+	display:table-cell; 
+	vertical-align:middle;
+}
+
+.image-link {
+	text-align: center;
+	padding: .7em 0px !important;
+}
