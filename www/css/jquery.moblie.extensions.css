@@ -10,7 +10,7 @@
 }
 
 .text-with-nl {
-	white-space:normal;
+	white-space:normal !important;
 }
 
 .img-container {

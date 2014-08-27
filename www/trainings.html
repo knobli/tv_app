@@ -13,14 +13,27 @@
 		<div data-role="page" id="trainings" data-url="trainings">
 			<div data-role="header" data-theme="b">
 				<h1>Trainings</h1>
-				<a href="#" data-rel="back" data-icon="arrow-l" data-iconpos="notext"  data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
-				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
+				<a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
+		        <a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
 				<ul data-role="listview" data-ajax="false" data-inset="false" id="list">
 
 				</ul>
 			</div><!-- /content -->
+		    <div data-role="panel" id="left-panel" data-theme="b">
+				<ul data-role="listview" data-ajax="true" data-inset="false" data-theme="a">
+					<li><a href="./index.html" rel="external">News</a></li>
+					<li><a href="./clubs.html" rel="external">Vereine</a></li>
+				    <li data-role="list-divider">Veranstaltungen</li>
+				    <li><a href="./trainings.html" rel="external">Training</a></li>
+				    <li><a href="./events.html" rel="external">Anl&auml;sse</a></li>
+				    <li><a href="./matches.html" rel="external">Matches</a></li>
+				    <li data-role="list-divider">Sonstiges</li>
+				    <li><a href="./results.html" rel="external">Resultate</a></li>
+				    <li><a href="./pitctures.html" rel="external">Bilder</a></li>
+				</ul>		        
+		    </div><!-- /panel -->			
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>

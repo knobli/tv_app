@@ -34,16 +34,41 @@ function createCarpoolMenuEntry(carpool) {
 	listEntry += '<h2>' + carpool.name + '</h2>';
 	listEntry += '<p>' + carpool.responsible.firstname + ' ' + carpool.responsible.surname + '</p>';
 	listEntry += '</div><div class="ui-block-b ui-li-aside">';
-	listEntry += '<p>' + carpool.responsible.city + '</p>';
+	listEntry += '<p>' + carpool.responsible.city + '</p><br>';
 	if(isLoggedIn && getUserId() != carpool.responsible.id){
-		if(getMemberStatusForCarpool(carpool)== MemberStatus.IN){
-			listEntry += '<button class="ui-btn ui-mini ui-icon-minus ui-btn-icon-left ui-btn-inline">Abmelden</button>';
+		if(getMemberStatusForCarpool(carpool) == MemberStatus.IN){
+			listEntry += 'Angemeldet';
 		} else {
-			listEntry += '<button class="ui-btn ui-mini ui-icon-plus ui-btn-icon-left ui-btn-inline">Anmelden</button>';
+			var freeSeats = getFreeSeats(carpool);
+			if(freeSeats > 0){
+				if(freeSeats == 1){
+					listEntry += 'Noch ' + freeSeats + ' Platz';
+				} else {
+					listEntry += 'Noch ' + freeSeats + ' Pl&auml;tze';	
+				}
+			} else {
+				listEntry += 'kein Platz mehr';
+			}
 		}
 	}
 	listEntry += '</div></fieldset></a></li>';
 	return listEntry;
+}
+
+function getFreeSeats(carpool){
+	var size = carpool.size;
+	var signins = 0;
+	$.ajax({
+	  type: "GET",
+	  url: 'http://grafstal.ch/controller/json/carpoolEntry.php',
+	  data: { 'carpoolId': carpool.id,
+	  			'countOnly': true },
+	  async: false
+	})
+	.done(function( data ) {
+		signins = data;
+	});	
+	return size - signins;
 }
 
 function loadCarpool(url){
