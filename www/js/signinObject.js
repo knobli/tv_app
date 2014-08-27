@@ -1,7 +1,12 @@
 var linkUrls = {"Training": "training.html", "Anlass": "event.html", "Match": "match.html", "Hockeymatch": "match.html"};
 
-function getSigninObjectFromUrl(url){
-	$.getJSON(url, function(data) { addSinginObjectMenuEntry(data); });
+function getSigninObjectFromUrl(url, type){
+	$.ajax({
+	  type: "GET",
+	  url: url,
+	  data: { 'riegeId': getSavedRiege(type) }
+	})
+		.done(function(data) { addSinginObjectMenuEntry(data); });
 }	
 
 function addSinginObjectMenuEntry(data){
@@ -23,7 +28,13 @@ function addSinginObjectMenuEntry(data){
 }
 
 function getNextSigninObjectFromUrl(url){
-	$.getJSON(url, function(data) { 
+	$.ajax({
+	  type: "GET",
+	  url: url,
+	  data: { 'riegeId': -1,
+	  		 'memberId': getUserId() }
+	})
+		.done(function(data) { 
 		$("#list").prepend(createSinginObjectMenuEntry(data[0]));
 		$( "#list" ).listview( "refresh" ); 
 	});
