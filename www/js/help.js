@@ -74,7 +74,7 @@ function addListListEntry(listId, key, arrayList){
 function createDate(phpFormattedDate){
 	var dateRegex = new RegExp("(\\d+)-(\\d+)-(\\d+)\\s+(\\d+):(\\d+):(\\d+)");
 	var dateSplits = dateRegex.exec(phpFormattedDate);
-	return new Date(dateSplits[1], dateSplits[2], dateSplits[3], dateSplits[4], dateSplits[5], dateSplits[6]);
+	return new Date(dateSplits[1], dateSplits[2] - 1, dateSplits[3], dateSplits[4], dateSplits[5], dateSplits[6]);
 }
 
 function getTimeStamp(date){
@@ -91,6 +91,10 @@ function getDateStamp(date){
 	
 	var output = (day<10 ? '0' : '') + day + '.' + (month<10 ? '0' : '') + month + '.' + date.getFullYear();
 	return output;
+}
+
+function getDateTimeStamp(date){
+	return getDateStamp(date) + ' ' + getTimeStamp(date);
 }
 
 function getDateString(date){
