@@ -71,6 +71,12 @@ function addListListEntry(listId, key, arrayList){
 	}
 }
 
+function createDate(phpFormattedDate){
+	var dateRegex = new RegExp("(\\d+)-(\\d+)-(\\d+)\\s+(\\d+):(\\d+):(\\d+)");
+	var dateSplits = dateRegex.exec(phpFormattedDate);
+	return new Date(dateSplits[1], dateSplits[2], dateSplits[3], dateSplits[4], dateSplits[5], dateSplits[6]);
+}
+
 function getTimeStamp(date){
 	var hours = date.getHours();
 	var minutes = date.getMinutes();

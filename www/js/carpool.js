@@ -74,7 +74,7 @@ function getFreeSeats(carpool){
 function loadCarpool(url){
 	$.getJSON(url, function(carpool) {
 		var listId = "list";
-		var startDate = new Date(carpool.signinObject.startDate.date);
+		var startDate = createDate(carpool.signinObject.startDate.date);
 		var title = "";
 		if(carpool.type == CarpoolType.CAR){
 			title += '<img src="img/glyphicons_005_car.png">';
