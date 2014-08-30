@@ -6,8 +6,8 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.moblie.extensions.css">
         <title>Turnverein Grafstal App</title>		
 	</head>
 
@@ -36,7 +36,6 @@
         <script type="text/javascript" src="js/help.js"></script>
         <script type="text/javascript" src="js/index.js"></script>     
 		<script>
-		 	app.initialize();
 			$( document ).on( "pagecreate", "#main-page", function() {
 			    $( document ).on( "swipeleft swiperight", "#main-page", function( e ) {
 			        if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
@@ -50,7 +49,7 @@
 			    	getNextSigninObjectFromUrl('http://grafstal.ch/controller/json/signinObjects.php?next=1');
 			    }
 			    getNewsFromUrl('http://grafstal.ch/controller/json/content.php', 'news.html');
-			    
+			    app.initialize();
 			});		
 		</script>
 	</body>
