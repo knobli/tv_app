@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Slidebars Basic Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- Slidebars CSS -->
+		<link rel="stylesheet" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="css/jquery.moblie.extensions.css">
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<div data-role="page" id="results" data-url="results">
+			<div data-role="header" data-theme="b" data-position="fixed">
+				<h1 id="pageTitle">Resultate</h1>
+				<a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
+				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
+			</div><!-- /header -->
+			<div role="main" class="ui-content">
+				<div data-role="tabs" id="tabMenu">
+				  <div data-role="navbar">
+				    <ul>
+				      <li><a href="best_results.html" class="ui-btn-active" data-ajax="false">Bestleistung</a></li>
+				      <li><a href="sock_results.html" data-ajax="false">B&uuml;chsenliste</a></li>
+				    </ul>
+				  </div>				  
+				</div>			
+			</div><!-- /content -->
+			<div data-role="panel" id="left-panel" data-theme="b">
+				<ul data-role="listview" data-ajax="true" data-inset="false" data-theme="a" id="navigation">
+				</ul>		        
+		    </div><!-- /panel -->	
+			<script type="text/javascript" src="cordova.js"></script>
+			<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+			<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
+			<script type="text/javascript" src="js/result.js"></script>
+			<script type="text/javascript" src="js/help.js"></script>
+			
+			<script>			
+			$( document ).on( "pagecreate", "#results", function() {
+			    $( document ).on( "swipeleft swiperight", "#results", function( e ) {
+			        if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
+			            if ( e.type === "swiperight" ) {
+			                $( "#left-panel" ).panel( "open" );
+			            }
+			        }
+			    });
+			    fillInNavigation();
+		    	$( "#tabMenu" ).tabs({load: function( event, ui ) {
+						initOrRefresh('list');
+			  			initOrRefresh('list2');  	
+			  		}
+				});
+			});			
+</script>  			
+		</div>
+	</body>
+</html>

@@ -153,3 +153,41 @@ function getUsername(){
 	return window.localStorage.getItem(usernameKey);
 }
 
+var navigationItems = [{name: "", loginRequired: false, items: [{name: "News", link: "index.html", loginRequired: false}, 
+																	{name: "Vereine", link: "clubs.html", loginRequired: false}]},
+						{name: "Veranstaltungen", loginRequired: false, items: [{name: "Training", link: "trainings.html", loginRequired: false}, 
+																					{name: "Anl&auml;sse", link: "events.html", loginRequired: false},
+																					{name: "Matches", link: "matches.html", loginRequired: false}]},
+						{name: "Sonstiges", loginRequired: false, items: [{name: "Resultate", link: "results.html", loginRequired: true}]}];
+
+function fillInNavigation(){
+	var groupItem = "";
+	$.each(navigationItems, function(index, groupElement){
+		if((groupElement.loginRequired && isLoggedIn()) || !groupElement.loginRequired){
+			if(groupElement.name != ""){
+				groupItem += '<li data-role="list-divider">' + groupElement.name + '</li>';
+			}
+			var counter = 0;
+			$.each(groupElement.items, function(index, itemElement){
+				if((itemElement.loginRequired && isLoggedIn()) || !itemElement.loginRequired){
+					groupItem += '<li><a href="./' + itemElement.link + '" rel="external">' + itemElement.name + '</a></li>';
+					counter++;
+				}
+			});
+			if(counter > 0){
+				$("#navigation").append(groupItem);
+			}
+			groupItem="";
+		}
+	});
+	$("#navigation").listview('refresh');
+}
+
+function initOrRefresh(listId){
+	var listView = $('#'+ listId);				
+	if (listView.hasClass('ui-listview')) {
+	    listView.listview('refresh');
+	} else {
+	    listView.listview();
+	}				
+}

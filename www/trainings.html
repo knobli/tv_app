@@ -11,7 +11,7 @@
 
 	<body>
 		<div data-role="page" id="trainings" data-url="trainings">
-			<div data-role="header" data-theme="b">
+			<div data-role="header" data-theme="b" data-position="fixed">
 				<h1>Trainings</h1>
 				<a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
 		        <a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
@@ -21,17 +21,8 @@
 
 				</ul>
 			</div><!-- /content -->
-		    <div data-role="panel" id="left-panel" data-theme="b">
-				<ul data-role="listview" data-ajax="true" data-inset="false" data-theme="a">
-					<li><a href="./index.html" rel="external">News</a></li>
-					<li><a href="./clubs.html" rel="external">Vereine</a></li>
-				    <li data-role="list-divider">Veranstaltungen</li>
-				    <li><a href="./trainings.html" rel="external">Training</a></li>
-				    <li><a href="./events.html" rel="external">Anl&auml;sse</a></li>
-				    <li><a href="./matches.html" rel="external">Matches</a></li>
-				    <li data-role="list-divider">Sonstiges</li>
-				    <li><a href="./results.html" rel="external">Resultate</a></li>
-				    <li><a href="./pitctures.html" rel="external">Bilder</a></li>
+			<div data-role="panel" id="left-panel" data-theme="b">
+				<ul data-role="listview" data-ajax="true" data-inset="false" data-theme="a" id="navigation">
 				</ul>		        
 		    </div><!-- /panel -->			
 		</div>
@@ -41,9 +32,17 @@
 		<script type="text/javascript" src="js/signinObject.js"></script>
 		<script type="text/javascript" src="js/help.js"></script>
 		<script>
-			$(document).on('pageshow', '#trainings', function() {
-				getSigninObjectFromUrl('http://grafstal.ch/controller/json/training.php', 'trainingRiege');
-			});
+			$( document ).on( "pagecreate", "#trainings", function() {
+			    $( document ).on( "swipeleft swiperight", "#trainings", function( e ) {
+			        if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
+			            if ( e.type === "swiperight" ) {
+			                $( "#left-panel" ).panel( "open" );
+			            }
+			        }
+			    });
+			    fillInNavigation();
+			    getSigninObjectFromUrl('http://grafstal.ch/controller/json/training.php', 'trainingRiege');
+			});			
 		</script>
 
 	</body>

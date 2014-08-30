@@ -68,7 +68,7 @@ function loadSigninObject(url, id){
 			addKeyValueListEntry(listId, 'Ort', signinObject.location.name);
 			addKeyValueListEntry(listId, 'Datum', getStartEndDate(startDate, endDate));
 			addKeyValueListEntry(listId, 'Verantwortlicher', signinObject.responsible.firstname + ' ' + signinObject.responsible.surname);
-			if(isLoggedIn){
+			if(isLoggedIn()){
 				var memberStatus = getMemberStatusForSigninObject(signinObject);
 				if(memberStatus === undefined || memberStatus == MemberStatus.NONE){
 					addTwoButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signin("+ signinObject.id + ")", 'Abmelden', 'ui-icon-minus', "signout("+ signinObject.id + ")");
