@@ -6,7 +6,7 @@ function addNewsMenuEntry(data, linkUrl){
   $.each(data, function(key, val) {
   	var createDate;
   	if(val.createDate != null){
-  		createDate = new Date(val.createDate.date);
+  		createDate = createDate(val.createDate.date);
   	} else {
   		createDate = new Date();
   	}
@@ -26,7 +26,7 @@ function loadNews(url, id){
 	})
 		.done(function( news ) {
 		  	if(news.createDate != null){
-		  		createDate = new Date(news.createDate.date);
+		  		createDate = createDate(news.createDate.date);
 		  	} else {
 		  		createDate = new Date();
 		  	}

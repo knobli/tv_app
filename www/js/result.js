@@ -19,7 +19,7 @@ function addResultEntry(id, data){
 }
 
 function createResultEntry(result){
-	var startDate = new Date(result.event.startDate.date);
+	var startDate = createDate(result.event.startDate.date);
 	var listEntry = '<li><fieldset class="ui-grid-a"><div class="ui-block-a">';
 	listEntry += '<h2>' + result.discipline.name + '</h2>';
 	listEntry += '<p>' + result.event.name +'</p>';

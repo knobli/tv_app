@@ -13,7 +13,7 @@ function addSinginObjectMenuEntry(data){
   var oldDateStamp;
   if(data.length != 0){
 	  $.each(data, function(key, val) {
-	  	var startDate = new Date(val.startDate.date);
+	  	var startDate = createDate(val.startDate.date);
 	  	var dateStamp = getDateStamp(startDate);
 	  	if(oldDateStamp != dateStamp){
 	  		$("#list").append('<li data-role="list-divider">' + getDateString(startDate) + '</li>');
@@ -41,7 +41,7 @@ function getNextSigninObjectFromUrl(url){
 }	
 
 function createSinginObjectMenuEntry(signinObject){
-	var startDate = new Date(signinObject.startDate.date);
+	var startDate = createDate(signinObject.startDate.date);
 	var listEntry = '<li><a href="' + linkUrls[signinObject.type] + '?id=' + signinObject.id + '" rel="external"><fieldset class="ui-grid-a"><div class="ui-block-a">';
 	listEntry += '<h2>' + signinObject.name + '</h2>';
 	listEntry += '<p><strong>' + signinObject.location.name +'</strong></p>';
@@ -60,8 +60,8 @@ function loadSigninObject(url, id){
 	  data: { 'id': id }
 	})
 		.done(function( signinObject ) {
-			var startDate = new Date(signinObject.startDate.date);
-	  		var endDate = new Date(signinObject.endDate.date);
+			var startDate = createDate(signinObject.startDate.date);
+	  		var endDate = createDate(signinObject.endDate.date);
 			var listId = "list";
 			$("#pageTitle").text(signinObject.name);
 			addKeyValueListEntry(listId, 'Infos', signinObject.description);
