@@ -92,6 +92,8 @@ function loadCarpool(url){
 			} else {
 				addButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signinCarpool("+ carpool.id + ")");				
 			}
+		} else if (isLoggedIn && getUserId() == carpool.responsible.id){
+			addButtonListEntry(listId, 'L&ouml;schen', 'ui-icon-delete', "removeCarpool("+ carpool.id + "," + carpool.signinObject.id + ")");	
 		}
 		addMemberListForCarpool(listId, carpool);
 		$( "#list" ).listview( "refresh" );
@@ -153,8 +155,28 @@ function changeStatusCarpool(id, status, text){
 	.done(function( data ) {
 		if(data.success){
 			alert(text +" erfolgreich");
+			location.reload();
 		} else {
 			alert(text + " fehlgeschlagen: " + data.error_message);
+		}
+	});	
+}
+
+function removeCarpool(id, signinObjectId){
+	$.ajax({
+	  type: "DELETE",
+	  url: 'http://grafstal.ch/controller/json/carpool.php',
+	  data: { 'id': id,
+	  			'memberId': getUserId() },
+	  async: true
+	})
+	.done(function( data ) {
+		if(data.success){
+			alert("Erfolgreich geloescht");
+			window.history.back();
+			location.reload();
+		} else {
+			alert("Loeschen fehlgeschlagen: " + data.error_message);
 		}
 	});	
 }
