@@ -19,7 +19,7 @@ function addSinginObjectMenuEntry(data){
 	  		$("#list").append('<li data-role="list-divider">' + getDateString(startDate) + '</li>');
 	  		oldDateStamp = dateStamp;
 	  	}
-	    $("#list").append(createSinginObjectMenuEntry(val));
+	    $("#list").append(createSinginObjectMenuEntry(val, 'time'));
 	  });
   } else {
   	$("#list").append("<li>Keine Eintr&auml;ge vorhanden</li>");
@@ -35,18 +35,22 @@ function getNextSigninObjectFromUrl(url){
 	  		 'memberId': getUserId() }
 	})
 		.done(function(data) { 
-		$("#list").prepend(createSinginObjectMenuEntry(data[0]));
+		$("#list").prepend(createSinginObjectMenuEntry(data[0], 'date'));
 		$( "#list" ).listview( "refresh" ); 
 	});
 }	
 
-function createSinginObjectMenuEntry(signinObject){
+function createSinginObjectMenuEntry(signinObject, dateType){
 	var startDate = createDate(signinObject.startDate.date);
 	var listEntry = '<li><a href="' + linkUrls[signinObject.type] + '?id=' + signinObject.id + '" rel="external"><fieldset class="ui-grid-a"><div class="ui-block-a">';
 	listEntry += '<h2>' + signinObject.name + '</h2>';
 	listEntry += '<p><strong>' + signinObject.location.name +'</strong></p>';
 	listEntry += '</div><div class="ui-block-b ui-li-aside">';
-	listEntry += '<p><strong>' + getTimeStamp(startDate) + '</strong></p>';
+	if(dateType == 'date'){
+		listEntry += '<p><strong>' + getDateTimeStamp(startDate) + '</strong></p>';
+	} else {
+		listEntry += '<p><strong>' + getTimeStamp(startDate) + '</strong></p>';
+	}
 	listEntry += '<p>' + signinObject.responsible.firstname + ' ' + signinObject.responsible.surname + '</p>';
 	listEntry += '</div></fieldset></a></li>';		
 	return listEntry;
@@ -70,7 +74,7 @@ function loadSigninObject(url, id){
 			addKeyValueListEntry(listId, 'Verantwortlicher', signinObject.responsible.firstname + ' ' + signinObject.responsible.surname);
 			if(isLoggedIn()){
 				var memberStatus = getMemberStatusForSigninObject(signinObject);
-				if(memberStatus === undefined || memberStatus == MemberStatus.NONE){
+				if(memberStatus === null || memberStatus == MemberStatus.NONE){
 					addTwoButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signin("+ signinObject.id + ")", 'Abmelden', 'ui-icon-minus', "signout("+ signinObject.id + ")");
 				} else if (memberStatus == MemberStatus.IN){
 					addButtonListEntry(listId, 'Angemeldet', 'ui-icon-check', "signout("+ signinObject.id + ")");
@@ -153,6 +157,7 @@ function changeStatus(id, status, text){
 	.done(function( data ) {
 		if(data.success){
 			alert(text +" erfolgreich");
+			location.reload();
 		} else {
 			alert(text + " fehlgeschlagen: " + data.error_message);
 		}
