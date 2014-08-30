@@ -18,7 +18,6 @@ function addNewsMenuEntry(data, linkUrl){
 }
 
 function loadNews(url, id){
-	
 	$.ajax({
 	  type: "GET",
 	  url: url,
