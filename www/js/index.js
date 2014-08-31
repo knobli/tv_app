@@ -37,13 +37,97 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    }
+    	navigator.splashscreen.hide();        
+        var pushNotification = window.plugins.pushNotification;
+		if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
+		
+		    pushNotification.register(
+		    app.successHandler,
+		    app.errorHandler,
+		    {
+		        "senderID":"756094719789",
+		        "ecb":"app.onNotificationGCM"
+		    });
+		} else {
+		    pushNotification.register(
+		    tokenHandler,
+		    errorHandler,
+		    {
+		        "badge":"true",
+		        "sound":"true",
+		        "alert":"true",
+		        "ecb":"app.onNotificationAPN"
+		    });
+		}		
+    },
+    
+	// result contains any message sent from the plugin call
+	successHandler: function(result) {
+		console.log('Callback Success! Result = '+result);
+	},
+	
+	errorHandler:function(error) {
+	    alert(error);
+	},
+	
+	onNotificationGCM: function(e) {
+        switch( e.event )
+        {
+            case 'registered':
+                if ( e.regid.length > 0 )
+                {
+                    console.log("Regid " + e.regid);
+                	$.ajax({
+					  type: "POST",
+					  url: 'http://grafstal.ch/controller/json/push.php',
+					  data: { 'registerId': e.regid,
+					  			'memberId': getUserId(),
+					  			'type': 'Android'}
+					})
+					.done(function( data ) {
+						if(!data.success){
+							alert("Push-Registierung fehlgeschlagen: " + data.error_message);
+						}
+					});	
+                }
+            break;
+ 
+            case 'message':
+              // this is the actual push notification. its format depends on the data model from the push server
+              alert(e.message);
+            break;
+ 
+            case 'error':
+              alert('GCM error = '+e.msg);
+            break;
+ 
+            default:
+              alert('An unknown GCM event has occurred');
+              break;
+        }
+   },
+    
+    onNotificationAPN: function(event) {
+	    if ( event.alert )
+	    {
+	        navigator.notification.alert(event.alert);
+	    }
+	
+	    if ( event.sound )
+	    {
+	        var snd = new Media(event.sound);
+	        snd.play();
+	    }
+	
+	    if ( event.badge )
+	    {
+	        window.plugins.pushNotification.setApplicationIconBadgeNumber(app.successHandler, app.errorHandler, event.badge);
+	    }
+	},
+	
+	tokenHandler: function(result) {
+	    // Your iOS push server needs to know the token before it can push to this device
+	    // here is where you might want to send it the token for later use.
+	    alert('device token = ' + result);
+	}
 };
