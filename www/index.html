@@ -5,7 +5,7 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
         <link rel="stylesheet" type="text/css" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
         <link rel="stylesheet" type="text/css" href="css/jquery.moblie.extensions.css">
         <title>Turnverein Grafstal App</title>		
@@ -29,6 +29,7 @@
 		    </div><!-- /panel -->	
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="PushNotification.js"></script>
         <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
         <script type="text/javascript" src="js/signinObject.js"></script>
@@ -36,6 +37,7 @@
         <script type="text/javascript" src="js/help.js"></script>
         <script type="text/javascript" src="js/index.js"></script>     
 		<script>
+			app.initialize();
 			$( document ).on( "pagecreate", "#main-page", function() {
 			    $( document ).on( "swipeleft swiperight", "#main-page", function( e ) {
 			        if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
@@ -49,7 +51,6 @@
 			    	getNextSigninObjectFromUrl('http://grafstal.ch/controller/json/signinObjects.php?next=1');
 			    }
 			    getNewsFromUrl('http://grafstal.ch/controller/json/content.php', 'news.html');
-			    app.initialize();
 			});		
 		</script>
 	</body>
