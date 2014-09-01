@@ -128,6 +128,18 @@ var app = {
 	tokenHandler: function(result) {
 	    // Your iOS push server needs to know the token before it can push to this device
 	    // here is where you might want to send it the token for later use.
-	    alert('device token = ' + result);
+        console.log("Regid " + result);
+    	$.ajax({
+		  type: "POST",
+		  url: 'http://grafstal.ch/controller/json/push.php',
+		  data: { 'registerId': result,
+		  			'memberId': getUserId(),
+		  			'type': 'iOS'}
+		})
+		.done(function( data ) {
+			if(!data.success){
+				alert("Push-Registierung fehlgeschlagen: " + data.error_message);
+			}
+		});	
 	}
 };
