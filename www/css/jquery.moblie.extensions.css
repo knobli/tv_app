@@ -13,6 +13,26 @@ iframe {
 	text-align: right
 }
 
+.signin {
+	background: rgba(71, 121, 42, 0.6) !important;
+	text-shadow: 0 1px 0 rgba(71, 121, 42, 0.2) !important;
+}
+
+.signin:hover {
+	background: rgba(71, 121, 42, 0.8) !important;
+	text-shadow: 0 1px 0 rgba(71, 121, 42, 0.4) !important;
+}
+
+.signout {
+	background: rgba(215, 44, 44, 0.6) !important;
+	text-shadow: 0 1px 0 rgba(215, 44, 44, 0.2) !important;
+}
+
+.signout:hover {
+	background: rgba(215, 44, 44, 0.8) !important;
+	text-shadow: 0 1px 0 rgba(215, 44, 44, 0.4) !important;
+}
+
 .text-indent {
 	padding-left: 10px;
 }

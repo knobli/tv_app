@@ -30,7 +30,7 @@
 		<script type="text/javascript" src="js/help.js"></script>
 		<script>
 			var id = getUrlParameter('id');
-			loadCarpool('http://grafstal.ch/controller/json/carpool.php?id=' + id);		
+			loadCarpool(getAPIUrl() + '/carpool.php?id=' + id);		
 		</script>
 	</body>
 </html>

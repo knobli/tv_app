@@ -4,7 +4,8 @@ function getSigninObjectFromUrl(url, type){
 	$.ajax({
 	  type: "GET",
 	  url: url,
-	  data: { 'riegeId': getSavedRiege(type) }
+	  data: { 'riegeId': getSavedRiege(type),
+	  			'memberId': getUserId() }
 	})
 		.done(function(data) { addSinginObjectMenuEntry(data); });
 }	
@@ -13,7 +14,7 @@ function addSinginObjectMenuEntry(data){
   var oldDateStamp;
   if(data.length != 0){
 	  $.each(data, function(key, val) {
-	  	var startDate = createDate(val.startDate.date);
+	  	var startDate = createDate(val.object.startDate.date);
 	  	var dateStamp = getDateStamp(startDate);
 	  	if(oldDateStamp != dateStamp){
 	  		$("#list").append('<li data-role="list-divider">' + getDateString(startDate) + '</li>');
@@ -40,9 +41,19 @@ function getNextSigninObjectFromUrl(url){
 	});
 }	
 
-function createSinginObjectMenuEntry(signinObject, dateType){
+function createSinginObjectMenuEntry(signinObjectAndStatus, dateType){
+	var signinObject = signinObjectAndStatus.object;
+	var memberStatus = signinObjectAndStatus.status;
 	var startDate = createDate(signinObject.startDate.date);
-	var listEntry = '<li><a href="' + linkUrls[signinObject.type] + '?id=' + signinObject.id + '" rel="external"><fieldset class="ui-grid-a"><div class="ui-block-a">';
+	var className = '';
+	if(isLoggedIn()){
+		if (memberStatus === MemberStatus.IN){
+			className = 'signin';
+		} else if (memberStatus === MemberStatus.OUT){
+			className = 'signout';
+		}
+	}
+	var listEntry = '<li><a href="' + linkUrls[signinObject.type] + '?id=' + signinObject.id + '" rel="external" class="' + className + '"><fieldset class="ui-grid-a"><div class="ui-block-a">';
 	listEntry += '<h2>' + signinObject.name + '</h2>';
 	listEntry += '<p><strong>' + signinObject.location.name +'</strong></p>';
 	listEntry += '</div><div class="ui-block-b ui-li-aside">';
@@ -94,7 +105,7 @@ function getMemberStatusForSigninObject(signinObject){
 	var memberStatus = null;
 	$.ajax({
 	  type: "GET",
-	  url: 'http://grafstal.ch/controller/json/signinEntries.php',
+	  url: getAPIUrl() + '/signinEntries.php',
 	  data: { 'signinObjectId': signinObject.id,
 	  			'memberId': getUserId() },
 	  async: false
@@ -109,7 +120,7 @@ function addMemberList(listId, signinObject){
 	memberList = new Array();
 	$.ajax({
 	  type: "GET",
-	  url: 'http://grafstal.ch/controller/json/signingEntries.php',
+	  url: getAPIUrl() + '/signingEntries.php',
 	  data: { 'signinObjectId': signinObject.id },
 	  async: false
 	})
@@ -125,7 +136,7 @@ function getCountOfCarpools(signinObject){
 	var carpoolCount = 99;
 	$.ajax({
 	  type: "GET",
-	  url: 'http://grafstal.ch/controller/json/carpool.php',
+	  url: getAPIUrl() + '/carpool.php',
 	  data: { 'signinObjectId': signinObject.id,
 	  			'getCount': true },
 	  async: false
@@ -147,7 +158,7 @@ function signout(id){
 function changeStatus(id, status, text){
 	$.ajax({
 	  type: "POST",
-	  url: 'http://grafstal.ch/controller/json/signinEntries.php',
+	  url: getAPIUrl() + '/signinEntries.php',
 	  data: { 'signinObjectId': id,
 	  			'memberId': getUserId(),
 	  			'status': status,

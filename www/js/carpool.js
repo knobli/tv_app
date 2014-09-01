@@ -60,7 +60,7 @@ function getFreeSeats(carpool){
 	var signins = 0;
 	$.ajax({
 	  type: "GET",
-	  url: 'http://grafstal.ch/controller/json/carpoolEntry.php',
+	  url: getAPIUrl() + '/carpoolEntry.php',
 	  data: { 'carpoolId': carpool.id,
 	  			'countOnly': true },
 	  async: false
@@ -104,7 +104,7 @@ function getMemberStatusForCarpool(carpool){
 	var memberStatus = null;
 	$.ajax({
 	  type: "GET",
-	  url: 'http://grafstal.ch/controller/json/carpoolEntry.php',
+	  url: getAPIUrl() + '/carpoolEntry.php',
 	  data: { 'carpoolId': carpool.id,
 	  			'memberId': getUserId() },
 	  async: false
@@ -119,7 +119,7 @@ function addMemberListForCarpool(listId, carpool){
 	memberList = new Array();
 	$.ajax({
 	  type: "GET",
-	  url: 'http://grafstal.ch/controller/json/carpoolEntry.php',
+	  url: getAPIUrl() + '/carpoolEntry.php',
 	  data: { 'carpoolId': carpool.id, },
 	  async: false
 	})
@@ -146,7 +146,7 @@ function signoutCarpool(id){
 function changeStatusCarpool(id, status, text){
 	$.ajax({
 	  type: "POST",
-	  url: 'http://grafstal.ch/controller/json/carpoolEntry.php',
+	  url: getAPIUrl() + '/carpoolEntry.php',
 	  data: { 'carpoolId': id,
 	  			'memberId': getUserId(),
 	  			'status': status },
@@ -165,7 +165,7 @@ function changeStatusCarpool(id, status, text){
 function removeCarpool(id, signinObjectId){
 	$.ajax({
 	  type: "DELETE",
-	  url: 'http://grafstal.ch/controller/json/carpool.php',
+	  url: getAPIUrl() + '/carpool.php',
 	  data: { 'id': id,
 	  			'memberId': getUserId() },
 	  async: true

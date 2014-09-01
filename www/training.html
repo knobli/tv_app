@@ -30,7 +30,7 @@
 			<script>
 			$(document).on('pageshow', '#training', function(){   
 			    var id = getUrlParameter("id");
-			    loadSigninObject('http://grafstal.ch/controller/json/training.php', id);
+			    loadSigninObject(getAPIUrl() + '/training.php', id);
 			}); 
 			</script>
 		</div>
