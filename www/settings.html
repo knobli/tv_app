@@ -18,7 +18,7 @@
 			<div role="main" class="ui-content">
 				<div id="login">
 					<h1>Login</h1>
-					<form id="loginForm" action="http://grafstal.ch/controller/json/login.php" method="post">
+					<form id="loginForm" method="post">
 						<div data-role="fieldcontain">
 							<label for="username" >Username</label>
 							<input type="text" name="username" id="username" placeholder="Username" />
@@ -70,7 +70,7 @@
 		});	
 		
 		function loadRiegenDropdown(ids){
-			$.getJSON('http://grafstal.ch/controller/json/riege.php', function(data) {
+			$.getJSON(getAPIUrl() + '/riege.php', function(data) {
 				var oldClub = "";
 				var optgroup = {};
 				$.each(data, function(i, riege) {
@@ -101,6 +101,7 @@
 			
 		function login(){
 			$("#loginForm").ajaxSubmit({
+				url: getAPIUrl() + '/login.php',
 				success: function(data){
 					if(data.success){
 						alert("Erfolgreich angemeldet");
@@ -129,6 +130,7 @@
 			$.each(ids, function(j, id) {
 				saveRiegeSelection(id, $("#" + id).val());
 			});
+			alert('Auswahl gespeichert');
       	}
       	
       	function checkLoginLogout(){

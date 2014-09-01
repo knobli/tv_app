@@ -78,7 +78,7 @@ var app = {
                     console.log("Regid " + e.regid);
                 	$.ajax({
 					  type: "POST",
-					  url: 'http://grafstal.ch/controller/json/push.php',
+					  url: getAPIUrl() + '/push.php',
 					  data: { 'registerId': e.regid,
 					  			'memberId': getUserId(),
 					  			'type': 'Android'}
@@ -130,7 +130,7 @@ var app = {
         console.log("Regid " + result);
     	$.ajax({
 		  type: "POST",
-		  url: 'http://grafstal.ch/controller/json/push.php',
+		  url: getAPIUrl() + '/push.php',
 		  data: { 'registerId': result,
 		  			'memberId': getUserId(),
 		  			'type': 'iOS'}

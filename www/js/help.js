@@ -4,6 +4,9 @@ MemberStatus = {
 	NONE : 3
 }
 
+function getAPIUrl(){
+	return 'http://grafstal.ch/controller/json/v0.1';
+}
 
 function addKeyValueListEntry(listId, key, value){
 	if(value != ""){

@@ -29,7 +29,7 @@
 		<script type="text/javascript" src="js/help.js"></script>
 		<script>
 			var id = getUrlParameter('id');
-			getCarpoolsFromUrl('http://grafstal.ch/controller/json/carpool.php?signinObjectId=' + id);
+			getCarpoolsFromUrl(getAPIUrl() + '/carpool.php?signinObjectId=' + id);
 		</script>
 	</body>
 </html>

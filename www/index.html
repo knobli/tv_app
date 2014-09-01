@@ -48,9 +48,9 @@
 			    });
 			    fillInNavigation();
 			    if(isLoggedIn()){
-			    	getNextSigninObjectFromUrl('http://grafstal.ch/controller/json/signinObjects.php?next=1');
+			    	getNextSigninObjectFromUrl(getAPIUrl() + '/signinObjects.php?next=1');
 			    }
-			    getNewsFromUrl('http://grafstal.ch/controller/json/content.php', 'news.html');
+			    getNewsFromUrl(getAPIUrl() + '/content.php', 'news.html');
 			});		
 		</script>
 	</body>
