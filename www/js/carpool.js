@@ -39,15 +39,19 @@ function createCarpoolMenuEntry(carpool) {
 		if(getMemberStatusForCarpool(carpool) == MemberStatus.IN){
 			listEntry += 'Angemeldet';
 		} else {
-			var freeSeats = getFreeSeats(carpool);
-			if(freeSeats > 0){
-				if(freeSeats == 1){
-					listEntry += 'Noch ' + freeSeats + ' Platz';
-				} else {
-					listEntry += 'Noch ' + freeSeats + ' Pl&auml;tze';	
-				}
+			if (carpool.type == CarpoolType.BICYCLE) {
+				listEntry += 'Let\'s go';
 			} else {
-				listEntry += 'kein Platz mehr';
+				var freeSeats = getFreeSeats(carpool);
+				if(freeSeats > 0){
+					if(freeSeats == 1){
+						listEntry += 'Noch ' + freeSeats + ' Platz';
+					} else {
+						listEntry += 'Noch ' + freeSeats + ' Pl&auml;tze';	
+					}
+				} else {
+					listEntry += 'kein Platz mehr';
+				}
 			}
 		}
 	}
