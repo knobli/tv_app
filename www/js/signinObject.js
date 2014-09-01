@@ -120,7 +120,7 @@ function addMemberList(listId, signinObject){
 	memberList = new Array();
 	$.ajax({
 	  type: "GET",
-	  url: getAPIUrl() + '/signingEntries.php',
+	  url: getAPIUrl() + '/signinEntries.php',
 	  data: { 'signinObjectId': signinObject.id },
 	  async: false
 	})
