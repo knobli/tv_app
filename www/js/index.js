@@ -36,11 +36,10 @@ var app = {
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
-    	navigator.splashscreen.hide();        
+    receivedEvent: function(id) {      
         var pushNotification = window.plugins.pushNotification;
 		if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
-		
+			navigator.splashscreen.hide();  
 		    pushNotification.register(
 		    app.successHandler,
 		    app.errorHandler,
@@ -50,8 +49,8 @@ var app = {
 		    });
 		} else {
 		    pushNotification.register(
-		    tokenHandler,
-		    errorHandler,
+		    app.tokenHandler,
+		    app.errorHandler,
 		    {
 		        "badge":"true",
 		        "sound":"true",
