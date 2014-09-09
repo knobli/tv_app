@@ -4,6 +4,37 @@ MemberStatus = {
 	NONE : 3
 }
 
+var loading = 0;
+var loadingError = false;
+
+function isOnline(){
+	return navigator.onLine;
+}
+
+function startLoading(){
+	loading++;
+	if(!isOnline() && !loadingError){
+		alert("Keine Internetverbindung vorhanden");
+		loadingError=true;
+		return false;
+	} else {
+		loadingError = false;
+	}
+	$.mobile.loading('show', {theme:"e", text:"Please wait...", textonly:false, textVisible: true});
+}
+
+function finishLoading(){
+	loading--;
+	if(loading <= 0){
+		$.mobile.loading('hide');
+	}
+}
+
+$.ajaxSetup({
+  beforeSend: startLoading,
+  complete: finishLoading
+});
+
 function getAPIUrl(){
 	return 'http://grafstal.ch/controller/json/v0.1';
 }
