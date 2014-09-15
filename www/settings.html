@@ -1,15 +1,13 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Slidebars Basic Template</title>
+		<title>Settings</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<!-- Slidebars CSS -->
 		<link rel="stylesheet" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
-		<style>
-		</style>
+		<link rel="stylesheet" href="css/jquery.moblie.extensions.css">
 	</head>
-
-	<body>
+	<body style="display:none">
 		<div data-role="page" id="settings" data-url="settings">
 			<div data-role="header" data-theme="b">
 				<h1>Einstellungen</h1>
@@ -30,120 +28,43 @@
 						<input type="button" value="Login" onclick="login()" />
 					</form>
 				</div>
-				
+
 				<div id="logout">
 					Eingeloggt als <b><span id="loginName">dummy</span></b>
 					<input type="button" value="Logout" onclick="logout()" />
 				</div>
-				
-				<h1>Riegenauswahl</h1>					
+
+				<h1>Riegenauswahl</h1>
 				<form action="#" method="post">
 					<div data-role="fieldcontain">
 						<label for="matchRiege">Match</label>
-						<select name="matchRiege" id="matchRiege">
-						</select>
+						<select name="matchRiege" id="matchRiege"></select>
 					</div>
 					<div data-role="fieldcontain">
 						<label for="eventRiege">Anlass</label>
-						<select name="eventRiege" id="eventRiege">
-						</select>
-					</div>	
+						<select name="eventRiege" id="eventRiege"></select>
+					</div>
 					<div data-role="fieldcontain">
 						<label for="trainingRiege">Training</label>
-						<select name="trainingRiege" id="trainingRiege">
-						</select>
-					</div>		
+						<select name="trainingRiege" id="trainingRiege"></select>
+					</div>
 					<input type="button" onclick="saveRiege()" value="Speichern" />
 				</form>
 			</div><!-- /content -->
-			
-			
-			<script type="text/javascript" src="js/jquery.form.min.js"></script>
-			<script type="text/javascript" src="js/signinObject.js"></script>	
-			<script type="text/javascript" src="js/help.js"></script>				
-			<script>
-			$( document ).on( "pagecreate", "#settings", function() {
+		</div>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.form.min.js"></script>
+		<script type="text/javascript" src="js/signinObject.js"></script>	
+		<script type="text/javascript" src="js/help.js"></script>
+		<script type="text/javascript" src="js/settings.js"></script>			
+		<script>
+			$(document).on("pagecreate", "#settings", function() {
 				checkLoginLogout();
 				loadRiegenDropdown(["eventRiege", "trainingRiege", "matchRiege"]);
-			});	
-		
-			function loadRiegenDropdown(ids){
-				$.getJSON(getAPIUrl() + '/riege.php', function(data) {
-					var oldClub = "";
-					var optgroup = {};
-					$.each(data, function(i, riege) {
-						if(oldClub != riege.club.name){
-							$.each(ids, function(j, id) {
-								if(oldClub != ""){
-									$('#' + id).append(optgroup[id]);
-									optgroup[id] = "";
-								}
-								optgroup[id] = '<optgroup label="' + riege.club.name + '">';
-							});
-							oldClub = riege.club.name;			
-						}
-						$.each(ids, function(j, id) {
-							if(getSavedRiege(id) != null && getSavedRiege(id) == riege.id){
-								optgroup[id] += '<option value="' + riege.id + '" selected="selected">' + riege.name + '</option>';
-							} else {
-								optgroup[id] += '<option value="' + riege.id + '">' + riege.name + '</option>';
-							}	 	
-						});		
-					});
-					$.each(ids, function(j, id) {
-						$('#' + id).append(optgroup[id]);
-						$('#' + id).selectmenu('refresh');
-					});
-				});
-			}	
-			
-			function login(){
-				$("#loginForm").ajaxSubmit({
-					url: getAPIUrl() + '/login.php',
-					success: function(data){
-						if(data.success){
-							alert("Erfolgreich angemeldet");
-							setLogin(data.memberId, data.username);
-							checkLoginLogout();
-						} else {
-							alert("Anmeldung fehlgeschlagen: " + data.error_message);
-						}
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError);
-					}
-				});
-			}
-		
-			function logout(){
-				removeLogin();
-				checkLoginLogout();
-			}
-		
-			function saveRiege(){
-				saveRiegenDropdown(["eventRiege", "trainingRiege", "matchRiege"]);
-			}      	
-		
-			function saveRiegenDropdown(ids){
-				$.each(ids, function(j, id) {
-					saveRiegeSelection(id, $("#" + id).val());
-				});
-				alert('Auswahl gespeichert');
-			}
-		
-			function checkLoginLogout(){
-				if(isLoggedIn()){
-					$("#logout").show();
-					$("#loginName").text(getUsername());
-					$("#login").hide();
-				} else {
-					$("#login").show();
-					$("#logout").hide();
-				}
-			}
-			</script>
-			
-		</div>
-				
+				$("body").show();
+			});
+		</script>
 	</body>
 </html>

@@ -10,7 +10,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="display:none">
 		<div data-role="page" id="matches" data-url="matches">
 			<div data-role="header" data-theme="b">
 				<h1>Matches</h1>
@@ -42,6 +42,7 @@
 			    });
 			    fillInNavigation();
 			    getSigninObjectFromUrl(getAPIUrl() + '/match.php', 'matchRiege');
+			    $("body").show();
 			});			
 		</script>
 	</body>

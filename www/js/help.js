@@ -12,7 +12,6 @@ function isOnline(){
 }
 
 function startLoading(){
-	loading++;
 	if(!isOnline() && !loadingError){
 		alert("Keine Internetverbindung vorhanden");
 		loadingError=true;
@@ -20,6 +19,7 @@ function startLoading(){
 	} else {
 		loadingError = false;
 	}
+	loading++;
 	$.mobile.loading('show', {theme:"e", text:"Please wait...", textonly:false, textVisible: true});
 }
 

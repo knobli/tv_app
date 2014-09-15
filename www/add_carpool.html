@@ -9,7 +9,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="display:none">
 		<div data-role="page" id="addCarpool" data-url="addCarpool">
 			<div data-role="header" data-theme="b">
 				<h1>Fahrgemeinschaft erstellen</h1>
@@ -50,6 +50,7 @@
 		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
 		<script type="text/javascript" src="js/jquery.form.min.js"></script>
 		<script type="text/javascript" src="js/help.js"></script>
+		<script type="text/javascript" src="js/carpool.js"></script>
 		<script>
 			$("input:radio[name='radio-type']").change(function(e){
 			    if($(this).val() == 1) {
@@ -57,26 +58,10 @@
 			    } else {
 			        $("#freeSeats").hide();
 			    }
-			
 			});
-			
-			function addCarpool(){
-				$("#signinObjectId").val(getUrlParameter('id'));
-				$("#memberId").val(getUserId());
-				$("#carpoolForm").ajaxSubmit({
-					url: getAPIUrl() + '/carpool.php',
-					success: function(data){
-						if(data.success){
-							alert("Fahrgemeinschaft eingetragen");
-						} else {
-							alert("Speichern fehlgeschlagen: " + data.error_message);
-						}
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-			        	alert(thrownError);
-      				}
-				});
-			}
+			$(document).on("pagecreate", "#addCarpool", function() {
+				$("body").show();
+			});			
 		</script>
 	</body>
 </html>

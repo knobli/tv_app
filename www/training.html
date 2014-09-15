@@ -10,7 +10,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="display:none">
 		<div data-role="page" id="training" data-url="training">
 			<div data-role="header" data-theme="b">
 				<h1 id="pageTitle">Trainingstitel</h1>
@@ -31,6 +31,7 @@
 			$(document).on('pageshow', '#training', function(){   
 			    var id = getUrlParameter("id");
 			    loadSigninObject(getAPIUrl() + '/training.php', id);
+			    $("body").show();
 			}); 
 			</script>
 		</div>

@@ -11,12 +11,12 @@
         <title>Turnverein Grafstal App</title>		
 	</head>
 
-	<body>
+	<body style="display:none">
 		<div data-role="page" id="main-page">
 		    <div data-role="header" data-theme="b">
 		        <h1>News</h1>
 		        <a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
-		        <a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
+		        <a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
 		    </div><!-- /header -->
 		    <div role="main" class="ui-content">
 				<ul data-role="listview" data-ajax="false" data-inset="false" id="list">
@@ -35,7 +35,8 @@
         <script type="text/javascript" src="js/signinObject.js"></script>
         <script type="text/javascript" src="js/news.js"></script>
         <script type="text/javascript" src="js/help.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>     
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/settings.js"></script>      
 		<script>
 			app.initialize();
 			$( document ).on( "pagecreate", "#main-page", function() {
@@ -51,6 +52,7 @@
 			    	getNextSigninObjectFromUrl(getAPIUrl() + '/signinObjects.php?next=1');
 			    }
 			    getNewsFromUrl(getAPIUrl() + '/content.php', 'news.html');
+			    $("body").show();
 			});		
 		</script>
 	</body>

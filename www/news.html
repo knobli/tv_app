@@ -10,7 +10,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="display:none">
 		<div data-role="page" id="news" data-url="news">
 			<div data-role="header" data-theme="b">
 				<h1 id="pageTitle">Newstitel</h1>
@@ -32,6 +32,7 @@
 			$(document).on('pageshow', '#news', function(){   
 			    var id = getUrlParameter("id");
 			    loadNews(getAPIUrl() + '/content.php', id);
+			    $("body").show();
 			}); 
 			</script>
 		</div>

@@ -10,8 +10,8 @@
 		</style>
 	</head>
 
-	<body>
-		<div data-role="page" id="event" data-url="event">
+	<body style="display:none">
+		<div data-role="page" id="match" data-url="match">
 			<div data-role="header" data-theme="b">
 				<h1 id="pageTitle">Matchtitle</h1>
 				
@@ -29,8 +29,11 @@
 		<script type="text/javascript" src="js/signinObject.js"></script>
 		<script type="text/javascript" src="js/help.js"></script>
 		<script>
-			var id = getUrlParameter('id');
-			loadSigninObject(getAPIUrl() + '/match.php', id);
+			$(document).on('pageshow', '#match', function(){  
+				var id = getUrlParameter('id');
+				loadSigninObject(getAPIUrl() + '/match.php', id);
+				$("body").show();
+			}); 
 		</script>
 	</body>
 </html>

@@ -10,7 +10,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="display:none">
 		<div data-role="page" id="event" data-url="event">
 			<div data-role="header" data-theme="b">
 				<h1 id="pageTitle">Anlasstitle</h1>
@@ -29,8 +29,11 @@
 		<script type="text/javascript" src="js/signinObject.js"></script>
 		<script type="text/javascript" src="js/help.js"></script>
 		<script>
-			var id = getUrlParameter('id');
-			loadSigninObject(getAPIUrl() + '/event.php', id);
-		</script>
+			$(document).on('pageshow', '#event', function(){  
+				var id = getUrlParameter('id');
+				loadSigninObject(getAPIUrl() + '/event.php', id);
+				$("body").show();
+			}); 
+		</script>		
 	</body>
 </html>

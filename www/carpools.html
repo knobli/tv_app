@@ -10,16 +10,15 @@
 		</style>
 	</head>
 
-	<body>
-		<div data-role="page" id="addCarpool" data-url="addCarpool">
+	<body style="display:none">
+		<div data-role="page" id="carpools" data-url="addCarpool">
 			<div data-role="header" data-theme="b">
 				<h1>Gemeinschaften</h1>
 				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
-		        <a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
+				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-				<ul data-role="listview" data-inset="false" id="list">		    				    			    
-				</ul>
+				<ul data-role="listview" data-inset="false" id="list"></ul>
 			</div><!-- /content -->
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
@@ -28,8 +27,11 @@
 		<script type="text/javascript" src="js/carpool.js"></script>
 		<script type="text/javascript" src="js/help.js"></script>
 		<script>
-			var id = getUrlParameter('id');
-			getCarpoolsFromUrl(getAPIUrl() + '/carpool.php?signinObjectId=' + id);
+			$(document).on("pagecreate", "#carpools", function() {
+				var id = getUrlParameter('id');
+				getCarpoolsFromUrl(getAPIUrl() + '/carpool.php?signinObjectId=' + id);
+				$("body").show();
+			});
 		</script>
 	</body>
 </html>

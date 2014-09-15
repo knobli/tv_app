@@ -10,17 +10,16 @@
 		</style>
 	</head>
 
-	<body>
-		<div data-role="page" id="addCarpool" data-url="addCarpool">
+	<body style="display:none">
+		<div data-role="page" id="carpool" data-url="addCarpool">
 			<div data-role="header" data-theme="b">
 				<h1>Fahrgemeinschaft</h1>
 				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
 				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-	    		<h2 style="text-align: center;" id="carpoolTitle"></h2>
-				<ul data-role="listview" data-inset="false" id="list">
-				</ul>
+				<h2 style="text-align: center;" id="carpoolTitle"></h2>
+				<ul data-role="listview" data-inset="false" id="list"></ul>
 			</div><!-- /content -->
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
@@ -29,8 +28,11 @@
 		<script type="text/javascript" src="js/carpool.js"></script>
 		<script type="text/javascript" src="js/help.js"></script>
 		<script>
-			var id = getUrlParameter('id');
-			loadCarpool(getAPIUrl() + '/carpool.php?id=' + id);		
+			$(document).on("pagecreate", "#carpool", function() {
+				var id = getUrlParameter('id');
+				loadCarpool(getAPIUrl() + '/carpool.php?id=' + id);
+				$("body").show();
+			});
 		</script>
 	</body>
 </html>
