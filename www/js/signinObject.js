@@ -1,188 +1,206 @@
-var linkUrls = {"Training": "training.html", "Anlass": "event.html", "Match": "match.html", "Hockeymatch": "match.html"};
+var linkUrls = {
+	"Training" : "training.html",
+	"Anlass" : "event.html",
+	"Match" : "match.html",
+	"Hockeymatch" : "match.html"
+};
 
-function getSigninObjectFromUrl(url, type){
+function getSigninObjectFromUrl(url, type) {
 	$.ajax({
-	  type: "GET",
-	  url: url,
-	  data: { 'riegeId': getSavedRiege(type),
-	  			'memberId': getUserId() }
-	})
-		.done(function(data) { addSinginObjectMenuEntry(data); });
-}	
-
-function addSinginObjectMenuEntry(data){
-  var oldDateStamp;
-  if(data.length != 0){
-	  $.each(data, function(key, val) {
-	  	var startDate = createDate(val.object.startDate.date);
-	  	var dateStamp = getDateStamp(startDate);
-	  	if(oldDateStamp != dateStamp){
-	  		$("#list").append('<li data-role="list-divider">' + getDateString(startDate) + '</li>');
-	  		oldDateStamp = dateStamp;
-	  	}
-	    $("#list").append(createSinginObjectMenuEntry(val, 'time'));
-	  });
-  } else {
-  	$("#list").append("<li>Keine Eintr&auml;ge vorhanden</li>");
-  }	  	
-  $( "#list" ).listview( "refresh" );	
+		type : "GET",
+		url : url,
+		data : {
+			'riegeId' : getSavedRiege(type),
+			'memberId' : getUserId()
+		}
+	}).done(function(data) {
+		addSinginObjectMenuEntry(data);
+	});
 }
 
-function getNextSigninObjectFromUrl(url){
-	$.ajax({
-	  type: "GET",
-	  url: url,
-	  data: { 'riegeId': -1,
-	  		 'memberId': getUserId() }
-	})
-		.done(function(data) { 
-		$("#list").prepend(createSinginObjectMenuEntry(data[0], 'date'));
-		$( "#list" ).listview( "refresh" ); 
-	});
-}	
+function addSinginObjectMenuEntry(data) {
+	var oldDateStamp;
+	if (data.length != 0) {
+		$.each(data, function(key, val) {
+			var startDate = createDate(val.object.startDate.date);
+			var dateStamp = getDateStamp(startDate);
+			if (oldDateStamp != dateStamp) {
+				$("#list").append('<li data-role="list-divider">' + getDateString(startDate) + '</li>');
+				oldDateStamp = dateStamp;
+			}
+			$("#list").append(createSinginObjectMenuEntry(val, 'time'));
+		});
+	} else {
+		$("#list").append("<li>Keine Eintr&auml;ge vorhanden</li>");
+	}
+	$("#list").listview("refresh");
+}
 
-function createSinginObjectMenuEntry(signinObjectAndStatus, dateType){
+function getNextSigninObjectFromUrl(url) {
+	$.ajax({
+		type : "GET",
+		url : url,
+		data : {
+			'riegeId' : -1,
+			'memberId' : getUserId()
+		}
+	}).done(function(data) {
+		$("#list").prepend(createSinginObjectMenuEntry(data[0], 'date'));
+		$("#list").listview("refresh");
+	});
+}
+
+function createSinginObjectMenuEntry(signinObjectAndStatus, dateType) {
 	var signinObject = signinObjectAndStatus.object;
 	var memberStatus = signinObjectAndStatus.status;
 	var startDate = createDate(signinObject.startDate.date);
 	var className = '';
-	if(isLoggedIn()){
-		if (memberStatus === MemberStatus.IN){
+	if (isLoggedIn()) {
+		if (memberStatus === MemberStatus.IN) {
 			className = 'signin';
-		} else if (memberStatus === MemberStatus.OUT){
+		} else if (memberStatus === MemberStatus.OUT) {
 			className = 'signout';
 		}
 	}
 	var listEntry = '<li><a href="' + linkUrls[signinObject.type] + '?id=' + signinObject.id + '" rel="external" class="' + className + '"><fieldset class="ui-grid-a"><div class="ui-block-a">';
 	listEntry += '<h2>' + signinObject.name + '</h2>';
-	listEntry += '<p><strong>' + signinObject.location.name +'</strong></p>';
+	listEntry += '<p><strong>' + signinObject.location.name + '</strong></p>';
 	listEntry += '</div><div class="ui-block-b ui-li-aside">';
-	if(dateType == 'date'){
+	if (dateType == 'date') {
 		listEntry += '<p><strong>' + getDateTimeStamp(startDate) + '</strong></p>';
 	} else {
 		listEntry += '<p><strong>' + getTimeStamp(startDate) + '</strong></p>';
 	}
 	listEntry += '<p>' + signinObject.responsible.firstname + ' ' + signinObject.responsible.surname + '</p>';
-	listEntry += '</div></fieldset></a></li>';		
+	listEntry += '</div></fieldset></a></li>';
 	return listEntry;
 }
 
-function loadSigninObject(url, id){
-	
+function loadSigninObject(url, id) {
+
 	$.ajax({
-	  type: "POST",
-	  url: url,
-	  data: { 'id': id }
-	})
-		.done(function( signinObject ) {
-			var startDate = createDate(signinObject.startDate.date);
-	  		var endDate = createDate(signinObject.endDate.date);
-			var listId = "list";
-			$("#pageTitle").text(signinObject.name);
-			addKeyValueListEntry(listId, 'Infos', signinObject.description);
-			addKeyValueListEntry(listId, 'Ort', signinObject.location.name);
-			addKeyValueListEntry(listId, 'Datum', getStartEndDate(startDate, endDate));
-			addKeyValueListEntry(listId, 'Verantwortlicher', signinObject.responsible.firstname + ' ' + signinObject.responsible.surname);
-			if(isLoggedIn()){
-				var memberStatus = getMemberStatusForSigninObject(signinObject);
-				if(memberStatus === null || memberStatus == MemberStatus.NONE){
-					addTwoButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signin("+ signinObject.id + ")", 'Abmelden', 'ui-icon-minus', "signout("+ signinObject.id + ")");
-				} else if (memberStatus == MemberStatus.IN){
-					addButtonListEntry(listId, 'Angemeldet', 'ui-icon-check', "signout("+ signinObject.id + ")");
-				} else if (memberStatus == MemberStatus.OUT){
-					addButtonListEntry(listId, 'Abgemeldet', 'ui-icon-delete', "signin("+ signinObject.id + ")");
-				}
-				var countOfCarpools = getCountOfCarpools(signinObject);
-				addKeyValueWithLinkListEntry(listId, 'Fahrgemeinschaften', '<span class="ui-li-count">' + countOfCarpools + '</span>', 'carpools.html?id=' + signinObject.id);
-			
-				addMemberList(listId, signinObject);
+		type : "POST",
+		url : url,
+		data : {
+			'id' : id
+		}
+	}).done(function(signinObject) {
+		var startDate = createDate(signinObject.startDate.date);
+		var endDate = createDate(signinObject.endDate.date);
+		var listId = "list";
+		$("#pageTitle").text(signinObject.name);
+		addKeyValueListEntry(listId, 'Infos', signinObject.description);
+		addKeyValueListEntry(listId, 'Ort', signinObject.location.name);
+		addKeyValueListEntry(listId, 'Datum', getStartEndDate(startDate, endDate));
+		addKeyValueListEntry(listId, 'Verantwortlicher', signinObject.responsible.firstname + ' ' + signinObject.responsible.surname);
+		if (isLoggedIn()) {
+			var memberStatus = getMemberStatusForSigninObject(signinObject);
+			if (memberStatus === null || memberStatus == MemberStatus.NONE) {
+				addTwoButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signin(" + signinObject.id + ")", 'Abmelden', 'ui-icon-minus', "signout(" + signinObject.id + ")");
+			} else if (memberStatus == MemberStatus.IN) {
+				addButtonListEntry(listId, 'Angemeldet', 'ui-icon-check', "signout(" + signinObject.id + ")");
+			} else if (memberStatus == MemberStatus.OUT) {
+				addButtonListEntry(listId, 'Abgemeldet', 'ui-icon-delete', "signin(" + signinObject.id + ")");
 			}
-			$( "#list" ).listview( "refresh" );
-		});
+			var countOfCarpools = getCountOfCarpools(signinObject);
+			addKeyValueWithLinkListEntry(listId, 'Fahrgemeinschaften', '<span class="ui-li-count">' + countOfCarpools + '</span>', 'carpools.html?id=' + signinObject.id);
+
+			addMemberList(listId, signinObject);
+		}
+		$("#list").listview("refresh");
+	});
 }
 
-function getMemberStatusForSigninObject(signinObject){
+function getMemberStatusForSigninObject(signinObject) {
 	var memberStatus = null;
 	$.ajax({
-	  type: "GET",
-	  url: getAPIUrl() + '/signinEntries.php',
-	  data: { 'signinObjectId': signinObject.id,
-	  			'memberId': getUserId() },
-	  async: false
-	})
-	.done(function( entry ) {
+		type : "GET",
+		url : getAPIUrl() + '/signinEntries.php',
+		data : {
+			'signinObjectId' : signinObject.id,
+			'memberId' : getUserId()
+		},
+		async : false
+	}).done(function(entry) {
 		memberStatus = entry.status;
-	});	
+	});
 	return memberStatus;
 }
 
-function addMemberList(listId, signinObject){
+function addMemberList(listId, signinObject) {
 	memberList = new Array();
 	$.ajax({
-	  type: "GET",
-	  url: getAPIUrl() + '/signinEntries.php',
-	  data: { 'signinObjectId': signinObject.id },
-	  async: false
-	})
-	.done(function( entries ) {
+		type : "GET",
+		url : getAPIUrl() + '/signinEntries.php',
+		data : {
+			'signinObjectId' : signinObject.id
+		},
+		async : false
+	}).done(function(entries) {
 		$.each(entries, function(key, entry) {
 			memberList.push(entry.member.firstname + ' ' + entry.member.surname);
 		});
-	});		
-	addListListEntry(listId, 'Anmeldungen  (Anmeldungen: ' + memberList.length + ')', memberList);	
+	});
+	addListListEntry(listId, 'Anmeldungen  (Anmeldungen: ' + memberList.length + ')', memberList);
 }
 
-function getCountOfCarpools(signinObject){
+function getCountOfCarpools(signinObject) {
 	var carpoolCount = 99;
 	$.ajax({
-	  type: "GET",
-	  url: getAPIUrl() + '/carpool.php',
-	  data: { 'signinObjectId': signinObject.id,
-	  			'getCount': true },
-	  async: false
-	})
-	.done(function( count ) {
+		type : "GET",
+		url : getAPIUrl() + '/carpool.php',
+		data : {
+			'signinObjectId' : signinObject.id,
+			'getCount' : true
+		},
+		async : false
+	}).done(function(count) {
 		carpoolCount = count;
-	});	
+	});
 	return carpoolCount;
 }
 
-function signin(id){
-	changeStatus(id,1, "Anmeldung");
+function signin(id) {
+	changeStatus(id, 1, "Anmeldung");
 }
 
-function signout(id){
-	changeStatus(id,0, "Abmeldung");
+function signout(id) {
+	changeStatus(id, 0, "Abmeldung");
 }
 
-function changeStatus(id, status, text){
+function changeStatus(id, status, text) {
 	$.ajax({
-	  type: "POST",
-	  url: getAPIUrl() + '/signinEntries.php',
-	  data: { 'signinObjectId': id,
-	  			'memberId': getUserId(),
-	  			'status': status,
-	  			'comment': 'Von Mobile App angepasst' },
-	  async: true
-	})
-	.done(function( data ) {
-		if(data.success){
-			alert(text +" erfolgreich");
+		type : "POST",
+		url : getAPIUrl() + '/signinEntries.php',
+		data : {
+			'signinObjectId' : id,
+			'memberId' : getUserId(),
+			'status' : status,
+			'comment' : 'Von Mobile App angepasst'
+		},
+		async : true
+	}).done(function(data) {
+		if (data.success) {
+			alert(text + " erfolgreich");
 			location.reload();
 		} else {
 			alert(text + " fehlgeschlagen: " + data.error_message);
 		}
-	});	
+	});
 }
 
-var stoargeKeys = {"eventRiege": "TV_APP_eventRiege", "trainingRiege": "TV_APP_trainingRiege", "matchRiege": "TV_APP_matchRiege"};
+var stoargeKeys = {
+	"eventRiege" : "TV_APP_eventRiege",
+	"trainingRiege" : "TV_APP_trainingRiege",
+	"matchRiege" : "TV_APP_matchRiege"
+};
 
-function getSavedRiege(type){
+function getSavedRiege(type) {
 	return window.localStorage.getItem(stoargeKeys[type]);
 }
 
-function saveRiegeSelection(type, selection){
-	if(selection != null){
+function saveRiegeSelection(type, selection) {
+	if (selection != null) {
 		window.localStorage.setItem(stoargeKeys[type], selection);
 	}
 }
