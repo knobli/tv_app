@@ -24,7 +24,7 @@ function startLoading() {
 		theme : "e",
 		text : "Please wait...",
 		textonly : false,
-		textVisible : true
+		textVisible : false
 	});
 }
 
