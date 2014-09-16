@@ -13,7 +13,7 @@ function isOnline() {
 
 function startLoading() {
 	if (!isOnline() && !loadingError) {
-		alert("Keine Internetverbindung vorhanden");
+		alert("Keine Internetverbindung: Daten können nicht geladen werden");
 		loadingError = true;
 		return false;
 	} else {
