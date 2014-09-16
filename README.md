@@ -45,4 +45,4 @@ Fahrgemeinschaft:
 </ul>
 
 <h3>Version 1.0</h3>
-Mitglieder erhalten mit dieser App die Möglichkeit sich jederzeit und überall für Trainings und Anlässe an- und abzumelden. Zusätzlich erhalten sie Informationen über die Büchsenliste und ihre aktuellen persönliche Bestleistungen. Ganz neu gibt es auch die Fahrgemeinschaftsverwaltung, Mitglieder können sich über die App arragieren und eine Fahrgemeinschaft für einen bestimmten Anlass machen.
+Mitglieder erhalten mit dieser App die Möglichkeit sich jederzeit und überall für Trainings und Anlässe an- und abzumelden. Zusätzlich erhalten sie Informationen über die Büchsenliste und ihre aktuellen persönlichen Bestleistungen. Ganz neu gibt es auch die Fahrgemeinschaftsverwaltung, Mitglieder können sich über die App arrangieren und eine Fahrgemeinschaft für einen bestimmten Anlass machen.
