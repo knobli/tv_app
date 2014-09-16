@@ -89,8 +89,10 @@ function loadCarpool(url) {
 		title += " " + carpool.name;
 		$('#carpoolTitle').html(title);
 		addKeyValueListEntry(listId, 'Termin', carpool.signinObject.name + ", " + getTimeStamp(startDate));
-		addKeyValueListEntry(listId, 'Fahrer', carpool.responsible.firstname + ' ' + carpool.responsible.surname);
+		var responsibleName = (carpool.type == CarpoolType.CAR) ? 'Fahrer' : 'Organisator';
+		addKeyValueListEntry(listId, responsibleName, carpool.responsible.firstname + ' ' + carpool.responsible.surname);
 		addKeyValueListEntry(listId, 'Ort', carpool.responsible.city);
+		addKeyValueListEntry(listId, 'Anzahl Pl&auml;tze', carpool.size);
 		if (isLoggedIn && getUserId() != carpool.responsible.id) {
 			if (getMemberStatusForCarpool(carpool) == MemberStatus.IN) {
 				addButtonListEntry(listId, 'Angemeldet', 'ui-icon-check', "signoutCarpool(" + carpool.id + ")");
