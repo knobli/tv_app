@@ -7,8 +7,12 @@ Turnverein App with Phonegap
 
 <h3>Version 1.5</h3>
 Allgemein:
--Ladeanzeige während dem Aufbau
--Benachrichtigung, falls Laden der Daten nicht möglich
+<ul>
+<li>Ladeanzeige während dem Aufbau</li>
+<li>Benachrichtigung, falls Laden der Daten nicht möglich</li>
+</ul>
 Fahrgemeinschaft:
--Zeigt Anzahl Plätze in der Übersicht an
--Text-Korrektur: Velo --> Organisator und Auto --> Fahrer
+<ul>
+<li>Zeigt Anzahl Plätze in der Übersicht an</li>
+<li>Text-Korrektur: Velo --> Organisator und Auto --> Fahrer</li>
+</ul>
