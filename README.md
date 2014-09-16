@@ -16,3 +16,33 @@ Fahrgemeinschaft:
 <li>Zeigt Anzahl Plätze in der Übersicht an</li>
 <li>Text-Korrektur: Velo --> Organisator und Auto --> Fahrer</li>
 </ul>
+
+<h3>Version 1.4</h3>
+<ul>
+<li>Fix Push-Notification</li>
+<li>Fix Splashscreen</li>
+</ul>
+
+<h3>Version 1.3</h3>
+<ul>
+<li>Anzeige ob an- bzw. abgemeldet</li>
+<li>Bug fix für Fahrgemeinschaften mit dem Typ Velo</li>
+<li>Technische Änderungen</li>
+</ul>
+
+<h3>Version 1.2</h3>
+<ul>
+<li>Push-Notification enabled</li>
+</ul>
+
+<h3>Version 1.1</h3>
+<ul>
+<li>Datum von Anlässe werden richtig angezeigt</li>
+<li>Auf der Startseite wird auch das Datum des Anlasses angezeigt</li>
+<li>An- und Abmelde-Funktion, falls kein Status</li>
+<li>Startseite sollte kleiner erscheinen</li>
+<li>Fahrgemeinschaften können gelöscht werden</li>
+</ul>
+
+<h3>Version 1.0</h3>
+Mitglieder erhalten mit dieser App die Möglichkeit sich jederzeit und überall für Trainings und Anlässe an- und abzumelden. Zusätzlich erhalten sie Informationen über die Büchsenliste und ihre aktuellen persönliche Bestleistungen. Ganz neu gibt es auch die Fahrgemeinschaftsverwaltung, Mitglieder können sich über die App arragieren und eine Fahrgemeinschaft für einen bestimmten Anlass machen.
