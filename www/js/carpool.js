@@ -4,9 +4,16 @@ CarpoolType = {
 }
 
 function getCarpoolsFromUrl(url, signinObjectId) {
-	$.getJSON(url, function(data) {
+	$.ajax({
+		type : "GET",
+		url : url,
+		data : {
+			'memberId' : getUserId(),
+			'signinObjectId': signinObjectId,
+		}
+	}).done(function(data) {
 		addCarpoolMenuEntry(data, signinObjectId);
-	});
+	});	
 }
 
 function addCarpoolMenuEntry(data, signinObjectId) {
@@ -22,7 +29,9 @@ function addCarpoolMenuEntry(data, signinObjectId) {
 	$("#list").listview("refresh");
 }
 
-function createCarpoolMenuEntry(carpool) {
+function createCarpoolMenuEntry(item) {
+	var carpool = item.carpool;
+	var memberStatus = item.status;
 	var listEntry = '<li><a href="carpool.html?id=' + carpool.id + '" class="image-link" rel="external"><fieldset class="ui-grid-a"><div class="ui-block-a">';
 	listEntry += '<div class="img-container"><div class="img-center-outer"><div class="img-center-inner">';
 	if (carpool.type == CarpoolType.CAR) {
@@ -36,7 +45,7 @@ function createCarpoolMenuEntry(carpool) {
 	listEntry += '</div><div class="ui-block-b ui-li-aside">';
 	listEntry += '<p>' + carpool.responsible.city + '</p><br>';
 	if (isLoggedIn && getUserId() != carpool.responsible.id) {
-		if (getMemberStatusForCarpool(carpool) == MemberStatus.IN) {
+		if (memberStatus == MemberStatus.IN) {
 			listEntry += 'Angemeldet';
 		} else {
 			if (carpool.type == CarpoolType.BICYCLE) {
@@ -60,82 +69,57 @@ function createCarpoolMenuEntry(carpool) {
 }
 
 function getFreeSeats(carpool) {
-	var size = carpool.size;
-	var signins = 0;
-	$.ajax({
-		type : "GET",
-		url : getAPIUrl() + '/carpoolEntry.php',
-		data : {
-			'carpoolId' : carpool.id,
-			'countOnly' : true
-		},
-		async : false
-	}).done(function(data) {
-		signins = data;
-	});
-	return size - signins;
+	return carpool.size - carpool.signinCount;
 }
 
-function loadCarpool(url) {
-	$.getJSON(url, function(carpool) {
-		var listId = "list";
-		var startDate = createDate(carpool.signinObject.startDate.date);
-		var title = "";
-		if (carpool.type == CarpoolType.CAR) {
-			title += '<img src="img/glyphicons_005_car.png">';
-		} else {
-			title += '<img src="img/glyphicons_306_bicycle.png">';
-		}
-		title += " " + carpool.name;
-		$('#carpoolTitle').html(title);
-		addKeyValueListEntry(listId, 'Termin', carpool.signinObject.name + ", " + getTimeStamp(startDate));
-		var responsibleName = (carpool.type == CarpoolType.CAR) ? 'Fahrer' : 'Organisator';
-		addKeyValueListEntry(listId, responsibleName, carpool.responsible.firstname + ' ' + carpool.responsible.surname);
-		addKeyValueListEntry(listId, 'Ort', carpool.responsible.city);
-		addKeyValueListEntry(listId, 'Anzahl Pl&auml;tze', carpool.size);
-		if (isLoggedIn && getUserId() != carpool.responsible.id) {
-			if (getMemberStatusForCarpool(carpool) == MemberStatus.IN) {
-				addButtonListEntry(listId, 'Angemeldet', 'ui-icon-check', "signoutCarpool(" + carpool.id + ")");
-			} else {
-				addButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signinCarpool(" + carpool.id + ")");
-			}
-		} else if (isLoggedIn && getUserId() == carpool.responsible.id) {
-			addButtonListEntry(listId, 'L&ouml;schen', 'ui-icon-delete', "removeCarpool(" + carpool.id + "," + carpool.signinObject.id + ")");
-		}
-		addMemberListForCarpool(listId, carpool);
-		$("#list").listview("refresh");
-	});
-}
-
-function getMemberStatusForCarpool(carpool) {
-	var memberStatus = null;
+function loadCarpool(url, id) {
 	$.ajax({
 		type : "GET",
-		url : getAPIUrl() + '/carpoolEntry.php',
+		url : url,
 		data : {
-			'carpoolId' : carpool.id,
+			'id': id,
 			'memberId' : getUserId()
-		},
-		async : false
-	}).done(function(entry) {
-		memberStatus = (entry == null) ? MemberStatus.OUT : MemberStatus.IN;
-	});
-	return memberStatus;
+		}
+	}).done(function(data) {
+		addCarpoolEntry(data);
+	});	
+}
+
+function addCarpoolEntry(data) {
+	var carpool = data.carpool;
+	var memberStatus = data.status;
+	var listId = "list";
+	var startDate = createDate(carpool.signinObject.startDate.date);
+	var title = "";
+	if (carpool.type == CarpoolType.CAR) {
+		title += '<img src="img/glyphicons_005_car.png">';
+	} else {
+		title += '<img src="img/glyphicons_306_bicycle.png">';
+	}
+	title += " " + carpool.name;
+	$('#carpoolTitle').html(title);
+	addKeyValueListEntry(listId, 'Termin', carpool.signinObject.name + ", " + getTimeStamp(startDate));
+	var responsibleName = (carpool.type == CarpoolType.CAR) ? 'Fahrer' : 'Organisator';
+	addKeyValueListEntry(listId, responsibleName, carpool.responsible.firstname + ' ' + carpool.responsible.surname);
+	addKeyValueListEntry(listId, 'Ort', carpool.responsible.city);
+	addKeyValueListEntry(listId, 'Anzahl Pl&auml;tze', carpool.size);
+	if (isLoggedIn && getUserId() != carpool.responsible.id) {
+		if (memberStatus == MemberStatus.IN) {
+			addButtonListEntry(listId, 'Angemeldet', 'ui-icon-check', "signoutCarpool(" + carpool.id + ")");
+		} else {
+			addButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signinCarpool(" + carpool.id + ")");
+		}
+	} else if (isLoggedIn && getUserId() == carpool.responsible.id) {
+		addButtonListEntry(listId, 'L&ouml;schen', 'ui-icon-delete', "removeCarpool(" + carpool.id + "," + carpool.signinObject.id + ")");
+	}
+	addMemberListForCarpool(listId, carpool);
+	$("#list").listview("refresh");
 }
 
 function addMemberListForCarpool(listId, carpool) {
 	memberList = new Array();
-	$.ajax({
-		type : "GET",
-		url : getAPIUrl() + '/carpoolEntry.php',
-		data : {
-			'carpoolId' : carpool.id,
-		},
-		async : false
-	}).done(function(entries) {
-		$.each(entries, function(key, entry) {
-			memberList.push(entry.member.firstname + ' ' + entry.member.surname);
-		});
+	$.each(carpool.members, function(key, member) {
+		memberList.push(member.firstname + ' ' + member.surname);
 	});
 	var title = "Anmeldungen:";
 	if (carpool.type == CarpoolType.CAR) {

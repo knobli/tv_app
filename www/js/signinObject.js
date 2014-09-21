@@ -77,14 +77,18 @@ function createSinginObjectMenuEntry(signinObjectAndStatus, dateType) {
 }
 
 function loadSigninObject(url, id) {
-
 	$.ajax({
-		type : "POST",
+		type : "GET",
 		url : url,
 		data : {
-			'id' : id
+			'id' : id,
+			'memberId' : getUserId()
 		}
-	}).done(function(signinObject) {
+	}).done(function(data) {
+		var signinObject = data.object;
+		var memberStatus = data.status;
+		var entries = data.entries;
+		var countOfCarpools = data.carpoolCount;
 		var startDate = createDate(signinObject.startDate.date);
 		var endDate = createDate(signinObject.endDate.date);
 		var listId = "list";
@@ -94,7 +98,6 @@ function loadSigninObject(url, id) {
 		addKeyValueListEntry(listId, 'Datum', getStartEndDate(startDate, endDate));
 		addKeyValueListEntry(listId, 'Verantwortlicher', signinObject.responsible.firstname + ' ' + signinObject.responsible.surname);
 		if (isLoggedIn()) {
-			var memberStatus = getMemberStatusForSigninObject(signinObject);
 			if (memberStatus === null || memberStatus == MemberStatus.NONE) {
 				addTwoButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signin(" + signinObject.id + ")", 'Abmelden', 'ui-icon-minus', "signout(" + signinObject.id + ")");
 			} else if (memberStatus == MemberStatus.IN) {
@@ -102,62 +105,20 @@ function loadSigninObject(url, id) {
 			} else if (memberStatus == MemberStatus.OUT) {
 				addButtonListEntry(listId, 'Abgemeldet', 'ui-icon-delete', "signin(" + signinObject.id + ")");
 			}
-			var countOfCarpools = getCountOfCarpools(signinObject);
 			addKeyValueWithLinkListEntry(listId, 'Fahrgemeinschaften', '<span class="ui-li-count">' + countOfCarpools + '</span>', 'carpools.html?id=' + signinObject.id);
 
-			addMemberList(listId, signinObject);
+			addMemberList(listId, entries);
 		}
 		$("#list").listview("refresh");
 	});
 }
 
-function getMemberStatusForSigninObject(signinObject) {
-	var memberStatus = null;
-	$.ajax({
-		type : "GET",
-		url : getAPIUrl() + '/signinEntries.php',
-		data : {
-			'signinObjectId' : signinObject.id,
-			'memberId' : getUserId()
-		},
-		async : false
-	}).done(function(entry) {
-		memberStatus = entry.status;
-	});
-	return memberStatus;
-}
-
-function addMemberList(listId, signinObject) {
+function addMemberList(listId, entries) {
 	memberList = new Array();
-	$.ajax({
-		type : "GET",
-		url : getAPIUrl() + '/signinEntries.php',
-		data : {
-			'signinObjectId' : signinObject.id
-		},
-		async : false
-	}).done(function(entries) {
-		$.each(entries, function(key, entry) {
-			memberList.push(entry.member.firstname + ' ' + entry.member.surname);
-		});
+	$.each(entries, function(key, entry) {
+		memberList.push(entry.member.firstname + ' ' + entry.member.surname);
 	});
 	addListListEntry(listId, 'Anmeldungen  (Anmeldungen: ' + memberList.length + ')', memberList);
-}
-
-function getCountOfCarpools(signinObject) {
-	var carpoolCount = 99;
-	$.ajax({
-		type : "GET",
-		url : getAPIUrl() + '/carpool.php',
-		data : {
-			'signinObjectId' : signinObject.id,
-			'getCount' : true
-		},
-		async : false
-	}).done(function(count) {
-		carpoolCount = count;
-	});
-	return carpoolCount;
 }
 
 function signin(id) {
