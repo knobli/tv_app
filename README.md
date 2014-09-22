@@ -5,6 +5,18 @@ Turnverein App with Phonegap
 
 <h1>Release Notes</h1>
 
+<h3>Version 1.6</h3>
+Allgemein:
+<ul>
+<li>Ladeanzeige während dem Aufbau</li>
+<li>Benachrichtigung, falls Laden der Daten nicht möglich</li>
+<li>Ladegeschwindigkeit verbessert</li>
+</ul>
+Fahrgemeinschaft:
+<ul>
+<li>Fahrgemeinschaften können nun sauber gelöscht werden</li>
+</ul>
+
 <h3>Version 1.5</h3>
 Allgemein:
 <ul>
