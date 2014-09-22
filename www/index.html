@@ -11,7 +11,7 @@
 		<title>Turnverein Grafstal App</title>
 	</head>
 
-	<body>
+	<body style="display: none;">
 		<div data-role="panel" id="left-panel" data-theme="b">
 			<ul data-role="listview" data-inset="false" data-theme="a" id="navigation"></ul>
 		</div><!-- /panel -->
@@ -45,6 +45,7 @@
 						getNextSigninObjectFromUrl('newsList', getAPIUrl() + '/signinObjects.php?next=1');
 					}
 					getNewsFromUrl('newsList', getAPIUrl() + '/content.php', 'news.html');
+					$('body').show();
 				});			
 			</script>
 		</div>
