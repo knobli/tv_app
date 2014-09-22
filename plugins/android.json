@@ -19,6 +19,10 @@
                         {
                             "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -68,6 +72,12 @@
                             "xml": "<service android:name=\"com.plugin.gcm.GCMIntentService\" />",
                             "count": 1
                         }
+                    ],
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        }
                     ]
                 }
             }
@@ -81,6 +91,9 @@
             "PACKAGE_NAME": "ch.grafstal"
         },
         "org.apache.cordova.splashscreen": {
+            "PACKAGE_NAME": "ch.grafstal"
+        },
+        "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "ch.grafstal"
         }
     },
