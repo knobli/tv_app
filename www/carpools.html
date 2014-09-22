@@ -1,37 +1,25 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Slidebars Basic Template</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<!-- Slidebars CSS -->
-		<link rel="stylesheet" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
-		<link rel="stylesheet" href="css/jquery.moblie.extensions.css">
-		<style>
-		</style>
+		<title>Carpools</title>
 	</head>
 
-	<body style="display:none">
-		<div data-role="page" id="carpools" data-url="carpools">
+	<body>
+		<div data-role="page" id="carpools">
 			<div data-role="header" data-theme="b">
 				<h1>Gemeinschaften</h1>
 				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
-				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
+				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-				<ul data-role="listview" data-inset="false" id="list"></ul>
+				<ul data-role="listview" data-inset="false" id="carpoolList"></ul>
 			</div><!-- /content -->
+			<script>
+				$(document).one("pagecreate", "#carpools", function() {
+					var id = getUrlParameter($(this).data("url"),"id");
+					getCarpoolsFromUrl('carpoolList', getAPIUrl() + '/carpool.php', id);
+				});
+			</script>
 		</div>
-		<script type="text/javascript" src="cordova.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
-		<script type="text/javascript" src="js/carpool.js"></script>
-		<script type="text/javascript" src="js/help.js"></script>
-		<script>
-			$(document).on("pagecreate", "#carpools", function() {
-				var id = getUrlParameter('id');
-				getCarpoolsFromUrl(getAPIUrl() + '/carpool.php?signinObjectId=' + id, id);
-				$("body").show();
-			});
-		</script>
 	</body>
 </html>

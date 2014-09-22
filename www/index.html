@@ -1,58 +1,78 @@
 <!doctype html>
 <html>
 	<head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-        <link rel="stylesheet" type="text/css" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
-        <link rel="stylesheet" type="text/css" href="css/jquery.moblie.extensions.css">
-        <title>Turnverein Grafstal App</title>		
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+		<meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+		<link rel="stylesheet" type="text/css" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery.moblie.extensions.css">
+		<title>Turnverein Grafstal App</title>
 	</head>
 
-	<body style="display:none">
-		<div data-role="page" id="main-page">
-		    <div data-role="header" data-theme="b">
-		        <h1>News</h1>
-		        <a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
-		        <a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
-		    </div><!-- /header -->
-		    <div role="main" class="ui-content">
-				<ul data-role="listview" data-ajax="false" data-inset="false" id="list">
+	<body>
+		<div data-role="panel" id="left-panel" data-theme="b">
+			<ul data-role="listview" data-inset="false" data-theme="a" id="navigation"></ul>
+		</div><!-- /panel -->
+
+		<div data-role="page" id="mainpage" data-ajax="false">
+			<div data-role="header" data-theme="b">
+				<h1>News</h1>
+				<a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
+				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
+			</div><!-- /header -->
+			<div role="main" class="ui-content">
+				<ul data-role="listview" data-ajax="false" data-inset="false" id="newsList">
 
 				</ul>
-		    </div><!-- /content -->
-			<div data-role="panel" id="left-panel" data-theme="b">
-				<ul data-role="listview" data-ajax="true" data-inset="false" data-theme="a" id="navigation">
-				</ul>		        
-		    </div><!-- /panel -->	
+			</div><!-- /content -->
+			<script type="text/javascript" src="cordova.js"></script>
+			<script type="text/javascript" src="PushNotification.js"></script>
+			<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+			<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
+			<script type="text/javascript" src="js/jquery.form.min.js"></script>
+			<script type="text/javascript" src="js/signinObject.js"></script>
+			<script type="text/javascript" src="js/carpool.js"></script>
+			<script type="text/javascript" src="js/news.js"></script>
+			<script type="text/javascript" src="js/help.js"></script>
+			<script type="text/javascript" src="js/index.js"></script>
+			<script type="text/javascript" src="js/settings.js"></script>
+			<script type="text/javascript" src="js/result.js"></script>
+			<script>
+				$(document).one("pagecreate", "#mainpage", function() {
+					if (isLoggedIn()) {
+						getNextSigninObjectFromUrl('newsList', getAPIUrl() + '/signinObjects.php?next=1');
+					}
+					getNewsFromUrl('newsList', getAPIUrl() + '/content.php', 'news.html');
+				});			
+			</script>
 		</div>
-		<script type="text/javascript" src="cordova.js"></script>
-		<script type="text/javascript" src="PushNotification.js"></script>
-        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
-        <script type="text/javascript" src="js/signinObject.js"></script>
-        <script type="text/javascript" src="js/news.js"></script>
-        <script type="text/javascript" src="js/help.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript" src="js/settings.js"></script>      
 		<script>
 			app.initialize();
-			$( document ).on( "pagecreate", "#main-page", function() {
-			    $( document ).on( "swipeleft swiperight", "#main-page", function( e ) {
-			        if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
-			            if ( e.type === "swiperight" ) {
-			                $( "#left-panel" ).panel( "open" );
-			            }
-			        }
-			    });
-			    fillInNavigation();
-			    if(isLoggedIn()){
-			    	getNextSigninObjectFromUrl(getAPIUrl() + '/signinObjects.php?next=1');
-			    }
-			    getNewsFromUrl(getAPIUrl() + '/content.php', 'news.html');
-			    $("body").show();
+			$(document).on("mobileinit", function(){
+			    $.mobile.changePage.defaults.allowSamePageTransition = true;
+			});
+			
+			$(document).one('pagebeforecreate', function() {
+				$("#left-panel").panel();
+				fillInNavigation();
+			});
+			
+			if (window.addEventListener) {
+				window.addEventListener("online", onOnline, false);
+				window.addEventListener("offline", onOffline, false);
+			} else {
+				document.body.ononline = onOnline;
+				document.body.onoffline = onOffline;
+			}			
+
+			$(document).one("swipeleft swiperight", function(e) {
+				if ($(".ui-page-active").jqmData("panel") !== "open") {
+					if (e.type === "swiperight") {
+						$("#left-panel").panel("open");
+					}
+				}
 			});		
 		</script>
 	</body>

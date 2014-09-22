@@ -2,13 +2,9 @@
 <html>
 	<head>
 		<title>Settings</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<!-- Slidebars CSS -->
-		<link rel="stylesheet" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
-		<link rel="stylesheet" href="css/jquery.moblie.extensions.css">
 	</head>
-	<body style="display:none">
-		<div data-role="page" id="settings" data-url="settings">
+	<body>
+		<div data-role="page" id="settings">
 			<div data-role="header" data-theme="b">
 				<h1>Einstellungen</h1>
 				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
@@ -51,20 +47,12 @@
 					<input type="button" onclick="saveRiege()" value="Speichern" />
 				</form>
 			</div><!-- /content -->
+			<script>
+				$(document).one("pagecreate", "#settings", function() {
+					checkLoginLogout();
+					loadRiegenDropdown(["eventRiege", "trainingRiege", "matchRiege"]);
+				});
+			</script>
 		</div>
-		<script type="text/javascript" src="cordova.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
-		<script type="text/javascript" src="js/jquery.form.min.js"></script>
-		<script type="text/javascript" src="js/signinObject.js"></script>	
-		<script type="text/javascript" src="js/help.js"></script>
-		<script type="text/javascript" src="js/settings.js"></script>			
-		<script>
-			$(document).on("pagecreate", "#settings", function() {
-				checkLoginLogout();
-				loadRiegenDropdown(["eventRiege", "trainingRiege", "matchRiege"]);
-				$("body").show();
-			});
-		</script>
 	</body>
 </html>

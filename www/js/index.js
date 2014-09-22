@@ -32,7 +32,7 @@ var app = {
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
+    onDeviceReady: function() {		    	
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
@@ -62,7 +62,7 @@ var app = {
     
 	// result contains any message sent from the plugin call
 	successHandler: function(result) {
-		console.log('Callback Success! Result = '+result);
+		console.log('Callback success of push notification registration!');
 	},
 	
 	errorHandler:function(error) {

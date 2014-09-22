@@ -6,26 +6,47 @@ MemberStatus = {
 
 var loading = 0;
 var loadingError = false;
+var onlineStatus = navigator.onLine || false;
+
+function onOnline() {
+	onlineStatus = true;
+	$("div .ui-header").each(function(index, element) {
+		$(element).removeClass("offline");
+	});
+}
+
+function onOffline() {
+	onlineStatus = false;
+	$("div .ui-header").each(function(index, element) {
+		$(element).removeClass("offline");
+		$(element).addClass("offline");
+	});
+}
 
 function isOnline() {
-	return navigator.onLine;
+	return onlineStatus;
 }
 
 function startLoading() {
 	if (!isOnline() && !loadingError) {
 		alert("Keine Internetverbindung: Daten können nicht geladen werden");
 		loadingError = true;
-		return false;
+	}
+	if (!isOnline()) {
+		loading=0;
+		$.mobile.loading('hide');
 	} else {
 		loadingError = false;
 	}
 	loading++;
-	$.mobile.loading('show', {
-		theme : "e",
-		text : "Please wait...",
-		textonly : false,
-		textVisible : false
-	});
+	if ($.mobile !== 'undefined' || $.mobile.loading !== 'undefined') {
+		$.mobile.loading('show', {
+			theme : "e",
+			text : "Please wait...",
+			textonly : false,
+			textVisible : false
+		});
+	}
 }
 
 function finishLoading() {
@@ -40,8 +61,13 @@ $.ajaxSetup({
 	complete : finishLoading
 });
 
+$.ajaxSetup({
+	beforeSend : startLoading,
+	cache : false
+});
+
 function getAPIUrl() {
-	return 'http://grafstal.ch/controller/json/v0.1';
+	return 'http://grafstal.ch/controller/json/v0.2';
 }
 
 function addKeyValueListEntry(listId, key, value) {
@@ -53,7 +79,7 @@ function addKeyValueListEntry(listId, key, value) {
 
 function addKeyValueWithLinkListEntry(listId, key, value, link) {
 	if (value != "") {
-		var listEntry = '<li><a href="' + link + '" rel="external">' + makeKeyValueListEntry(key, value) + '</a></li>';
+		var listEntry = '<li><a href="' + link + '">' + makeKeyValueListEntry(key, value) + '</a></li>';
 		$("#" + listId).append(listEntry);
 	}
 }
@@ -68,7 +94,7 @@ function makeKeyValueListEntry(key, value) {
 }
 
 function addLinkListEntry(listId, text, icon, pageName) {
-	$("#" + listId).append('<li><a href="' + pageName + '" class="ui-btn ui-mini ' + icon + ' ui-btn-icon-left ui-btn-b" rel="external">' + text + '</a></li>');
+	$("#" + listId).append('<li><a href="' + pageName + '" class="ui-btn ui-mini ' + icon + ' ui-btn-icon-left ui-btn-b">' + text + '</a></li>');
 }
 
 function addButtonListEntry(listId, text, icon, functionName) {
@@ -156,8 +182,8 @@ function getStartEndDate(startDate, endDate) {
 	return output;
 }
 
-function getUrlParameter(sParam) {
-	var sPageURL = window.location.search.substring(1);
+function getUrlParameter(url, sParam) {
+	var sPageURL = url.split("?")[1];
 	var sURLVariables = sPageURL.split('&');
 	for (var i = 0; i < sURLVariables.length; i++) {
 		var sParameterName = sURLVariables[i].split('=');
@@ -206,11 +232,13 @@ var navigationItems = [{
 	items : [{
 		name : "News",
 		link : "index.html",
-		loginRequired : false
+		loginRequired : false,
+		ajax: false
 	}, {
 		name : "Vereine",
 		link : "clubs.html",
-		loginRequired : false
+		loginRequired : false,
+		ajax: true
 	}]
 }, {
 	name : "Veranstaltungen",
@@ -218,15 +246,18 @@ var navigationItems = [{
 	items : [{
 		name : "Training",
 		link : "trainings.html",
-		loginRequired : false
+		loginRequired : false,
+		ajax: true
 	}, {
 		name : "Anl&auml;sse",
 		link : "events.html",
-		loginRequired : false
+		loginRequired : false,
+		ajax: true
 	}, {
 		name : "Matches",
 		link : "matches.html",
-		loginRequired : false
+		loginRequired : false,
+		ajax: true
 	}]
 }, {
 	name : "Sonstiges",
@@ -234,7 +265,8 @@ var navigationItems = [{
 	items : [{
 		name : "Resultate",
 		link : "results.html",
-		loginRequired : true
+		loginRequired : true,
+		ajax: true
 	}]
 }];
 
@@ -248,7 +280,9 @@ function fillInNavigation() {
 			var counter = 0;
 			$.each(groupElement.items, function(index, itemElement) {
 				if ((itemElement.loginRequired && isLoggedIn()) || !itemElement.loginRequired) {
-					groupItem += '<li><a href="./' + itemElement.link + '" rel="external">' + itemElement.name + '</a></li>';
+					groupItem += '<li><a href="' + itemElement.link + '"';
+					groupItem += (!itemElement.ajax) ? ' data-ajax="false"' : '';
+					groupItem += '>' + itemElement.name + '</a></li>';
 					counter++;
 				}
 			});
@@ -258,7 +292,17 @@ function fillInNavigation() {
 			groupItem = "";
 		}
 	});
-	$("#navigation").listview('refresh');
+	initOrRefresh('navigation');
+}
+
+function refreshPage() {
+	$.mobile.changePage($.mobile.activePage.data('url'), {
+		allowSamePageTransition : true,
+		changeHash : false,
+		transition : 'none',
+		showLoadMsg : false,
+		reloadPage : true
+	});
 }
 
 function initOrRefresh(listId) {

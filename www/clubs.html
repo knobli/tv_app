@@ -1,62 +1,34 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Slidebars Basic Template</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<!-- Slidebars CSS -->
-		<link rel="stylesheet" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
-		<link rel="stylesheet" href="css/jquery.moblie.extensions.css">
-		<style>
-		</style>
+		<title>Clubs</title>
 	</head>
 
-	<body style="display:none">
-		<div data-role="page" id="clubs" data-url="clubs">
+	<body>
+		<div data-role="page" id="clubs">
 			<div data-role="header" data-theme="b">
 				<h1>Vereine</h1>
 				<a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
-		        <a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
+				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
 				<ul data-role="listview" data-inset="false">
 					<li data-role="list-divider">TVG</li>
-				    <li><a href="riege/maennerriege.html" rel="external">M&auml;nnerriege</a></li>
-				    <li><a href="riege/teamgrafstal.html" rel="external">Team Grafstal</a></li>
-				    <li><a href="riege/turnverein.html" rel="external">Turnverein</a></li>
+				    <li><a href="riege/maennerriege.html">M&auml;nnerriege</a></li>
+				    <li><a href="riege/teamgrafstal.html">Team Grafstal</a></li>
+				    <li><a href="riege/turnverein.html">Turnverein</a></li>
 				    <li data-role="list-divider">DTVG</li>
-				    <li><a href="riege/damenriege.html" rel="external">Damenriege</a></li>
-				    <li><a href="riege/frauenriege.html" rel="external">Frauenriege</a></li>
-				    <li><a href="riege/korbball.html" rel="external">Korbball</a></li>
-				    <li><a href="riege/volleyball.html" rel="external">Volleyball</a></li>				    
+				    <li><a href="riege/damenriege.html">Damenriege</a></li>
+				    <li><a href="riege/frauenriege.html">Frauenriege</a></li>
+				    <li><a href="riege/korbball.html">Korbball</a></li>
+				    <li><a href="riege/volleyball.html">Volleyball</a></li>				    
 				    <li data-role="list-divider">JTKL</li>
-				    <li><a href="riege/ballsport.html" rel="external">Ballsport</a></li>
-				    <li><a href="riege/juspo.html" rel="external">Juspo</a></li>
-				    <li><a href="riege/kitu.html" rel="external">KITU</a></li>
-				    <li><a href="riege/muki.html" rel="external">MUKI-Turnen</a></li>	   			    
+				    <li><a href="riege/ballsport.html">Ballsport</a></li>
+				    <li><a href="riege/juspo.html">Juspo</a></li>
+				    <li><a href="riege/kitu.html">KITU</a></li>
+				    <li><a href="riege/muki.html">MUKI-Turnen</a></li>	
 				</ul>
 			</div><!-- /content -->
-			<div data-role="panel" id="left-panel" data-theme="b">
-				<ul data-role="listview" data-ajax="true" data-inset="false" data-theme="a" id="navigation">
-				</ul>		        
-		    </div><!-- /panel -->			
 		</div>
-		<script type="text/javascript" src="cordova.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
-		<script type="text/javascript" src="js/carpool.js"></script>
-		<script type="text/javascript" src="js/help.js"></script>
-		<script>
-			$( document ).on( "pagecreate", "#clubs", function() {
-			    $( document ).on( "swipeleft swiperight", "#clubs", function( e ) {
-			        if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
-			            if ( e.type === "swiperight" ) {
-			                $( "#left-panel" ).panel( "open" );
-			            }
-			        }
-			    });
-			    fillInNavigation();
-			    $("body").show();
-			});				
-		</script>
 	</body>
 </html>

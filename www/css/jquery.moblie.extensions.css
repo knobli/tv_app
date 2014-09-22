@@ -33,6 +33,11 @@ iframe {
 	text-shadow: 0 1px 0 rgba(215, 44, 44, 0.4) !important;
 }
 
+.offline {
+	background: rgba(215, 44, 44, 0.6) !important;
+	text-shadow: 0 1px 0 rgba(215, 44, 44, 0.2) !important;
+}
+
 .text-indent {
 	padding-left: 10px;
 }

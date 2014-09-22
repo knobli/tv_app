@@ -1,10 +1,10 @@
-function getNewsFromUrl(url, linkUrl) {
+function getNewsFromUrl(listId, url, linkUrl) {
 	$.getJSON(url, function(data) {
-		addNewsMenuEntry(data, linkUrl);
+		addNewsMenuEntry(listId, data, linkUrl);
 	});
 }
 
-function addNewsMenuEntry(data, linkUrl) {
+function addNewsMenuEntry(listId, data, linkUrl) {
 	$.each(data, function(key, val) {
 		var createDate;
 		if (val.createDate != null) {
@@ -12,11 +12,11 @@ function addNewsMenuEntry(data, linkUrl) {
 		} else {
 			createDate = new Date();
 		}
-		$("#list").append('<li><a href="' + linkUrl + '?id=' + val.id + '" rel="external"><h2>' + $('<textarea />').html(val.title).text() + '</h2><p>' + getDateStamp(createDate) + '</p><p class="text-with-nl" id="introText' + val.id + '"></p></a></li>');
+		$("#" + listId).append('<li><a href="' + linkUrl + '?id=' + val.id + '"><h2>' + $('<textarea />').html(val.title).text() + '</h2><p>' + getDateStamp(createDate) + '</p><p class="text-with-nl" id="introText' + val.id + '"></p></a></li>');
 		$("#introText" + val.id).html($('<textarea />').html(val.introText).text());
 	});
 
-	$("#list").listview("refresh");
+	$("#" + listId).listview("refresh");
 }
 
 function loadNews(url, id) {

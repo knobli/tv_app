@@ -1,49 +1,24 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Slidebars Basic Template</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<!-- Slidebars CSS -->
-		<link rel="stylesheet" href="css/jquery_mobile/jquery.mobile-1.4.3.min.css">
-		<link rel="stylesheet" href="css/jquery.moblie.extensions.css">
-		<style>
-		</style>
+		<title>Matche</title>
 	</head>
 
-	<body style="display:none">
-		<div data-role="page" id="matches" data-url="matches">
+	<body>
+		<div data-role="page" id="matches">
 			<div data-role="header" data-theme="b">
 				<h1>Matches</h1>
 				<a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
-		        <a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon" rel="external">Settings</a>
+				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-				<ul data-role="listview" data-inset="false" id="list">
-				</ul>
+				<ul data-role="listview" data-inset="false" id="matchList"></ul>
 			</div><!-- /content -->
-			<div data-role="panel" id="left-panel" data-theme="b">
-				<ul data-role="listview" data-ajax="true" data-inset="false" data-theme="a" id="navigation">
-				</ul>		        
-		    </div><!-- /panel -->			
+			<script>
+				$(document).one("pagecreate", "#matches", function() {
+					getSigninObjectFromUrl('matchList', getAPIUrl() + '/match.php', 'matchRiege');
+				});
+			</script>
 		</div>
-		<script type="text/javascript" src="cordova.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
-		<script type="text/javascript" src="js/signinObject.js"></script>
-		<script type="text/javascript" src="js/help.js"></script>
-		<script>
-			$( document ).on( "pagecreate", "#matches", function() {
-			    $( document ).on( "swipeleft swiperight", "#matches", function( e ) {
-			        if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
-			            if ( e.type === "swiperight" ) {
-			                $( "#left-panel" ).panel( "open" );
-			            }
-			        }
-			    });
-			    fillInNavigation();
-			    getSigninObjectFromUrl(getAPIUrl() + '/match.php', 'matchRiege');
-			    $("body").show();
-			});			
-		</script>
 	</body>
 </html>
