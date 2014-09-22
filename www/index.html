@@ -16,14 +16,14 @@
 			<ul data-role="listview" data-inset="false" data-theme="a" id="navigation"></ul>
 		</div><!-- /panel -->
 
-		<div data-role="page" id="mainpage" data-ajax="false">
+		<div data-role="page" id="mainpage">
 			<div data-role="header" data-theme="b">
 				<h1>News</h1>
 				<a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
 				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
-				<ul data-role="listview" data-ajax="false" data-inset="false" id="newsList">
+				<ul data-role="listview" data-inset="false" id="newsList">
 
 				</ul>
 			</div><!-- /content -->
@@ -46,35 +46,37 @@
 					}
 					getNewsFromUrl('newsList', getAPIUrl() + '/content.php', 'news.html');
 					$('body').show();
-				});			
+				});
 			</script>
 		</div>
 		<script>
 			app.initialize();
-			$(document).on("mobileinit", function(){
-			    $.mobile.changePage.defaults.allowSamePageTransition = true;
-			});
-			
-			$(document).one('pagebeforecreate', function() {
-				$("#left-panel").panel();
-				fillInNavigation();
-			});
-			
 			if (window.addEventListener) {
 				window.addEventListener("online", onOnline, false);
 				window.addEventListener("offline", onOffline, false);
 			} else {
 				document.body.ononline = onOnline;
 				document.body.onoffline = onOffline;
-			}			
+			}
 
-			$(document).one("swipeleft swiperight", function(e) {
-				if ($(".ui-page-active").jqmData("panel") !== "open") {
-					if (e.type === "swiperight") {
-						$("#left-panel").panel("open");
+			$(document).one('pagebeforecreate', function() {
+				$("#left-panel").panel();
+				fillInNavigation();
+			});
+
+			$(function() {
+				//$.mobile.defaultPageTransition = 'none';
+				$.mobile.changePage.defaults.allowSamePageTransition = true;
+
+				$(document).on("swipeleft swiperight", function(e) {
+					if ($(".ui-page-active").jqmData("panel") !== "open") {
+						if (e.type === "swiperight") {
+							$("#left-panel").panel("open");
+						}
 					}
-				}
-			});		
+				});
+
+			});
 		</script>
 	</body>
 </html>

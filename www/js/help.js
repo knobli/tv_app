@@ -58,11 +58,7 @@ function finishLoading() {
 
 $.ajaxSetup({
 	beforeSend : startLoading,
-	complete : finishLoading
-});
-
-$.ajaxSetup({
-	beforeSend : startLoading,
+	complete : finishLoading,
 	cache : false
 });
 
