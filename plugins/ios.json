@@ -15,6 +15,20 @@
                         {
                             "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "framework": {
+                "parents": {
+                    "SystemConfiguration.framework": [
+                        {
+                            "xml": "true",
+                            "count": 1
                         }
                     ]
                 }
@@ -26,6 +40,9 @@
             "PACKAGE_NAME": "ch.grafstal"
         },
         "com.phonegap.plugins.PushPlugin": {
+            "PACKAGE_NAME": "ch.grafstal"
+        },
+        "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "ch.grafstal"
         }
     },
