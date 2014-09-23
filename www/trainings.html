@@ -17,7 +17,7 @@
 				</ul>
 			</div><!-- /content -->
 			<script>			
-				$( document ).one( "pagecreate", "#trainings", function() {
+				$( document ).one( "pageshow", "#trainings", function() {
 				    getSigninObjectFromUrl('trainingsList', getAPIUrl() + '/training.php', 'trainingRiege');
 				});			
 			</script>	

@@ -9,11 +9,13 @@ function getCarpoolsFromUrl(listId, url, signinObjectId) {
 		url : url,
 		data : {
 			'memberId' : getUserId(),
-			'signinObjectId': signinObjectId,
-		}
+			'signinObjectId' : signinObjectId,
+		},
+		beforeSend : startLoading,
+		complete : finishLoading
 	}).done(function(data) {
 		addCarpoolMenuEntry(listId, data, signinObjectId);
-	});	
+	});
 }
 
 function addCarpoolMenuEntry(listId, data, signinObjectId) {
@@ -78,12 +80,14 @@ function loadCarpool(listId, url, id) {
 		type : "GET",
 		url : url,
 		data : {
-			'id': id,
+			'id' : id,
 			'memberId' : getUserId()
-		}
+		},
+		beforeSend : startLoading,
+		complete : finishLoading
 	}).done(function(data) {
 		addCarpoolEntry(listId, data);
-	});	
+	});
 }
 
 function addCarpoolEntry(listId, data) {
@@ -158,7 +162,7 @@ function changeStatusCarpool(id, status, text) {
 function removeCarpool(id, signinObjectId) {
 	$.ajax({
 		type : "DELETE",
-		url : getAPIUrl() + '/carpool.php?'+ Math.random()* Math.random(),
+		url : getAPIUrl() + '/carpool.php?' + Math.random() * Math.random(),
 		data : {
 			'id' : id,
 			'memberId' : getUserId()

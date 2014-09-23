@@ -16,7 +16,7 @@
 				<ul data-role="listview" data-inset="false" id="matchView"></ul>
 			</div><!-- /content -->
 			<script>
-				$(document).one('pagecreate', '#match', function() {
+				$(document).one('pageshow', '#match', function() {
 					var id = getUrlParameter($(this).data("url"),"id");
 					loadSigninObject('matchView', getAPIUrl() + '/match.php', id);
 				});

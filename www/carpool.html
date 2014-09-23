@@ -16,7 +16,7 @@
 				<ul data-role="listview" data-inset="false" id="carpoolView"></ul>
 			</div><!-- /content -->
 			<script>
-				$(document).one("pagecreate", "#carpool", function() {
+				$(document).one("pageshow", "#carpool", function() {
 					var id = getUrlParameter($(this).data("url"), 'id');
 					loadCarpool('carpoolView', getAPIUrl() + '/carpool.php?id=' + id);
 				});

@@ -50,6 +50,8 @@
 			<script>
 				$(document).one("pagecreate", "#settings", function() {
 					checkLoginLogout();
+				});			
+				$(document).one("pageshow", "#settings", function() {
 					loadRiegenDropdown(["eventRiege", "trainingRiege", "matchRiege"]);
 				});
 			</script>

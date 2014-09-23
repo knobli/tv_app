@@ -12,7 +12,9 @@ function getSigninObjectFromUrl(listId, url, type) {
 		data : {
 			'riegeId' : getSavedRiege(type),
 			'memberId' : getUserId()
-		}
+		},
+		beforeSend : startLoading,
+		complete : finishLoading
 	}).done(function(data) {
 		addSinginObjectMenuEntry(listId, data);
 	});
@@ -45,7 +47,9 @@ function getNextSigninObjectFromUrl(listId, url) {
 		data : {
 			'riegeId' : -1,
 			'memberId' : getUserId()
-		}
+		},
+		beforeSend : startLoading,
+		complete : finishLoading
 	}).done(function(data) {
 		$(listSelector).prepend(createSinginObjectMenuEntry(data[0], 'date'));
 		$(listSelector).listview("refresh");
@@ -86,7 +90,9 @@ function loadSigninObject(viewId, url, id) {
 		data : {
 			'id' : id,
 			'memberId' : getUserId()
-		}
+		},
+		beforeSend : startLoading,
+		complete : finishLoading
 	}).done(function(data) {
 		var signinObject = data.object;
 		var memberStatus = data.status;

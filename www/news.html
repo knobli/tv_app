@@ -18,7 +18,7 @@
 				<div id="fullText" class="text-with-nl"></div>
 			</div><!-- /content -->
 			<script>
-				$(document).one('pagecreate', '#news', function() {
+				$(document).one('pageshow', '#news', function() {
 					var id = getUrlParameter($(this).data("url"),"id");
 					loadNews(getAPIUrl() + '/content.php', id);
 				});

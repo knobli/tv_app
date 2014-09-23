@@ -1,7 +1,12 @@
 function getNewsFromUrl(listId, url, linkUrl) {
-	$.getJSON(url, function(data) {
+	$.ajax({
+		type : "GET",
+		url : url,
+		beforeSend : startLoading,
+		complete : finishLoading		
+	}).done(function(data) {
 		addNewsMenuEntry(listId, data, linkUrl);
-	});
+	});	
 }
 
 function addNewsMenuEntry(listId, data, linkUrl) {
@@ -25,8 +30,12 @@ function loadNews(url, id) {
 		url : url,
 		data : {
 			'id' : id
-		}
+		},
+		cache: true,
+		beforeSend : startLoading,
+		complete : finishLoading	
 	}).done(function(news) {
+		var createDate;
 		if (news.createDate != null) {
 			createDate = createDate(news.createDate.date);
 		} else {

@@ -15,7 +15,7 @@
 				<ul data-role="listview" data-inset="false" id="eventList"></ul>
 			</div><!-- /content -->
 			<script>
-				$(document).one("pagecreate", "#events", function() {
+				$(document).one("pageshow", "#events", function() {
 					getSigninObjectFromUrl('eventList', getAPIUrl() + '/event.php', 'eventRiege');
 				});
 			</script>

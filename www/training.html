@@ -17,7 +17,7 @@
 				</ul>				
 			</div><!-- /content -->
 			<script>
-				$(document).one('pagecreate', '#training', function(){   
+				$(document).one('pageshow', '#training', function(){   
 				    var id = getUrlParameter($(this).data("url"),"id");
 				    loadSigninObject('trainingView', getAPIUrl() + '/training.php', id);
 				}); 

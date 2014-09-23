@@ -15,7 +15,7 @@
 				<ul data-role="listview" data-inset="false" id="matchList"></ul>
 			</div><!-- /content -->
 			<script>
-				$(document).one("pagecreate", "#matches", function() {
+				$(document).one("pageshow", "#matches", function() {
 					getSigninObjectFromUrl('matchList', getAPIUrl() + '/match.php', 'matchRiege');
 				});
 			</script>

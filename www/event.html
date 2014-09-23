@@ -16,7 +16,7 @@
 				<ul data-role="listview" data-inset="false" id="eventView"></ul>
 			</div><!-- /content -->
 			<script>
-				$(document).one('pagecreate', '#event', function() {
+				$(document).one('pageshow', '#event', function() {
 					var id = getUrlParameter($(this).data("url"),"id");
 					loadSigninObject('eventView', getAPIUrl() + '/event.php', id);
 				});

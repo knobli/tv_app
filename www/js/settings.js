@@ -1,30 +1,40 @@
 function loadRiegenDropdown(ids) {
-	$.getJSON(getAPIUrl() + '/riege.php', function(data) {
-		var oldClub = "";
-		var optgroup = {};
-		$.each(data, function(i, riege) {
-			if (oldClub != riege.club.name) {
-				$.each(ids, function(j, id) {
-					if (oldClub != "") {
-						$('#' + id).append(optgroup[id]);
-						optgroup[id] = "";
-					}
-					optgroup[id] = '<optgroup label="' + riege.club.name + '">';
-				});
-				oldClub = riege.club.name;
-			}
+	$.ajax({
+		type : "GET",
+		url : getAPIUrl() + '/riege.php',
+		cache : true,
+		beforeSend : startLoading,
+		complete : finishLoading
+	}).done(function(data) {
+		addRiegeSelection(data, ids);
+	});
+}
+
+function addRiegeSelection(data, ids) {
+	var oldClub = "";
+	var optgroup = {};
+	$.each(data, function(i, riege) {
+		if (oldClub != riege.club.name) {
 			$.each(ids, function(j, id) {
-				if (getSavedRiege(id) != null && getSavedRiege(id) == riege.id) {
-					optgroup[id] += '<option value="' + riege.id + '" selected="selected">' + riege.name + '</option>';
-				} else {
-					optgroup[id] += '<option value="' + riege.id + '">' + riege.name + '</option>';
+				if (oldClub != "") {
+					$('#' + id).append(optgroup[id]);
+					optgroup[id] = "";
 				}
+				optgroup[id] = '<optgroup label="' + riege.club.name + '">';
 			});
-		});
+			oldClub = riege.club.name;
+		}
 		$.each(ids, function(j, id) {
-			$('#' + id).append(optgroup[id]);
-			$('#' + id).selectmenu('refresh');
+			if (getSavedRiege(id) != null && getSavedRiege(id) == riege.id) {
+				optgroup[id] += '<option value="' + riege.id + '" selected="selected">' + riege.name + '</option>';
+			} else {
+				optgroup[id] += '<option value="' + riege.id + '">' + riege.name + '</option>';
+			}
 		});
+	});
+	$.each(ids, function(j, id) {
+		$('#' + id).append(optgroup[id]);
+		$('#' + id).selectmenu('refresh');
 	});
 }
 

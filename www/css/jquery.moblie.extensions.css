@@ -1,9 +1,9 @@
 img {
-  max-width: 100%;
+	max-width: 100%;
 }
 
 iframe {
-  max-width: 100%;	
+	max-width: 100%;
 }
 
 .ui-listview .ui-li-right-side {
@@ -43,29 +43,77 @@ iframe {
 }
 
 .text-with-nl {
-	white-space:normal !important;
+	white-space: normal !important;
 }
 
 .img-container {
-	float: left; 
-	width: 80px; 
+	float: left;
+	width: 80px;
 	height: 80px;
 }
 
 .img-center-outer {
-	margin-left: auto; 
-	margin-right: auto; 
-	display:table; 
-	height: 100%; 
-	vertical-align:middle;
+	margin-left: auto;
+	margin-right: auto;
+	display: table;
+	height: 100%;
+	vertical-align: middle;
 }
 
 .img-center-inner {
-	display:table-cell; 
-	vertical-align:middle;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .image-link {
 	text-align: center;
 	padding: .7em 0px !important;
+}
+
+@-webkit-keyframes fadeinSpecial {
+	from {opacity: 1;}
+	to {opacity: 1;}
+}
+@-moz-keyframes
+fadeinSpecial {
+	from {opacity: 1;}
+	to {opacity: 1;}
+}
+@keyframes
+fadeinSpecial {
+	from {opacity: 1;}
+	to {opacity: 1;}
+}
+@-webkit-keyframes
+fadeoutSpecial {
+	from {opacity: 1;}
+	to {opacity: 1;}
+}
+@-moz-keyframes
+fadeoutSpecial {
+	from {opacity: 1;}
+	to {opacity: 1;}
+}
+@keyframes
+fadeoutSpecial {
+	from {opacity: 1;}
+	to {opacity: 1;}
+}
+.fadeSpecial.out {
+	opacity: 1;
+	-webkit-animation-duration: 125ms;
+	-webkit-animation-name: fadeoutSpecial;
+	-moz-animation-duration: 125ms;
+	-moz-animation-name: fadeoutSpecial;
+	animation-duration: 125ms;
+	animation-name: fadeoutSpecial;
+}
+.fadeSpecial.in {
+	opacity: 1;
+	-webkit-animation-duration: 225ms;
+	-webkit-animation-name: fadeinSpecial;
+	-moz-animation-duration: 225ms;
+	-moz-animation-name: fadeinSpecial;
+	animation-duration: 225ms;
+	animation-name: fadeinSpecial;
 }

@@ -40,7 +40,7 @@
 			<script type="text/javascript" src="js/settings.js"></script>
 			<script type="text/javascript" src="js/result.js"></script>
 			<script>
-				$(document).one("pagecreate", "#mainpage", function() {
+				$(document).one("pageshow", "#mainpage", function() {
 					if (isLoggedIn()) {
 						getNextSigninObjectFromUrl('newsList', getAPIUrl() + '/signinObjects.php?next=1');
 					}
@@ -65,7 +65,7 @@
 			});
 
 			$(function() {
-				//$.mobile.defaultPageTransition = 'none';
+				$.mobile.defaultPageTransition = 'fadeSpecial';
 				$.mobile.changePage.defaults.allowSamePageTransition = true;
 
 				$(document).on("swipeleft swiperight", function(e) {

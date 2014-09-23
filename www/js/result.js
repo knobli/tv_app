@@ -4,7 +4,9 @@ function getResultsFromUrl(id, url) {
 		url : url,
 		data : {
 			'memberId' : getUserId()
-		}
+		},
+		beforeSend : startLoading,
+		complete : finishLoading			
 	}).done(function(data) {
 		addResultEntry(id, data);
 	});
