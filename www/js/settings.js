@@ -41,6 +41,8 @@ function addRiegeSelection(data, ids) {
 function login() {
 	$("#loginForm").ajaxSubmit({
 		url : getAPIUrl() + '/login.php',
+		beforeSend : startLoading,
+		complete : finishLoading,		
 		success : function(data) {
 			if (data.success) {
 				alert("Erfolgreich angemeldet");

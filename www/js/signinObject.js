@@ -147,7 +147,8 @@ function changeStatus(id, status, text) {
 			'status' : status,
 			'comment' : 'Von Mobile App angepasst'
 		},
-		async : true
+		beforeSend : startLoading,
+		complete : finishLoading
 	}).done(function(data) {
 		if (data.success) {
 			alert(text + " erfolgreich");

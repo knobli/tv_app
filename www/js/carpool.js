@@ -106,7 +106,9 @@ function addCarpoolEntry(listId, data) {
 	var responsibleName = (carpool.type === CarpoolType.CAR) ? 'Fahrer' : 'Organisator';
 	addKeyValueListEntry(listId, responsibleName, carpool.responsible.firstname + ' ' + carpool.responsible.surname);
 	addKeyValueListEntry(listId, 'Ort', carpool.responsible.city);
-	addKeyValueListEntry(listId, 'Anzahl Pl&auml;tze', carpool.size);
+	if(carpool.type === CarpoolType.CAR){
+		addKeyValueListEntry(listId, 'Anzahl Pl&auml;tze', carpool.size);
+	}
 	if (isLoggedIn() && getUserId() != carpool.responsible.id) {
 		if (memberStatus === MemberStatus.IN) {
 			addButtonListEntry(listId, 'Angemeldet', 'ui-icon-check', "signoutCarpool(" + carpool.id + ")");
@@ -148,7 +150,9 @@ function changeStatusCarpool(id, status, text) {
 			'carpoolId' : id,
 			'memberId' : getUserId(),
 			'status' : status
-		}
+		},
+		beforeSend : startLoading,
+		complete : finishLoading
 	}).done(function(data) {
 		if (data.success) {
 			alert(text + " erfolgreich");
@@ -166,7 +170,9 @@ function removeCarpool(id, signinObjectId) {
 		data : {
 			'id' : id,
 			'memberId' : getUserId()
-		}
+		},
+		beforeSend : startLoading,
+		complete : finishLoading
 	}).done(function(data) {
 		if (data.success) {
 			alert("Erfolgreich geloescht");
@@ -181,6 +187,8 @@ function addCarpool() {
 	$("#memberId").val(getUserId());
 	$("#carpoolForm").ajaxSubmit({
 		url : getAPIUrl() + '/carpool.php',
+		beforeSend : startLoading,
+		complete : finishLoading,
 		success : function(data) {
 			if (data.success) {
 				alert("Fahrgemeinschaft eingetragen");
