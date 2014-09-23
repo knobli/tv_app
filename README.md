@@ -5,6 +5,13 @@ Turnverein App with Phonegap
 
 <h1>Release Notes</h1>
 
+<h3>Version 1.7</h3>
+Allgemein:
+<ul>
+<li>Saubere Übergange zwischen den Seiten</li>
+<li>Menü durch Slide-Bewegung überall aufrufbar</li>
+</ul>
+
 <h3>Version 1.6</h3>
 Allgemein:
 <ul>
