@@ -5,6 +5,12 @@ Turnverein App with Phonegap
 
 <h1>Release Notes</h1>
 
+<h3>Version 1.8</h3>
+Allgemein:
+<ul>
+<li>Ladeanzeige für An- und Abmeldungen</li>
+</ul>
+
 <h3>Version 1.7</h3>
 Allgemein:
 <ul>
