@@ -1,0 +1,39 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+	<body>
+		<div data-role="page" id="training">
+			<div data-role="header" data-theme="b">
+				<h1 id="pageTitle">Trainingstitel</h1>
+				
+				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
+				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
+			</div><!-- /header -->
+			<div role="main" class="ui-content">	
+				<input type="button" onclick="removeObject(1)" value="Delete 1" />
+				<input type="button" onclick="removeObject(2)" value="Delete 2" />
+				<input type="button" onclick="removeObject(3)" value="Delete 3" />
+				<div id="testOutput"></div>
+				<script>
+				    function removeObject(id) {
+				        $.ajax({
+				            type: "DELETE",
+				            url: 'http://tv.grafstal.ch/test/ajax_android_bug.php',
+				            data: {
+				                'id': id
+				            },
+				            cache: false
+				        }).done(function (data) {
+				            if (data.success) {
+				                $("#testOutput").text("Delete " + data.id + " Timestamp from backend: " + data.timestamp);
+				                //alert("Delete " + data.id + " Timestamp from backend: " + data.timestamp);
+				            }
+				        });
+				
+				    }
+				</script>
+			</div>
+		</div>
+	</body>
+</html>

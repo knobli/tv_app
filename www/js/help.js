@@ -266,6 +266,11 @@ var navigationItems = [{
 		link : "results.html",
 		loginRequired : true,
 		ajax: true
+	}, {
+		name : "Test",
+		link : "test.html",
+		loginRequired : false,
+		ajax: true
 	}]
 }];
 
