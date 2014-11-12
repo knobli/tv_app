@@ -13,19 +13,26 @@ function loadRiegenDropdown(ids) {
 function addRiegeSelection(data, ids) {
 	var oldClub = "";
 	var optgroup = {};
+	$.each(ids, function(j, id) {
+		optgroup[id] = "";
+	});	
 	$.each(data, function(i, riege) {
-		if (oldClub != riege.club.name) {
+		var clubName = "Spezial";
+		if(riege.club !== null){
+			clubName = riege.club.name;
+		}
+		if (oldClub !== clubName) {
 			$.each(ids, function(j, id) {
 				if (oldClub != "") {
 					$('#' + id).append(optgroup[id]);
 					optgroup[id] = "";
 				}
-				optgroup[id] = '<optgroup label="' + riege.club.name + '">';
+				optgroup[id] = '<optgroup label="' + clubName + '">';
 			});
-			oldClub = riege.club.name;
+			oldClub = clubName;
 		}
 		$.each(ids, function(j, id) {
-			if (getSavedRiege(id) != null && getSavedRiege(id) == riege.id) {
+			if (getSavedRiege(id) !== null && getSavedRiege(id) === riege.id) {
 				optgroup[id] += '<option value="' + riege.id + '" selected="selected">' + riege.name + '</option>';
 			} else {
 				optgroup[id] += '<option value="' + riege.id + '">' + riege.name + '</option>';
