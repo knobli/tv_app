@@ -112,7 +112,7 @@ function addCarpoolEntry(listId, data) {
 	if (isLoggedIn() && getUserId() != carpool.responsible.id) {
 		if (memberStatus === MemberStatus.IN) {
 			addButtonListEntry(listId, 'Angemeldet', 'ui-icon-check', "signoutCarpool(" + carpool.id + ")");
-		} else {
+		} else if (carpool.size - carpool.members.length > 0) {
 			addButtonListEntry(listId, 'Anmelden', 'ui-icon-plus', "signinCarpool(" + carpool.id + ")");
 		}
 	} else if (isLoggedIn && getUserId() == carpool.responsible.id) {
