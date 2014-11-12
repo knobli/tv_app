@@ -61,7 +61,7 @@ $.ajaxSetup({
 });
 
 function getAPIUrl() {
-	return 'http://grafstal.ch/controller/json/v0.2';
+	return 'http://grafstal.ch/controller/json/v0.3';
 }
 
 function addKeyValueListEntry(listId, key, value) {
@@ -251,6 +251,11 @@ var navigationItems = [{
 		name : "Matches",
 		link : "matches.html",
 		loginRequired : false,
+		ajax: true
+	}, {
+		name : "Sitzungen",
+		link : "meetings.html",
+		loginRequired : true,
 		ajax: true
 	}]
 }, {
