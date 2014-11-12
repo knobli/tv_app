@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Sitzungen</title>
+	</head>
+
+	<body> 
+		<div data-role="page" id="meetings">
+			<div data-role="header" data-theme="b">
+				<h1>Sitzungen</h1>
+				<a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
+		        <!-- <a href="add_meeting.html" data-icon="plus" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Add</a> -->
+		        <a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
+			</div>
+			<div role="main" class="ui-content">
+				<ul data-role="listview" data-inset="false" id="meetingsList">
+
+				</ul>
+			</div><!-- /content -->
+			<script>			
+				$( document ).one( "pageshow", "#meetings", function() {
+				    getSigninObjectFromUrl('meetingsList', getAPIUrl() + '/meeting.php', 'meetingRiege');
+				});			
+			</script>	
+		</div>
+	</body>
+</html>
