@@ -2,7 +2,8 @@ var linkUrls = {
 	"Training" : "training.html",
 	"Anlass" : "event.html",
 	"Match" : "match.html",
-	"Hockeymatch" : "match.html"
+	"Hockeymatch" : "match.html",
+	"Sitzung" : "meeting.html"
 };
 
 function getSigninObjectFromUrl(listId, url, type) {
@@ -166,7 +167,7 @@ var stoargeKeys = {
 };
 
 function getSavedRiege(type) {
-	return window.localStorage.getItem(stoargeKeys[type]);
+	return parseInt(window.localStorage.getItem(stoargeKeys[type]));
 }
 
 function saveRiegeSelection(type, selection) {
