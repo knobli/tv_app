@@ -63,11 +63,7 @@ function createSinginObjectMenuEntry(signinObjectAndStatus, dateType) {
 	var startDate = createDate(signinObject.startDate.date);
 	var className = '';
 	if (isLoggedIn()) {
-		if (memberStatus === MemberStatus.IN) {
-			className = 'signin';
-		} else if (memberStatus === MemberStatus.OUT) {
-			className = 'signout';
-		}
+		className = getMemberStatusCss(memberStatus);
 	}
 	var listEntry = '<li><a href="' + linkUrls[signinObject.type] + '?id=' + signinObject.id + '" class="' + className + '"><fieldset class="ui-grid-a"><div class="ui-block-a">';
 	listEntry += '<h2>' + signinObject.name + '</h2>';
@@ -107,12 +103,15 @@ function loadSigninObject(viewId, url, id) {
 		addKeyValueListEntry(viewId, 'Datum', getStartEndDate(startDate, endDate));
 		addKeyValueListEntry(viewId, 'Verantwortlicher', signinObject.responsible.firstname + ' ' + signinObject.responsible.surname);
 		if (isLoggedIn()) {
-			if (memberStatus === null || memberStatus === MemberStatus.NONE || memberStatus === "") {
-				addTwoButtonListEntry(viewId, 'Anmelden', 'ui-icon-plus', "signin(" + signinObject.id + ")", 'Abmelden', 'ui-icon-minus', "signout(" + signinObject.id + ")");
-			} else if (memberStatus === MemberStatus.IN) {
+			if (memberStatus === MemberStatus.IN) {
 				addButtonListEntry(viewId, 'Angemeldet', 'ui-icon-check', "signout(" + signinObject.id + ")");
 			} else if (memberStatus === MemberStatus.OUT) {
 				addButtonListEntry(viewId, 'Abgemeldet', 'ui-icon-delete', "signin(" + signinObject.id + ")");
+			} else {
+				addTwoButtonListEntry(viewId, 'Anmelden', 'ui-icon-plus', "signin(" + signinObject.id + ")", 'Abmelden', 'ui-icon-minus', "signout(" + signinObject.id + ")");
+			}
+			if (memberStatus === MemberStatus.SPECIAL) {
+				addInformation(viewId, 'Bereits als Helfer angemeldet!');
 			}
 			addKeyValueWithLinkListEntry(viewId, 'Fahrgemeinschaften', '<span class="ui-li-count">' + countOfCarpools + '</span>', 'carpools.html?id=' + signinObject.id);
 

@@ -1,7 +1,19 @@
 MemberStatus = {
 	IN : 1,
 	OUT : 0,
+	SPECIAL : 2,
 	NONE : 3
+}
+
+MemberStatusCss = {
+	1 : "signin",
+	0 : "signout",
+	2 : "signinSpecial",
+}
+
+function getMemberStatusCss(memberStatus){
+	var cssClass = MemberStatusCss[memberStatus];
+	return (cssClass === undefined) ? "" : cssClass;
 }
 
 var loading = 0;
@@ -62,6 +74,12 @@ $.ajaxSetup({
 
 function getAPIUrl() {
 	return 'https://grafstal.ch/controller/json/v0.3';
+}
+
+function addInformation(listId, info){
+	if (info != "") {
+		$("#" + listId).append('<li><a href="" class="ui-btn ui-icon-info ui-btn-icon-left">' + info + '</a></li>');
+	}	
 }
 
 function addKeyValueListEntry(listId, key, value) {

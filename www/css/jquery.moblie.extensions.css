@@ -23,6 +23,16 @@ iframe {
 	text-shadow: 0 1px 0 rgba(71, 121, 42, 0.4) !important;
 }
 
+.signinSpecial {
+	background: rgba(215, 190, 53, 0.6) !important;
+	text-shadow: 0 1px 0 rgba(215, 190, 53, 0.2) !important;
+}
+
+.signinSpecial:hover {
+	background: rgba(215, 190, 53, 0.8) !important;
+	text-shadow: 0 1px 0 rgba(215, 190, 53, 0.4) !important;
+}
+
 .signout {
 	background: rgba(215, 44, 44, 0.6) !important;
 	text-shadow: 0 1px 0 rgba(215, 44, 44, 0.2) !important;
