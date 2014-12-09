@@ -61,7 +61,7 @@ $.ajaxSetup({
 });
 
 function getAPIUrl() {
-	return 'http://grafstal.ch/controller/json/v0.3';
+	return 'https://grafstal.ch/controller/json/v0.3';
 }
 
 function addKeyValueListEntry(listId, key, value) {
