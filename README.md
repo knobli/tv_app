@@ -5,7 +5,7 @@ Turnverein App with Phonegap
 
 <h1>Release Notes</h1>
 
-<h3>Version 1.8</h3>
+<h3>Version 1.9</h3>
 Allgemein:
 <ul>
 <li>Die Riegen-Filter wurde erweitert</li>
