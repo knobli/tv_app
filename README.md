@@ -8,6 +8,20 @@ Turnverein App with Phonegap
 <h3>Version 1.8</h3>
 Allgemein:
 <ul>
+<li>Die Riegen-Filter wurde erweitert</li>
+<li>Sitzungen wurden hinzugefügt</li>
+<li>Aktueller Kontostand wurde hinzugefügt</li>
+<li>Die Verbindung zum Backend ist nun SSL-verschlüsselt</li>
+</ul>
+Anlässe:
+<ul>
+<li>Anmelungen bei einer Helferliste werden farbig markiert</li>
+<li>Bugfix: Falls die Fahrgemeinschaft voll ist, erscheint der Anmelde-Knopf nicht mehr</li>
+</ul>
+
+<h3>Version 1.8</h3>
+Allgemein:
+<ul>
 <li>Ladeanzeige für An- und Abmeldungen</li>
 </ul>
 
