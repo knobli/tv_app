@@ -48,6 +48,10 @@ iframe {
 	text-shadow: 0 1px 0 rgba(215, 44, 44, 0.2) !important;
 }
 
+.total {
+	border-bottom:double;
+}
+
 .text-indent {
 	padding-left: 10px;
 }

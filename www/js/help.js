@@ -210,6 +210,10 @@ function getParameterByName(name) {
 	return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
 
+function roundTwoDecimalPlaces(number){
+	return parseFloat(Math.round(number * 100) / 100).toFixed(2);
+}
+
 var userIdKey = "TV_APP_userId";
 var usernameKey = "TV_APP_username";
 
@@ -282,6 +286,11 @@ var navigationItems = [{
 	items : [{
 		name : "Resultate",
 		link : "results.html",
+		loginRequired : true,
+		ajax: true
+	}, {
+		name : "Kontostand",
+		link : "billItems.html",
 		loginRequired : true,
 		ajax: true
 	}]

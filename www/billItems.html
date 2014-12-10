@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Rechnungen</title>
+	</head>
+
+	<body>
+		<div data-role="page" id="billItems">
+			<div data-role="header" data-theme="b">
+				<h1>Rechnungen</h1>
+				<a href="#left-panel" data-icon="grid" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
+				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
+			</div><!-- /header -->
+			<div role="main" class="ui-content">
+				<ul data-role="listview" data-inset="false" id="billItemList"></ul>
+			</div><!-- /content -->
+			<script>
+				$(document).one("pageshow", "#billItems", function() {
+					getBillItemsFromUrl('billItemList', getAPIUrl() + '/billItem.php');
+				});
+			</script>
+		</div>
+	</body>
+</html>
