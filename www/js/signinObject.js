@@ -111,7 +111,7 @@ function loadSigninObject(viewId, url, id) {
 				addTwoButtonListEntry(viewId, 'Anmelden', 'ui-icon-plus', "signin(" + signinObject.id + ")", 'Abmelden', 'ui-icon-minus', "signout(" + signinObject.id + ")");
 			}
 			if (memberStatus === MemberStatus.SPECIAL) {
-				addInformation(viewId, 'Bereits als Helfer angemeldet!');
+				addInformation(viewId, 'Als Helfer angemeldet!');
 			}
 			addKeyValueWithLinkListEntry(viewId, 'Fahrgemeinschaften', '<span class="ui-li-count">' + countOfCarpools + '</span>', 'carpools.html?id=' + signinObject.id);
 
