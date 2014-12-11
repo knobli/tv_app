@@ -15,6 +15,19 @@
 		<div data-role="panel" id="left-panel" data-theme="b">
 			<ul data-role="listview" data-inset="false" data-theme="a" id="navigation"></ul>
 		</div><!-- /panel -->
+		
+		<div data-role="popup" id="signinFrame" data-theme="a" class="ui-corner-all" data-history="false">
+  			<form id="signinForm" method="post">
+				<div class="popupFrame">
+	  				<h3 id="signinFrameTitle"></h3>
+	  				<input type="hidden" name="signinObjectId" id="signinObjectId" value="">
+	  				<input type="hidden" name="status" id="status" value="">
+	  				<input type="hidden" name="memberId" id="memberId" value="">
+	  				<textarea name="comment" placeholder="Kommentar"></textarea>
+	  				<input type="button" class="ui-btn ui-corner-all ui-shadow ui-btn-b" id="signinFrameButton" value="" onclick="signin()" />
+				</div>
+  			</form>
+		</div>
 
 		<div data-role="page" id="mainpage">
 			<div data-role="header" data-theme="b">
@@ -62,6 +75,7 @@
 
 			$(document).one('pagebeforecreate', function() {
 				$("#left-panel").panel();
+				$("#signinFrame").popup();
 				fillInNavigation();
 			});
 

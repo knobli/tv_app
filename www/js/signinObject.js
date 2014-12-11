@@ -104,11 +104,11 @@ function loadSigninObject(viewId, url, id) {
 		addKeyValueListEntry(viewId, 'Verantwortlicher', signinObject.responsible.firstname + ' ' + signinObject.responsible.surname);
 		if (isLoggedIn()) {
 			if (memberStatus === MemberStatus.IN) {
-				addButtonListEntry(viewId, 'Angemeldet', 'ui-icon-check', "signout(" + signinObject.id + ")");
+				addPopupListEntry(viewId, 'Angemeldet', 'ui-icon-check', signinObject.id, MemberStatus.OUT);
 			} else if (memberStatus === MemberStatus.OUT) {
-				addButtonListEntry(viewId, 'Abgemeldet', 'ui-icon-delete', "signin(" + signinObject.id + ")");
+				addPopupListEntry(viewId, 'Abgemeldet', 'ui-icon-delete', signinObject.id, MemberStatus.IN);
 			} else {
-				addTwoButtonListEntry(viewId, 'Anmelden', 'ui-icon-plus', "signin(" + signinObject.id + ")", 'Abmelden', 'ui-icon-minus', "signout(" + signinObject.id + ")");
+				addTwoPopupListEntry(viewId, 'Anmelden', 'ui-icon-plus', 'Abmelden', 'ui-icon-minus', signinObject.id);
 			}
 			if (memberStatus === MemberStatus.SPECIAL) {
 				addInformation(viewId, 'Als Helfer angemeldet!');
@@ -129,32 +129,35 @@ function addMemberList(listId, entries) {
 	addListListEntry(listId, 'Anmeldungen  (Anmeldungen: ' + memberList.length + ')', memberList);
 }
 
-function signin(id) {
-	changeStatus(id, 1, "Anmeldung");
+function initSignInPopupListEntry(id, status) {
+	$("#signinObjectId").val(id);
+	$("#status").val(status);
+	if(status === MemberStatus.IN){
+		$("#signinFrameTitle").text("Anmelden");
+		$("#signinFrameButton").val("Anmelden");
+	} else if(status === MemberStatus.OUT){
+		$("#signinFrameTitle").text("Abmelden");
+		$("#signinFrameButton").val("Abmelden");
+	}
+	$("#memberId").val(getUserId());
 }
 
-function signout(id) {
-	changeStatus(id, 0, "Abmeldung");
-}
-
-function changeStatus(id, status, text) {
-	$.ajax({
-		type : "POST",
+function signin() {
+	var text = $("#signinFrameTitle").text();
+	$("#signinForm").ajaxSubmit({
 		url : getAPIUrl() + '/signinEntries.php',
-		data : {
-			'signinObjectId' : id,
-			'memberId' : getUserId(),
-			'status' : status,
-			'comment' : 'Von Mobile App angepasst'
-		},
 		beforeSend : startLoading,
-		complete : finishLoading
-	}).done(function(data) {
-		if (data.success) {
-			alert(text + " erfolgreich");
-			refreshPage();
-		} else {
-			alert(text + " fehlgeschlagen: " + data.error_message);
+		complete : finishLoading,		
+		success : function(data) {
+			if (data.success) {
+				alert(text + " erfolgreich");
+				refreshPage();
+			} else {
+				alert(text + " fehlgeschlagen: " + data.error_message);
+			}
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
 		}
 	});
 }

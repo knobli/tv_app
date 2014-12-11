@@ -105,6 +105,23 @@ function makeKeyValueListEntry(key, value) {
 	return listEntry;
 }
 
+function addPopupListEntry(listId, text, icon, id, status) {
+	$("#" + listId).append('<li>' + createSignInPopupListEntry(text, icon, id, status) + '</li>');
+}
+
+function addTwoPopupListEntry(listId, text, icon, text2, icon2, id) {
+	var listEntry = '<li><fieldset class="ui-grid-a"><div class="ui-block-a">';
+	listEntry += createSignInPopupListEntry(text, icon, id, MemberStatus.IN);
+	listEntry += '</div><div class="ui-block-b">';
+	listEntry += createSignInPopupListEntry(text2, icon2, id, MemberStatus.OUT);
+	listEntry += '</div></fieldset></li>';
+	$("#" + listId).append(listEntry);
+}
+
+function createSignInPopupListEntry(text, icon, id, status){
+	return '<a href="#signinFrame" onclick="initSignInPopupListEntry(' + id + ', ' + status + ')" data-rel="popup" data-position-to="window" class="ui-btn ui-mini ' + icon + ' ui-btn-icon-left ui-btn-b">' + text + '</a>';
+}
+
 function addLinkListEntry(listId, text, icon, pageName) {
 	$("#" + listId).append('<li><a href="' + pageName + '" class="ui-btn ui-mini ' + icon + ' ui-btn-icon-left ui-btn-b">' + text + '</a></li>');
 }
