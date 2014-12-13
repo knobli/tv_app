@@ -5,6 +5,13 @@ Turnverein App with Phonegap
 
 <h1>Release Notes</h1>
 
+<h3>Version 1.10</h3>
+Allgemein:
+<ul>
+<li>Bei An- und Abmeldungen können nun Kommentare geschrieben werden</li>
+<li>Bugfix: Riege-Filter nicht aktiv</li>
+</ul>
+
 <h3>Version 1.9</h3>
 Allgemein:
 <ul>
