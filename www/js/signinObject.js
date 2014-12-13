@@ -169,7 +169,11 @@ var stoargeKeys = {
 };
 
 function getSavedRiege(type) {
-	return parseInt(window.localStorage.getItem(stoargeKeys[type]));
+	var riegeId = window.localStorage.getItem(stoargeKeys[type]);
+	if(riegeId === null){
+		riegeId = -2
+	}
+	return parseInt(riegeId);
 }
 
 function saveRiegeSelection(type, selection) {
