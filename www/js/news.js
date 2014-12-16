@@ -49,3 +49,29 @@ function loadNews(url, id) {
 		}
 	});
 }
+
+var loadingNews = 0;
+function loadMoreNews(listId, url, linkUrl){
+	$.ajax({
+		type : "GET",
+		url : url,
+		data : {
+			number: function() {
+						return $('#' + listId).children().size();
+					}
+		},		
+		beforeSend : function(){
+						if(loadingNews == 1){
+							return false;
+						}
+						startLoading();
+						loadingNews=1;
+					},
+		complete : function(){
+						finishLoading();
+						loadingNews=0;
+					},		
+	}).done(function(data) {
+		addNewsMenuEntry(listId, data, linkUrl);
+	});		
+}

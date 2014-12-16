@@ -356,3 +356,8 @@ function initOrRefresh(listId) {
 		listView.listview();
 	}
 }
+
+function isNearBottom(){
+	var heightOffset = 100;
+	return ($(window).scrollTop()+heightOffset >= $(document).height() - $(window).height());
+}

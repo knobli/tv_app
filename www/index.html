@@ -61,6 +61,14 @@
 					getNewsFromUrl('newsList', getAPIUrl() + '/content.php', 'news.html');
 					$('body').show();
 				});
+				
+				$(function() {
+					$(window).bind('scrollstart', function () {        
+						if (isNearBottom()){
+					         loadMoreNews("newsList", getAPIUrl() + '/content.php', 'news.html');
+					 	}
+					 });
+				});
 			</script>
 		</div>
 		<script>
