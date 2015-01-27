@@ -184,7 +184,7 @@ function removeCarpool(id, signinObjectId) {
 }
 
 function addCarpool() {
-	$("#memberId").val(getUserId());
+	$("#carpoolMemberId").val(getUserId());
 	$("#carpoolForm").ajaxSubmit({
 		url : getAPIUrl() + '/carpool.php',
 		beforeSend : startLoading,

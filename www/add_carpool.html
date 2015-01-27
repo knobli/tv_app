@@ -13,8 +13,8 @@
 			</div><!-- /header -->
 			<div role="main" class="ui-content">
 				<form method="post" id="carpoolForm">
-					<input type="hidden" id="signinObjectId" name="signinObjectId" />
-					<input type="hidden" id="memberId" name="memberId" />
+					<input type="hidden" id="carpoolSigninObjectId" name="signinObjectId" />
+					<input type="hidden" id="carpoolMemberId" name="memberId" />
 					<input type="text" name="name" required="required" placeholder="Gruppennamen"/>
 					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="false" style="margin: 0 auto; width: 100%; text-align: center; position: relativ; left: 50%;">
 					        <input type="radio" name="radio-type" id="radio-car" value="1" checked="checked">
@@ -48,7 +48,7 @@
 				    }
 				});
 				$(document).one("pagecreate", "#addCarpool", function() {
-					$("#signinObjectId").val(getUrlParameter($(this).data("url"),'id'));
+					$("#carpoolSigninObjectId").val(getUrlParameter($(this).data("url"),'id'));
 				});			
 			</script>			
 		</div>
