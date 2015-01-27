@@ -3,6 +3,20 @@ CarpoolType = {
 	BICYCLE : 2
 }
 
+function getCarpoolsFromUrlForMember(listId, url){
+	$.ajax({
+		type : "GET",
+		url : url,
+		data : {
+			'memberId' : getUserId()
+		},
+		beforeSend : startLoading,
+		complete : finishLoading
+	}).done(function(data) {
+		addCarpoolMenuEntry(listId, data, signinObjectId, 'time');
+	});	
+}
+
 function getCarpoolsFromUrl(listId, url, signinObjectId) {
 	$.ajax({
 		type : "GET",
@@ -14,27 +28,42 @@ function getCarpoolsFromUrl(listId, url, signinObjectId) {
 		beforeSend : startLoading,
 		complete : finishLoading
 	}).done(function(data) {
-		addCarpoolMenuEntry(listId, data, signinObjectId);
+		addCarpoolMenuEntry(listId, data, signinObjectId, null);
+		addAddCarpoolEntry(listId, signinObjectId);
 	});
 }
 
-function addCarpoolMenuEntry(listId, data, signinObjectId) {
+function addCarpoolMenuEntry(listId, data, signinObjectId, dateType) {
+	var oldDateStamp;
 	var listSelector = "#" + listId;
 	if (data.length !== 0) {
 		$.each(data, function(key, val) {
-			$(listSelector).append(createCarpoolMenuEntry(val));
+			if(dateType === 'time'){
+				var startDate = createDate(val.carpool.signinObject.startDate.date);
+				var dateStamp = getDateStamp(startDate);
+				if (oldDateStamp !== dateStamp) {
+					$(listSelector).append('<li data-role="list-divider">' + getDateString(startDate) + '</li>');
+					oldDateStamp = dateStamp;
+				}			
+			}
+			$(listSelector).append(createCarpoolMenuEntry(val, dateType));
 		});
 	} else {
 		$(listSelector).append("<li>Keine Eintr&auml;ge vorhanden</li>");
 	}
+	$(listSelector).listview("refresh");
+}
 
+function addAddCarpoolEntry(listId, signinObjectId){
+	var listSelector = "#" + listId;
 	addLinkListEntry(listId, 'Neue Fahrgemeinschaft hinzuf&uuml;gen', 'ui-icon-plus', 'add_carpool.html?id=' + signinObjectId);
 	$(listSelector).listview("refresh");
 }
 
-function createCarpoolMenuEntry(item) {
+function createCarpoolMenuEntry(item, dateType) {
 	var carpool = item.carpool;
 	var memberStatus = item.status;
+	var startDate = createDate(carpool.signinObject.startDate.date);
 	var listEntry = '<li><a href="carpool.html?id=' + carpool.id + '" class="image-link"><fieldset class="ui-grid-a"><div class="ui-block-a">';
 	listEntry += '<div class="img-container"><div class="img-center-outer"><div class="img-center-inner">';
 	if (carpool.type === CarpoolType.CAR) {
@@ -45,6 +74,9 @@ function createCarpoolMenuEntry(item) {
 	listEntry += '</div></div></div>';
 	listEntry += '<h2>' + carpool.name + '</h2>';
 	listEntry += '<p>' + carpool.responsible.firstname + ' ' + carpool.responsible.surname + '</p>';
+	if(dateType === 'time'){
+		listEntry += '<p>' + getTimeStamp(startDate) + '</p>';
+	}
 	listEntry += '</div><div class="ui-block-b ui-li-aside">';
 	listEntry += '<p>' + carpool.responsible.city + '</p><br>';
 	if (isLoggedIn() && getUserId() != carpool.responsible.id) {
@@ -57,12 +89,12 @@ function createCarpoolMenuEntry(item) {
 				var freeSeats = getFreeSeats(carpool);
 				if (freeSeats > 0) {
 					if (freeSeats === 1) {
-						listEntry += 'Noch ' + freeSeats + ' Platz';
+						listEntry += freeSeats + ' Platz';
 					} else {
-						listEntry += 'Noch ' + freeSeats + ' Pl&auml;tze';
+						listEntry += freeSeats + ' Pl&auml;tze';
 					}
 				} else {
-					listEntry += 'kein Platz mehr';
+					listEntry += 'kein Platz';
 				}
 			}
 		}

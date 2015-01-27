@@ -17,7 +17,11 @@
 			<script>
 				$(document).one("pageshow", "#carpools", function() {
 					var id = getUrlParameter($(this).data("url"),"id");
-					getCarpoolsFromUrl('carpoolList', getAPIUrl() + '/carpool.php', id);
+					if(id === null){
+						getCarpoolsFromUrlForMember('carpoolList', getAPIUrl() + '/carpool.php');
+					} else {
+						getCarpoolsFromUrl('carpoolList', getAPIUrl() + '/carpool.php', id);
+					}
 				});
 			</script>
 		</div>

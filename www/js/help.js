@@ -299,6 +299,11 @@ var navigationItems = [{
 		link : "meetings.html",
 		loginRequired : true,
 		ajax: true
+	}, {
+		name : "Fahrgemeinschaften",
+		link : "carpools.html",
+		loginRequired : true,
+		ajax: true
 	}]
 }, {
 	name : "Sonstiges",
