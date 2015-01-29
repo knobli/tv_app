@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Add receipt</title>
+	</head>
+
+	<body>
+		<div data-role="page" id="addReceipt">
+			<div data-role="header" data-theme="b">
+				<h1>Neue Quittung</h1>
+				<a href="#" data-rel="back" data-icon="arrow-l" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Back</a>
+				<a href="settings.html" data-icon="gear" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Settings</a>
+			</div><!-- /header -->
+			<div role="main" class="ui-content">
+				<form method="post" id="receiptForm" enctype="multipart/form-data">
+					<input type="hidden" id="receiptMemberId" name="memberId" />
+					<input type="text" name="description" required="required" placeholder="Beschreibung"/>
+					<input type="text" name="value" required="required" placeholder="Betrag"/>
+					<input type="file" name="picture" accept="image/x-png, image/gif, image/jpeg" />
+					<input type="button" onclick="addReceipt()" value="Quittung einreichen"  />
+				</form>
+			</div><!-- /content -->		
+		</div>
+	</body>
+</html>

@@ -47,3 +47,19 @@ function createTotalMenuEntry(total) {
 	listEntry += '</div></fieldset></li>';
 	return listEntry;
 }
+
+function addReceipt(){
+	$("#receiptMemberId").val(getUserId());
+	$("#receiptForm").ajaxSubmit({
+		url : getAPIUrl() + '/receipt.php',
+		beforeSend : startLoading,
+		complete : finishLoading,		
+		success : function(data) {
+			if (data.success) {
+				alert("Erfolgreich eingetragen");
+			} else {
+				alert("Fehlgeschlagen: " + data.error_message);
+			}
+		}
+	});
+}
