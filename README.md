@@ -5,6 +5,12 @@ Turnverein App with Phonegap
 
 <h1>Release Notes</h1>
 
+<h3>Version 1.12</h3>
+Allgemein:
+<ul>
+<li>Neue Funktion für das Einsenden einer Quittung</li>
+</ul>
+
 <h3>Version 1.11</h3>
 Allgemein:
 <ul>
