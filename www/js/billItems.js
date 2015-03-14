@@ -57,6 +57,7 @@ function addReceipt(){
 		success : function(data) {
 			if (data.success) {
 				alert("Erfolgreich eingetragen");
+                $('#receiptForm').clearForm();
 			} else {
 				alert("Fehlgeschlagen: " + data.error_message);
 			}
