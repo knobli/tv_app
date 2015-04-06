@@ -73,7 +73,7 @@ $.ajaxSetup({
 });
 
 function getAPIUrl() {
-	return 'https://grafstal.ch/controller/json/v0.3';
+	return 'https://grafstal.ch/controller/json/v0.4';
 }
 
 function addInformation(listId, info){

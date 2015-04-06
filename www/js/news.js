@@ -11,13 +11,13 @@ function getNewsFromUrl(listId, url, linkUrl) {
 
 function addNewsMenuEntry(listId, data, linkUrl) {
 	$.each(data, function(key, val) {
-		var createDate;
+		var createdDate;
 		if (val.createDate != null) {
-			createDate = createDate(val.createDate.date);
+            createdDate = createDate(val.createDate.date);
 		} else {
-			createDate = new Date();
+            createdDate = new Date();
 		}
-		$("#" + listId).append('<li><a href="' + linkUrl + '?id=' + val.id + '"><h2>' + $('<textarea />').html(val.title).text() + '</h2><p>' + getDateStamp(createDate) + '</p><p class="text-with-nl" id="introText' + val.id + '"></p></a></li>');
+		$("#" + listId).append('<li><a href="' + linkUrl + '?id=' + val.id + '"><h2>' + $('<textarea />').html(val.title).text() + '</h2><p>' + getDateStamp(createdDate) + '</p><p class="text-with-nl" id="introText' + val.id + '"></p></a></li>');
 		$("#introText" + val.id).html($('<textarea />').html(val.introText).text());
 	});
 
@@ -35,14 +35,14 @@ function loadNews(url, id) {
 		beforeSend : startLoading,
 		complete : finishLoading	
 	}).done(function(news) {
-		var createDate;
+		var createdDate;
 		if (news.createDate != null) {
-			createDate = createDate(news.createDate.date);
+            createdDate = createDate(news.createDate.date);
 		} else {
-			createDate = new Date();
+            createdDate = new Date();
 		}
 		$("#pageTitle").html($('<textarea />').html(news.title).text());
-		$("#createDate").text(getDateStamp(createDate));
+		$("#createDate").text(getDateStamp(createdDate));
 		$("#introText").html($('<textarea />').html(news.introText).text());
 		if (news.fullText != "") {
 			$("#fullText").html($('<textarea />').html(news.fullText).text());
