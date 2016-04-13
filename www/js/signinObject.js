@@ -98,10 +98,19 @@ function loadSigninObject(viewId, url, id) {
 		var startDate = createDate(signinObject.startDate.date);
 		var endDate = createDate(signinObject.endDate.date);
 		$("#pageTitle").text(signinObject.name);
+		if(isDefined(signinObject.team)) {
+			addKeyValueListEntry(viewId, 'Mannschaft 1', signinObject.team.name);
+		}
+		if(isDefined(signinObject.rival)) {
+			addKeyValueListEntry(viewId, 'Mannschaft 2', signinObject.rival.name);
+		}
 		addKeyValueListEntry(viewId, 'Infos', signinObject.description);
 		addKeyValueListEntry(viewId, 'Ort', signinObject.location.name);
 		addKeyValueListEntry(viewId, 'Datum', getStartEndDate(startDate, endDate));
 		addKeyValueListEntry(viewId, 'Verantwortlicher', signinObject.responsible.firstname + ' ' + signinObject.responsible.surname);
+		if(isDefined(signinObject.assistant)){
+			addKeyValueListEntry(viewId, 'Assistent', signinObject.assistant.firstname + ' ' + signinObject.assistant.surname);
+		}
 		if (isLoggedIn()) {
 			if (memberStatus === MemberStatus.IN) {
 				addPopupListEntry(viewId, 'Angemeldet', 'ui-icon-check', signinObject.id, MemberStatus.OUT);

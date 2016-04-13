@@ -262,6 +262,10 @@ function getUsername() {
 	return window.localStorage.getItem(usernameKey);
 }
 
+function isDefined(v){
+	return v !== undefined && v !== null;
+}
+
 var navigationItems = [{
 	name : "",
 	loginRequired : false,
