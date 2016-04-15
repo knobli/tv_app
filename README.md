@@ -12,7 +12,7 @@ Allgemein:
 <li>Teams bei Matches besser sichtbar</li>
 
 Bugfixes:
-<ul>:q
+<ul>
 <li>Fahrrad Fahrgemeinschaften</li>
 <li>Erstellungsdatum von Berichten</li>
 </ul>
