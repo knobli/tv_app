@@ -5,6 +5,18 @@ Turnverein App with Phonegap
 
 <h1>Release Notes</h1>
 
+<h3>Version 1.13</h3>
+Allgemein:
+<ul>
+<li>Assistent beim Trainings sichtbar</li>
+<li>Teams bei Matches besser sichtbar</li>
+
+Bugfixes:
+<ul>:q
+<li>Fahrrad Fahrgemeinschaften</li>
+<li>Erstellungsdatum von Berichten</li>
+</ul>
+
 <h3>Version 1.12</h3>
 Allgemein:
 <ul>
