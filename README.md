@@ -10,6 +10,7 @@ Allgemein:
 <ul>
 <li>Assistent beim Trainings sichtbar</li>
 <li>Teams bei Matches besser sichtbar</li>
+</ul>
 
 Bugfixes:
 <ul>
