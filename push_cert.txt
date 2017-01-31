@@ -1,0 +1,9 @@
+https://www.raywenderlich.com/123862/push-notifications-tutorial
+1. Goto https://developer.apple.com/account/ios/certificate/
+2. App IDs -> Edit the App (e.g. )
+3. Create new Certificate
+4. Use the already existing Raffael/TVGrafstalPush.certSigningRequest 
+5. Download Cert and execute it, that it will be shown in Key Chain App
+6. Search Cert in Key Chain (it should be under Login and not System, otherwise please move)
+  http://stackoverflow.com/a/21060610
+7. Export Cert as .p12 with right click
