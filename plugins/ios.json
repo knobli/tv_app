@@ -1,50 +1,21 @@
 {
-    "prepare_queue": {
-        "installed": [],
-        "uninstalled": []
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "ch.grafstal"
     },
-    "config_munge": {
-        "files": {
-            "config.xml": {
-                "parents": {
-                    "/*": [
-                        {
-                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
-                            "count": 1
-                        }
-                    ]
-                }
-            },
-            "framework": {
-                "parents": {
-                    "SystemConfiguration.framework": [
-                        {
-                            "xml": "true",
-                            "count": 1
-                        }
-                    ]
-                }
-            }
-        }
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "ch.grafstal"
     },
-    "installed_plugins": {
-        "org.apache.cordova.device": {
-            "PACKAGE_NAME": "ch.grafstal"
-        },
-        "com.phonegap.plugins.PushPlugin": {
-            "PACKAGE_NAME": "ch.grafstal"
-        },
-        "org.apache.cordova.network-information": {
-            "PACKAGE_NAME": "ch.grafstal"
-        }
-    },
-    "dependent_plugins": {}
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "ch.grafstal"
+    }
+  },
+  "dependent_plugins": {}
 }

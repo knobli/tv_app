@@ -1,0 +1,33 @@
+{
+  "name": "ch.grafstal",
+  "displayName": "TV Grafstal",
+  "version": "1.0.14",
+  "description": "Turnvereine Grafstal App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "cordova-android": "^9.1.0",
+    "cordova-ios": "^6.2.0",
+    "cordova-plugin-network-information": "^3.0.0",
+    "cordova-plugin-splashscreen": "^6.0.0",
+    "cordova-plugin-whitelist": "^1.3.5"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-splashscreen": {}
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}

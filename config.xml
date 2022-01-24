@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ch.grafstal" version="1.0.14" xmlns="http://www.w3.org/ns/widgets">
+<widget id="ch.grafstal" version="1.0.14" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>TV Grafstal</name>
     <description>
         Turnvereine Grafstal App
@@ -7,43 +7,38 @@
     <author email="info@grafstal.ch" href="http://www.grafstal.ch">
         Raffael Santschi
     </author>
-    <preference name="permissions" value="none" />
-    <preference name="phonegap-version" value="3.5.0" />
-    <preference name="orientation" value="default" />
-    <preference name="target-device" value="universal" />
-    <preference name="fullscreen" value="true" />
-    <preference name="webviewbounce" value="true" />
-    <preference name="prerendered-icon" value="true" />
-    <preference name="stay-in-webview" value="false" />
-    <preference name="ios-statusbarstyle" value="black-opaque" />
-    <preference name="detect-data-types" value="true" />
-    <preference name="exit-on-suspend" value="false" />
-    <preference name="show-splash-screen-spinner" value="true" />
-    <preference name="auto-hide-splash-screen" value="true" />
-    <preference name="disable-cursor" value="false" />
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
     <preference name="android-minSdkVersion" value="14" />
-    <preference name="android-installLocation" value="auto" />
-	<preference name="SplashScreen" value="screen" />
-	<preference name="SplashScreenDelay" value="5000" />
-    <preference name="AndroidPersistentFileLocation" value="Internal" />
-    <icon src="www/icon.png" />
+    <icon src="res/icon.png" />
     <platform name="android">
-    <!--
-    ldpi    : 36x36 px
-    mdpi    : 48x48 px
-    hdpi    : 72x72 px
-    xhdpi   : 96x96 px
-    xxhdpi  : 144x144 px
-    xxxhdpi : 192x192 px
--->
+        <allow-intent href="market:*" />
         <icon qualifier="ldpi" src="res/icon/android/mipmap-hdpi/ic_launcher.png" />
         <icon qualifier="mdpi" src="res/icon/android/mipmap-ldpi/ic_launcher.png" />
         <icon qualifier="hdpi" src="res/icon/android/mipmap-mdpi/ic_launcher.png" />
         <icon qualifier="xhdpi" src="res/icon/android/mipmap-xhdpi/ic_launcher.png" />
         <icon qualifier="xxhdpi" src="res/icon/android/mipmap-xxhdpi/ic_launcher.png" />
         <icon qualifier="xxxhdpi" src="res/icon/android/mipmap-xxxhdpi/ic_launcher.png" />
+
+        <splash src="res/screen/android/splash_hdpi_landscape.png" density="land-hdpi" />
+        <splash src="res/screen/android/splash_ldpi_landscape.png" density="land-ldpi" />
+        <splash src="res/screen/android/splash_mdpi_landscape.png" density="land-mdpi" />
+        <splash src="res/screen/android/splash_xhdpi_landscape.png" density="land-xhdpi" />
+
+        <splash src="res/screen/android/splash_hdpi.png" density="port-hdpi" />
+        <splash src="res/screen/android/splash_ldpi.png" density="port-ldpi" />
+        <splash src="res/screen/android/splash_mdpi.png" density="port-mdpi" />
+        <splash src="res/screen/android/splash_xhdpi.png" density="port-xhdpi" />
     </platform>
     <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
         <!-- iOS 8.0+ -->
         <!-- iPhone 6 Plus  -->
         <icon src="res/ios/180.png" width="180" height="180" />
@@ -77,23 +72,11 @@
         <icon src="res/ios/167.png" width="167" height="167" />
         <!-- iTunes Marketing Image -->
         <icon src="res/ios/1024.png" width="1024" height="1024" />
-    </platform>
-    <icon platform="webos" src="res/icon/webos/icon-64.png" />
-    <platform name="android">
-        <splash src="res/screen/android/splash_hdpi_landscape.png" density="land-hdpi" />
-        <splash src="res/screen/android/splash_ldpi_landscape.png" density="land-ldpi" />
-        <splash src="res/screen/android/splash_mdpi_landscape.png" density="land-mdpi" />
-        <splash src="res/screen/android/splash_xhdpi_landscape.png" density="land-xhdpi" />
 
-        <splash src="res/screen/android/splash_hdpi.png" density="port-hdpi" />
-        <splash src="res/screen/android/splash_ldpi.png" density="port-ldpi" />
-        <splash src="res/screen/android/splash_mdpi.png" density="port-mdpi" />
-        <splash src="res/screen/android/splash_xhdpi.png" density="port-xhdpi" />
+        <splash height="480" src="res/screen/ios/screen-iphone-portrait.png" width="320" />
+        <splash height="960" src="res/screen/ios/screen-iphone-portrait-2x.png" width="640" />
+        <splash height="1136" src="res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" />
+        <splash height="1024" src="res/screen/ios/screen-ipad-portrait.png" width="768" />
+        <splash height="768" src="res/screen/ios/screen-ipad-landscape.png" width="1024" />
     </platform>
-    <splash platform="ios" height="480" src="res/screen/ios/screen-iphone-portrait.png" width="320" />
-    <splash platform="ios" height="960" src="res/screen/ios/screen-iphone-portrait-2x.png" width="640" />
-    <splash platform="ios" height="1136" src="res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" />
-    <splash platform="ios" height="1024" src="res/screen/ios/screen-ipad-portrait.png" width="768" />
-    <splash platform="ios" height="768" src="res/screen/ios/screen-ipad-landscape.png" width="1024" />
-    <access origin="*" />
 </widget>

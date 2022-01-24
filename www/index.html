@@ -40,46 +40,39 @@
 
 				</ul>
 			</div><!-- /content -->
-			<script type="text/javascript" src="cordova.js"></script>
-			<script type="text/javascript" src="js/PushNotification.js"></script>
-			<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-			<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
-			<script type="text/javascript" src="js/jquery.form.min.js"></script>
-			<script type="text/javascript" src="js/billItems.js"></script>
-			<script type="text/javascript" src="js/signinObject.js"></script>
-			<script type="text/javascript" src="js/carpool.js"></script>
-			<script type="text/javascript" src="js/news.js"></script>
-			<script type="text/javascript" src="js/help.js"></script>
-			<script type="text/javascript" src="js/index.js"></script>
-			<script type="text/javascript" src="js/settings.js"></script>
-			<script type="text/javascript" src="js/result.js"></script>
-			<script>
-				$(document).one("pageshow", "#mainpage", function() {
-					if (isLoggedIn()) {
-						getNextSigninObjectFromUrl('newsList', getAPIUrl() + '/signinObjects.php?next=1');
-					}
-					getNewsFromUrl('newsList', getAPIUrl() + '/content.php', 'news.html');
-					$('body').show();
-				});
-				
-				$(function() {
-					$(window).bind('scrollstart', function () {        
-						if (isNearBottom()){
-					         loadMoreNews("newsList", getAPIUrl() + '/content.php', 'news.html');
-					 	}
-					 });
-				});
-			</script>
 		</div>
+		<script type="text/javascript" src="cordova.js"></script>
+		<!-- <script type="text/javascript" src="js/PushNotification.js"></script> -->
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile-1.4.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.form.min.js"></script>
+		<script type="text/javascript" src="js/billItems.js"></script>
+		<script type="text/javascript" src="js/signinObject.js"></script>
+		<script type="text/javascript" src="js/carpool.js"></script>
+		<script type="text/javascript" src="js/news.js"></script>
+		<script type="text/javascript" src="js/help.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/settings.js"></script>
+		<script type="text/javascript" src="js/result.js"></script>
 		<script>
-			app.initialize();
-			if (window.addEventListener) {
-				window.addEventListener("online", onOnline, false);
-				window.addEventListener("offline", onOffline, false);
-			} else {
-				document.body.ononline = onOnline;
-				document.body.onoffline = onOffline;
-			}
+			$(document).one("pageshow", "#mainpage", function() {
+				if (isLoggedIn()) {
+					getNextSigninObjectFromUrl('newsList', getAPIUrl() + '/signinObjects.php?next=1');
+				}
+				getNewsFromUrl('newsList', getAPIUrl() + '/content.php', 'news.html');
+				$('body').show();
+			});
+
+			$(function() {
+				$(window).bind('scrollstart', function () {
+					if (isNearBottom()){
+						loadMoreNews("newsList", getAPIUrl() + '/content.php', 'news.html');
+					}
+				});
+			});
+
+			document.addEventListener("online", onOnline, false);
+			document.addEventListener("offline", onOffline, false);
 
 			$(document).one('pagebeforecreate', function() {
 				$("#left-panel").panel();
