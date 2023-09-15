@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ch.grafstal" version="1.0.14" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ch.grafstal" version="1.0.15" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>TV Grafstal</name>
     <description>
         Turnvereine Grafstal App
@@ -16,7 +16,9 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <preference name="android-minSdkVersion" value="14" />
+    <preference name="android-targetSdkVersion" value="30" />
     <icon src="res/icon.png" />
+    <splash src="res/splash.png"/>
     <platform name="android">
         <allow-intent href="market:*" />
         <icon qualifier="ldpi" src="res/icon/android/mipmap-hdpi/ic_launcher.png" />

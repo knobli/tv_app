@@ -7,9 +7,6 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "ch.grafstal"
-    },
     "cordova-plugin-network-information": {
       "PACKAGE_NAME": "ch.grafstal"
     },
