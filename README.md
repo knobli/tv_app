@@ -5,6 +5,13 @@ Turnverein App with Phonegap
 
 <h1>Release Notes</h1>
 
+<h3>Version 1.14</h3>
+Allgemein:
+<ul>
+<li>Update libs</li>
+<li>Bugfix: Interne Links in News</li>
+</ul>
+
 <h3>Version 1.13</h3>
 Allgemein:
 <ul>
