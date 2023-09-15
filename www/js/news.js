@@ -18,7 +18,7 @@ function addNewsMenuEntry(listId, data, linkUrl) {
             createdDate = new Date();
 		}
 		$("#" + listId).append('<li><a href="' + linkUrl + '?id=' + val.id + '"><h2>' + $('<textarea />').html(val.title).text() + '</h2><p>' + getDateStamp(createdDate) + '</p><p class="text-with-nl" id="introText' + val.id + '"></p></a></li>');
-		$("#introText" + val.id).html($('<textarea />').html(val.introText).text());
+		$("#introText" + val.id).html($('<textarea />').html(convertUrl(val.introText)).text());
 	});
 
 	$("#" + listId).listview("refresh");
@@ -43,9 +43,9 @@ function loadNews(url, id) {
 		}
 		$("#pageTitle").html($('<textarea />').html(news.title).text());
 		$("#createDate").text(getDateStamp(createdDate));
-		$("#introText").html($('<textarea />').html(news.introText).text());
+		$("#introText").html($('<textarea />').html(convertUrl(news.introText)).text());
 		if (news.fullText != "") {
-			$("#fullText").html($('<textarea />').html(news.fullText).text());
+			$("#fullText").html($('<textarea />').html(convertUrl(news.fullText)).text());
 		}
 	});
 }
@@ -74,4 +74,8 @@ function loadMoreNews(listId, url, linkUrl){
 	}).done(function(data) {
 		addNewsMenuEntry(listId, data, linkUrl);
 	});		
+}
+
+function convertUrl(text) {
+	return text.replaceAll(/href=&quot;(((?!(http|www)).)*)&quot;/g, 'href=&quot;https://www.grafstal.ch/$1&quot;');
 }
